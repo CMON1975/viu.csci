@@ -9,7 +9,8 @@ Separation of interface from implementation, hidden information.
 | `array` | `A[top] = obj;` | `top--;` |
 | `top = 0;` | `top++;` | `victim = list;` |
 | `list = 0;` | `new node; N.next = list; list = N;` | `list = list -> next` |
-*properties*: ==FILO (First In, Last Out)==
+
+**properties**: ==FILO (First In, Last Out)==
 - `pop(push(s.obj)) == obj;`
 - `top(push(s.obj)) == obj;`
 - `isEmpty(new()) == true;`
@@ -22,15 +23,18 @@ Use preconditions (comments are simplest) to put responsibility for handling exc
 Document on semantic level, show the purpose of code only if it is not readily apparent.
 
 ### Queue
+
 | new | enQ (enqueue) | deQ (dequeue) |
-*properties*: ==FIFO (First In, First Out)==
+| --- | --- | --- |
+
+**properties**: ==FIFO (First In, First Out)==
 
 ```front(enQ(new().obj)) == obj;
 deQ(enQ(new().obj)) == new();
 front(enQ(enQ(Q,obj1),obj2)) == front(enQ(Q,obj1));
-deQ(enQ(enQ(Q,obj1),obj2)) == enQ(deQ(enQ(Q.obj1)),obj2)```
-
-*Breakdown of last above:*
+deQ(enQ(enQ(Q,obj1),obj2)) == enQ(deQ(enQ(Q.obj1)),obj2)
+```
+**Breakdown of last above:**
 Left-hand side:
 1. ==enQ(Q, obj1)==: This means enqueue ==obj1== to the queue ==Q==.
 2. ==enQ(enQ(Q, obj1), obj2)==: After enqueuing ==obj1==, this adds ==obj2== to the resulting queue.
