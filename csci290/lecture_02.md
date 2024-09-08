@@ -96,3 +96,532 @@ Professor prefers double, circularly linked list with dummy node(s).
 
 Stack implementations: function calls, HTML tag matching, undo/redo functionality in text editors, expression evaluation (postfix/infix conversion), depth-first search in graphs.
 Queue implementations: job queues, accessing shared resources, CPU time slicing, breadth-first search in graphs, print queues for printers.
+
+## Prof's Notes (Transcribed with corrections)
+### ADT: Stack
+* Stacks: Overview
+    * hold ordered list of elements
+    * last-in, first-out (LIFO) ordering
+    * The term "stack" is based on the concept of stacking new elements one on top of another as they arrive, and processing whatever is on top of the stack when we get the opportunity.
+* Stack ADT
+    * need to include the type of data being stacked
+    * plus the typical stack operations. These include:
+        * constructors to create an empty stack
+        * destructors to clean up a stack once finished with it
+        * a method which takes a new element and adds it to the stack, typically called `push`
+        * a method to look at the element on the top of the stack, typically called `top`
+        * a method to remove and discard the top stack element, typically called `pop`
+        * a method which checks if the stack is full
+        * a method which checks if the stack is empty
+    * Note that, by convention, we can only examine the top stack element.
+* Stack applications
+    * language-parsing operations: evaluating computations, trying to derive meaning from text or from source code, etc
+    * in information storage during program execution: storing parameters, local variables, and other key data for subroutine calls
+    * Examples:
+        * a stack-based algorithm for printing a string of characters backwards:
+        * a stack-based algorithm for seeing if all the brackts matching in a source code file:
+```
+while not end-of-file:
+    get the next character
+    if the character is a left (open) bracket, push it on the stack
+    if the character is a right (close) bracket
+        if the stack is empty,
+            generate an error message (unmatched closing bracket)
+            and exit
+        if the bracket type is different than the brack type on the 
+            top of the stack, generate an error message (unmatched closing bracket) and exit
+        otherwise pop the top bracket off the stack
+        
+    if the stack is not empty, generate an error message
+        (unmatched opening bracket) and exit
+```
+* Array-based implementation
+    * The header file: `stack.h`
+```
+#include
+using namespace std;
+#ifndef STACK_H
+#define STACK_H
+
+// DEFAULTMAX --- default maximum stack size
+const int DEFAULTMAX = 128;
+
+// StackElement is used to determine the type of
+// data stored in the stack
+typedef char StackElement;
+
+// defaultelement can be used as a default
+// stack element value
+const char defaultelement = '\0';
+
+// Stack class, using an array-based implementation,
+// where the constructor dynamically allocates
+// the array using either the DEFAULTMAX size or
+// a size specified by passing a positive integer
+// parameter to the constructor
+//
+// the usual stack operations are available:
+//      top, pop, push, isempty, and isfull
+//
+class stack {
+    public:
+        stack();            // default constructor
+        stack(int size);    // constructor for passed size
+        ~stack();           // destructor
+        // push new data on stack
+        void push(StackElement data);
+        void pop();         // remove the top stack element
+        // get a copy of top stack element
+        StackElement top();
+        bool isempty();     // return True iff stack is empty
+        bool isfull();      // return True iff stack is full
+    private:
+        StackElement *sptr;
+        int maxsize;
+        int currentsize;
+};
+#endif
+```
+* The stack implementation: stack.cpp
+```
+#include "stack.h"
+//  privately accessible data fields
+//  for the stack class:
+//      StackElement *sptr;
+//      int maxsize;
+//      int currentsize;
+
+// default constructor, the maximum stack size is 
+//      determined by DEFAULTMAX const in stack.h
+stack::stack()
+{
+    maxsize = DEFAULTMAX;
+    currentsize = 0;
+    sptr = new StackElement[maxsize];
+}
+
+// constructor using the passed size
+// as the maximum stack size
+// if the passed size is a positive integer,
+// otherwise uses DEFAULTMAX
+stack::stack(int size)
+{
+    if (size > 0) maxisize = size;
+    else maxsize = DEFAULTMAX;
+    currentsize = 0;
+    sptr = new StackElement[maxsize];
+}
+
+// destructor - deallocate stack space
+stack::~stack()
+{
+    delete [] sptr;
+}
+
+// push new data on stack
+void stack::push(StackElement data)
+{
+    // check to ensure stack is not already full
+    if (currentsize < maxsize) {
+        // add new element to top space on stack
+        // and increment size counter
+        // (index of top element)
+        sptr[currentsize++] = data
+    } else {
+        cerr << "Cannot push onto a full stack" << endl;
+    }
+}
+
+/ remove top element
+void stack::pop()
+{
+    // check to ensure stack is not already empty
+    if (currentsize > 0) {
+        // decrement size counter
+        // (which is also index of top element)
+        currentsize--;
+    } else {
+        cerr << "Cannot pop from an empty stack"
+             << endl;
+    }
+}
+
+// get copy of top stack element
+StackElement stack::top()
+{
+    // check to ensure stack is not currently empty
+    if (currentsize > 0) {
+        // return copy of top element
+        return (sptr[currentsize-1]);
+    } else {
+        cerr << "Cannot examine top of empty stack, "
+             << "returning default value" << endl;
+        return defaultelement;
+    }
+}
+
+// return True iff stack is empty
+bool stack::isempty()
+{
+    return (currentsize == 0);
+}
+
+// return True iff stack is full
+bool stack::isfull()
+{
+    return (currensize == maxsize);
+}
+```
+* Stack Application Example
+ * This application takes a series of command line arguments and prints each argument backwards, using a stack to reverse the characters in each string:
+```
+#include "stack.h"
+using namespace std;
+// this program takes each of its command line
+// arguments and uses a stack to print the argument
+// out backwards
+
+void printbackwards(char *str);
+
+int main(int argc, char *argv[])
+{
+    for (int i = 0; i < argc; i++) {
+        printbackwards(argv[i]);
+        cout << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
+void printbackwards(char *str)
+{
+    int index = 0;
+    int length;
+    stack *mystack;
+
+    // allocate a stack just a little bigger 
+    // than you need
+    length = strlen(str);
+    mystack = new stack(length+1);
+    
+    // push the string contents onto the stack
+    // one character at a time until you hit
+    // the end of the string
+    while (index < length) {
+        mystack->push(str[index]);
+        index++;
+    }
+
+    // pop the stack contents off and print them
+    // one at a time until the stack is empty
+    while (mystack->isempty() == False) {
+        cout << mystack->top();
+        mystack->pop();
+    }
+
+    delete mystack;
+}
+```
+* Stack Application Example
+ * This application takes a series of command line arguments and determins whether or not each is a palindrome (i.e., is spelled the same way forward and backwards) using a stack to check the characters in each string:
+ ```
+ #include "stack.h"
+ using namespace.std;
+ // this program takes each of its command line
+ // arguments and uses a stack to determine
+ // if the argument is a palindrome
+
+ bool ispalindrome(char *str);
+
+ int main(int argc, char *argv[])
+ {
+    for (int i = 0; i < argc; i++) {
+        cout << argv[i];
+        if (ispalindrome(argv[i])) {
+            cout << " is a palindrome" << endl;
+        } else {
+            cout << " is not a palindrome << endl;
+        }
+    }
+    return 0;
+ }
+
+ bool ispalindrome(char *str)
+ {
+    int index = 0;
+    int length;
+    stack *mystack;
+
+    length = strlen(str);
+    mystack = new stack(length+1);
+
+    // push the string contents onto the stack
+    // one character at a time until you
+    // hit the end of the string
+    while (str[index] != '\0') {
+        mystack->push(str[index]);
+        index++;
+    }
+
+    // pop the stack contents off and compare them
+    // to the string contents one at a time until
+    // you find a difference or the stack is empty
+    index = 0;
+    while (!(mystack->isempty())) {
+        if (mystack->top() != str[index++]) {
+            delete mystack;
+            return false;
+        } else {
+            mystack->pop();
+        }
+    }
+
+    delete mystack;
+    return true;
+ }
+ ```
+### ADT: Queue
+* Queues: Overview
+    * Queue ADT: first in, first out (FIFO)
+    * a constructor, which creates and initializes a new (empty) queue
+    * an Enqueue operation, which takes a new data item and (as long as the queue is not full) adds it to the end of the queue
+    * a Dequeue operation, which removes a data item from the front of the queue (as long as the queue is not empty) and returns it
+    * a destructor, which deallocates a queue which is no longer needed
+    * an isempty operation, which returns true if the queue is empty and false otherwise
+    * an isfull operation, which returns true if the queue is full and false otherwise
+    * a getsize operation, which returns a count of the number of items currently in the queue
+* Pointer-based Queue Interface
+```
+class Queue {
+    public:
+        // the public interface
+        Queue();            // initializes queue with default maxsize
+        Queue(int max)      // initializes queue with specified maxsize
+        ~Queue();           // deallocates queue
+        void enqueue(QElem& e)  // adds e to queue if queue isn't full
+        QElem & dequeue();  // removes/returns front queue element
+                            // if queue isn't empty
+        int getsize();      // returns current count of queue elements
+        bool isempty();     // returns true iff queue is empty
+        bool isfull();      // returns true iff queue is full
+        void printQ();      // prints current queue contents
+    
+    private:
+        // the "inaccessible" implementation details
+        struct Node {
+            QElem *data;
+            Node *prev;
+            Node *next;
+        };
+        Node *Q;        // a pointer to the front queue element
+        int maxQsize;   // the chosen maximum queue size
+        int actQsize;   // the actual number of elements in queue
+};
+```
+* Implementation
+```
+#include "pointerq.h"
+
+Queue::Queue()
+{
+    Q = new Node;
+    maxQsize = DEFAULTMAXSIZE;
+    actQsize = 0;
+    Q->prev = Q;
+    Q->next = Q;
+    Q->data = NULL;
+}
+
+Queue::Queue(int max)
+{
+    Q = new Node;
+    maxQsize = max;
+    actQsize = 0;
+    Q->prev = Q;
+    Q->next = Q;
+    Q->data = NULL;
+}
+
+Queue::~Queue()
+{
+    Node *temp;
+    while (Q->next != Q) {
+        Q->next = Q->next->next;
+        delete Q->next->prev;
+        Q->next->prev = Q;
+    }
+    delete Q;
+    actQsize = 0;
+    maxQsize = DEFAULTMAXSIZE;
+}
+
+void Queue::enqueue(QElem & e)
+{
+    Node *temp = NULL;
+    if (actQsize < maxQsize) {
+        temp = new Node;
+    }
+    if (temp == NULL) {
+        throw string("ERROR: queue overflow");
+    }
+    temp->data = &e;
+    temp->prev = Q->prev;
+    temp->next = Q;
+    Q->prev->next = temp;
+    Q->prev = temp;
+    actQsize++;
+}
+
+QElem & Queue::dequeue()
+{
+    if (actQsize == 0) {
+        throw string("ERROR: queue underflow");
+    }
+    QElem & e = *(Q->next->data);
+    Q->next = Q->next->next;
+    delete Q->next->prev;
+    Q->next->prev = Q;
+    actQsize--;
+    return e;
+}
+
+int Queue::getsize()
+{
+    return actQsize;
+}
+
+bool Queue::isempty()
+{
+    return (actQsize == 0);
+}
+
+bool Queue::isfull()
+{
+    return (actQsize == maxQsize);
+}
+
+void Queue::printQ()
+{
+    cout << "The queue has " << actQsize << " of " << maxQsize;
+    cout << " possible elements:" << endl;
+
+    Node *temp = Q->next;
+    int i = 0;
+    while (temp != Q) {
+        cout << temp->data;
+        i++;
+        if (((i % 5) == 0) || (i == actQsize))
+            cout << endl;
+        else cout << " ";
+    }
+}
+```
+* Array Queue Interface
+```
+class Queue {
+    public:
+        Queue();            // initializes queue with default maxsize
+        Queue(int max);     // initializes queue with specified maxsize
+        ~Queue();           // deallocates queue
+        void enqueue(QElem & e);    // adds e to queue if queue isn't full
+        QElement & dequeue();   // removes/returns front queue element
+                                // if queue isn't empty
+        int getsize();      // returns current count of queue elements
+        bool isempty();     // returns true iff queue is empty
+        bool isfull();      // returns true iff queue is empty
+        void printQ();      // prints current queue contents
+    
+    private:
+        QElem **Q;      // a pointer to the front queue element
+        int maxQsize;   // the chosen maximum queue size
+        int actQsize;   // the actual number of elements in the queue
+        int front;      // current position of the first element in queue
+        int back;       // current position of the last element in queue
+};
+```
+* Implementation
+```
+#include "arrayq.h"
+
+Queue::Queue()
+{
+    Q = new (QElem *)[DEFAULTMAXSIZE];
+    maxQsize = DEFAULTMAXSIZE;
+    actQsize = 0;
+    front = 0;
+    back = -1;
+}
+
+Queue::Queue(int max)
+{
+    Q = new (QElem *)[max];
+    maxQsize = max;
+    actQsize = 0;
+    front = 0;
+    back = -1;   
+}
+
+Queue::~Queue()
+{
+    delete [] Q;
+    front = 0;
+    back = -1;
+    actQsize = 0;
+    maxQsize = 0;
+}
+
+void Queue::enqueue(QElem & e)
+{
+    if (actQsize >= maxQsize) {
+        throw string("ERROR: queue overflow");
+    }
+    back++;
+    back = back % maxQsize;
+    Q[back] = &e;
+    actQsize++;
+}
+
+QElem & Queue::dequeue()
+{
+    if (actQsize == 0) {
+        throw string ("ERROR: queue underflow");
+    } else {
+        QElem & e = *Q[front];
+        front++;
+        front = front % maxQsize;
+        actQsize--;
+        return e;
+    }
+}
+
+int Queue::setsize()
+{
+    return actQsize;
+}
+
+boolean Queue::isempty()
+{
+    return (actQsize == 0);
+}
+
+boolean Queue:isfull()
+{
+    return (actQsize == maxQsize);
+}
+
+void Queue::printQ()
+{
+    int index;
+    index = front;
+    cout << "The queue has " << actQsize << " of " << maxQsize;
+    cout << " possible elements:" << endl;
+
+    for (int i = 1, index = front; i <= actQsize; i++, index++) {
+        index = index % maxQsize;
+        cout << *Q[index];
+        if (((i % 5) == 0) || (i == actQsize))
+            cout << endl;
+        else
+            cout << " ";
+    }
+}
