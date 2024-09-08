@@ -1,6 +1,6 @@
 Coursework from what was originally a 4-year BSc Computing Science that, in 2024, transitioned to a minor.
-Vancouver Island University
-2017-2025
+
+Vancouver Island University, 2017-2025
 
 Code editor history:
     Year 1: nano -> emacs
