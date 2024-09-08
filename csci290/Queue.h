@@ -1,6 +1,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H
+
 #include <iostream>
+#include <stdexcept> // For standard exceptions
 using namespace std;
 
 class Queue
@@ -46,15 +48,13 @@ public:
     {
         if (isFull())
         {
-            cout << "Queue is full! Cannot enqueue.\n";
-            return;
+            throw overflow_error("Queue is full! Cannot enqueue.");
         }
 
         // Circularly increment rear index
         rear = (rear + 1) % capacity;
         arr[rear] = element;
         size++;
-        cout << "Enqueued: " << element << endl;
     }
 
     // Dequeue (remove an element from the front)
@@ -62,15 +62,13 @@ public:
     {
         if (isEmpty())
         {
-            cout << "Queue is empty! Cannot dequeue.\n";
-            return -1; // Or throw an exception
+            throw underflow_error("Queue is empty! Cannot dequeue.");
         }
 
         int element = arr[front];
         // Circularly increment front index
         front = (front + 1) % capacity;
         size--;
-        cout << "Dequeued: " << element << endl;
         return element;
     }
 
@@ -79,8 +77,7 @@ public:
     {
         if (isEmpty())
         {
-            cout << "Queue is empty!\n";
-            return -1; // Or throw an exception
+            throw underflow_error("Queue is empty! Cannot peek.");
         }
         return arr[front];
     }
@@ -91,4 +88,5 @@ public:
         return size;
     }
 };
+
 #endif
