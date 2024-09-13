@@ -1,66 +1,250 @@
-#include <stack>
-// quadratic algorithm function: O(n^2)
-void calculateSpanQuadratic(double X[], int size, int S[])
+#include <iostream>
+#include <chrono>
+#include "spans.h"
+using std::cout;
+using std::endl;
+
+int main()
 {
-    for (int i = 0; i < size; i++)
+    using namespace std::chrono;
+
+    // test case 1
     {
-        // initialize span for X[i]
-        S[i] = 1;
+        double X1[] = {100, 80, 60, 70, 60, 75, 85};
+        int size1 = sizeof(X1) / sizeof(X1[0]);
+        int S1[size1];
 
-        // move backwards checking elements
-        for (int j = i - 1; j >= 0 && X[j] <= X[i]; j--)
+        cout << "Test Case 1: \n";
+        cout << "Input X1: ";
+        for (int i = 0; i < size1; i++)
         {
-            S[i]++;
+            cout << X1[i] << " ";
         }
+        cout << endl;
+
+        // quadratic
+        auto start = high_resolution_clock::now();
+        calculateSpanQuadratic(X1, size1, S1);
+        auto end = high_resolution_clock::now();
+        auto duration_quadratic = duration_cast<nanoseconds>(end - start);
+        cout << "Output S1 (Quadratic): ";
+        for (int i = 0; i < size1; i++)
+        {
+            cout << S1[i] << " ";
+        }
+        cout << "\nExecution Time (Quadratic): " << duration_quadratic.count() << " ns\n";
+
+        // linear
+        start = high_resolution_clock::now();
+        calculateSpanLinear(X1, size1, S1);
+        end = high_resolution_clock::now();
+        auto duration_linear = duration_cast<nanoseconds>(end - start);
+        cout << "Output S1 (Linear): ";
+        for (int i = 0; i < size1; i++)
+        {
+            cout << S1[i] << " ";
+        }
+        cout << "\nExecution Time (Linear): " << duration_linear.count() << " ns\n";
+
+        // vector
+        start = high_resolution_clock::now();
+        calculateSpanVector(X1, size1, S1);
+        end = high_resolution_clock::now();
+        auto duration_vector = duration_cast<nanoseconds>(end - start);
+        cout << "Output S1 (Vector): ";
+        for (int i = 0; i < size1; i++)
+        {
+            cout << S1[i] << " ";
+        }
+        cout << "\nExecution Time (Vector): " << duration_vector.count() << " ns\n";
     }
-}
-// linear algorithm: O(n)
-#include <stack>
 
-void calculateSpanLinear(double X[], int size, int S[])
-{
-    std::stack<int> st; // stack stores element indices
-
-    for (int i = 0; i < size; i++)
+    // test case 2
     {
-        // pop elements from the stack while the current element X[i] is greater
-        // than or equal to the element corresponding to the index at the top of the stack
-        while (!st.empty() && X[st.top()] <= X[i])
+        double X2[] = {10, 20, 30, 40, 50};
+        int size2 = sizeof(X2) / sizeof(X2[0]);
+        int S2[size2];
+
+        cout << "\nTest Case 2: \n";
+        cout << "Input X2: ";
+        for (int i = 0; i < size2; i++)
         {
-            st.pop();
+            cout << X2[i] << " ";
         }
+        cout << endl;
 
-        // measure span:
-        // if stack is empty, all previous elements are smaller, so the span is i + 1
-        // else span is the difference between the current index i and the index of the top element in the stack
-        S[i] = (st.empty()) ? (i + 1) : (i - st.top());
+        // quadratic
+        auto start = high_resolution_clock::now();
+        calculateSpanQuadratic(X2, size2, S2);
+        auto end = high_resolution_clock::now();
+        auto duration_quadratic = duration_cast<nanoseconds>(end - start);
+        cout << "Output S2 (Quadratic): ";
+        for (int i = 0; i < size2; i++)
+        {
+            cout << S2[i] << " ";
+        }
+        cout << "\nExecution Time (Quadratic): " << duration_quadratic.count() << " ns\n";
 
-        // push the current index onto the stack
-        st.push(i);
+        // linear
+        start = high_resolution_clock::now();
+        calculateSpanLinear(X2, size2, S2);
+        end = high_resolution_clock::now();
+        auto duration_linear = duration_cast<nanoseconds>(end - start);
+        cout << "Output S2 (Linear): ";
+        for (int i = 0; i < size2; i++)
+        {
+            cout << S2[i] << " ";
+        }
+        cout << "\nExecution Time (Linear): " << duration_linear.count() << " ns\n";
+
+        // vector
+        start = high_resolution_clock::now();
+        calculateSpanVector(X2, size2, S2);
+        end = high_resolution_clock::now();
+        auto duration_vector = duration_cast<nanoseconds>(end - start);
+        cout << "Output S2 (Vector): ";
+        for (int i = 0; i < size2; i++)
+        {
+            cout << S2[i] << " ";
+        }
+        cout << "\nExecution Time (Vector): " << duration_vector.count() << " ns\n";
     }
-}
-
-// linear algorithm with vector implementation: O(n)
-#include <vector>
-
-void calculateSpanVector(double X[], int size, int S[])
-{
-    std::vector<int> vec; // vector stores indices
-
-    for (int i = 0; i < size; i++)
+    // test case 3
     {
-        // use iterators to traverse and remove elements from vec
-        auto it = vec.rbegin();
-        while (it != vec.rend() && X[*it] <= X[i])
+        double X3[] = {50, 40, 30, 20, 10};
+        int size3 = sizeof(X3) / sizeof(X3[0]);
+        int S3[size3];
+
+        cout << "\nTest Case 3: \n";
+        cout << "Input X3: ";
+        for (int i = 0; i < size3; i++)
         {
-            ++it;
+            cout << X3[i] << " ";
         }
-        vec.erase(it.base(), vec.end()); // remove using iterator
+        cout << endl;
 
-        // calculate the span using the iterators
-        S[i] = (vec.empty()) ? (i + 1) : (i - vec.back());
+        // quadratic
+        auto start = high_resolution_clock::now();
+        calculateSpanQuadratic(X3, size3, S3);
+        auto end = high_resolution_clock::now();
+        auto duration_quadratic = duration_cast<nanoseconds>(end - start);
+        cout << "Output S3 (Quadratic): ";
+        for (int i = 0; i < size3; i++)
+        {
+            cout << S3[i] << " ";
+        }
+        cout << "\nExecution Time (Quadratic): " << duration_quadratic.count() << " ns\n";
 
-        // push the current index onto the vector
-        vec.push_back(i);
+        // linear
+        start = high_resolution_clock::now();
+        calculateSpanLinear(X3, size3, S3);
+        end = high_resolution_clock::now();
+        auto duration_linear = duration_cast<nanoseconds>(end - start);
+        cout << "Output S3 (Linear): ";
+        for (int i = 0; i < size3; i++)
+        {
+            cout << S3[i] << " ";
+        }
+        cout << "\nExecution Time (Linear): " << duration_linear.count() << " ns\n";
+
+        // vector
+        start = high_resolution_clock::now();
+        calculateSpanVector(X3, size3, S3);
+        end = high_resolution_clock::now();
+        auto duration_vector = duration_cast<nanoseconds>(end - start);
+        cout << "Output S3 (Vector): ";
+        for (int i = 0; i < size3; i++)
+        {
+            cout << S3[i] << " ";
+        }
+        cout << "\nExecution Time (Vector): " << duration_vector.count() << " ns\n";
     }
+    // test case 4
+    {
+        double X4[] = {10, 4, 5, 90, 120, 80};
+        int size4 = sizeof(X4) / sizeof(X4[0]);
+        int S4[size4];
+
+        cout << "\nTest Case 4: \n";
+        cout << "Input X4: ";
+        for (int i = 0; i < size4; i++)
+        {
+            cout << X4[i] << " ";
+        }
+        cout << endl;
+
+        // quadratic
+        auto start = high_resolution_clock::now();
+        calculateSpanQuadratic(X4, size4, S4);
+        auto end = high_resolution_clock::now();
+        auto duration_quadratic = duration_cast<nanoseconds>(end - start);
+        cout << "Output S4 (Quadratic): ";
+        for (int i = 0; i < size4; i++)
+        {
+            cout << S4[i] << " ";
+        }
+        cout << "\nExecution Time (Quadratic): " << duration_quadratic.count() << " ns\n";
+
+        // linear
+        start = high_resolution_clock::now();
+        calculateSpanLinear(X4, size4, S4);
+        end = high_resolution_clock::now();
+        auto duration_linear = duration_cast<nanoseconds>(end - start);
+        cout << "Output S4 (Linear): ";
+        for (int i = 0; i < size4; i++)
+        {
+            cout << S4[i] << " ";
+        }
+        cout << "\nExecution Time (Linear): " << duration_linear.count() << " ns\n";
+
+        // vector
+        start = high_resolution_clock::now();
+        calculateSpanVector(X4, size4, S4);
+        end = high_resolution_clock::now();
+        auto duration_vector = duration_cast<nanoseconds>(end - start);
+        cout << "Output S4 (Vector): ";
+        for (int i = 0; i < size4; i++)
+        {
+            cout << S4[i] << " ";
+        }
+        cout << "\nExecution Time (Vector): " << duration_vector.count() << " ns\n";
+    }
+
+    // test case with larger input to better see the timing differences
+    const int size_large = 10000;
+    double X_large[size_large];
+    int S_large[size_large];
+
+    // initialize X_large with random values or a specific pattern
+    // for example, we can use an increasing sequence
+    for (int i = 0; i < size_large; i++)
+    {
+        X_large[i] = i % 100; // repeating pattern to prevent monotonic increase
+    }
+
+    cout << "\nTest Case Large Input: \n";
+    cout << "Input X_large: [Large array with " << size_large << " elements]\n";
+
+    // quadratic
+    auto start = high_resolution_clock::now();
+    calculateSpanQuadratic(X_large, size_large, S_large);
+    auto end = high_resolution_clock::now();
+    auto duration_quadratic = duration_cast<milliseconds>(end - start);
+    cout << "Execution Time (Quadratic): " << duration_quadratic.count() << " ms\n";
+
+    // linear
+    start = high_resolution_clock::now();
+    calculateSpanLinear(X_large, size_large, S_large);
+    end = high_resolution_clock::now();
+    auto duration_linear = duration_cast<milliseconds>(end - start);
+    cout << "Execution Time (Linear): " << duration_linear.count() << " ms\n";
+
+    // vector
+    start = high_resolution_clock::now();
+    calculateSpanVector(X_large, size_large, S_large);
+    end = high_resolution_clock::now();
+    auto duration_vector = duration_cast<milliseconds>(end - start);
+    cout << "Execution Time (Vector): " << duration_vector.count() << " ms\n";
+
+    return 0;
 }

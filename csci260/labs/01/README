@@ -1,0 +1,86 @@
+LAB 01 CSCI 260 F24N02
+CHRISTOPHER MAGNUS ØVRINGMO NILSSEN
+577 990 765
+V1.0 240912
+(rename this file with .md extension to view with markdown formatting in appropriate environment)
+# Package Contents
+- `spans.h`: header file
+- `spans.cpp`: source code for `calculateSpanQuadratic`, `calculateSpanLinear`, and `calculateSpanVector` functions
+- `lab01.cpp`: test cases
+- `typescript`: output of test cases
+- `makefile`: Makefile. To compile, type `make` from the program's root.
+# Analysis of the Linear Algorithm's Time Complexity
+## Overview:
+The `calculateSpanLinear` function uses a stack to compute the span of each element in an array in linear time, $O(n)$. The key to understanding why the algorithm is linear lies in analyzing the total number of operations performed relative to the size of the input array.
+## Algorithm Steps:
+1. **Initialization:**
+    - Create an empty stack to store indices of elements.
+2. **Iteration Over the Array:**
+    - For each element `X[i]` in the array:
+        - While the stack is not empty and the top element of the stack `X[st.top()]` is less than or equal to `X[i]`, pop elements from the stack.
+        - Compute the span `S[i]`:
+            - If the stack is empty, `S[i] = i + 1`.
+            - Else, `S[i] = i - st.top()`.
+        - Push the index `i` onto the stack.
+
+**Why the Algorithm is `O(n)`:**
+- **Single Pass Over the Array:**
+    - The algorithm iterates over each element in the array exactly once in a single loop, which accounts for `O(n)` time.
+- **Stack Operations:**
+    - Each element is pushed onto the stack exactly once.
+    - An element can be popped from the stack at most once.
+- **Total number of Stack Operations:**
+    - For an array of size `n`, there can be at most `n` pushes and `n` pops.
+    - Therefore, the total number of stack operations is bounded by $2n$.
+- **Amortized Analysis:**
+    - Although the inner `while` loop may seem to introduce addtional iterations, it doesn't increase the overall time complexity.
+    - The key observation is that every element is pushed and popped at most once.
+    - The cumulative effect of all `while` loops across all iterations does not exceed `n` pops.
+
+**Conclusion:**
+- Since all operations (array traversal and stack manipulations) are performed in $O(1)$ time per element, and each element is processed a constant number of times, the total time complexity of the algorithm is $O(n)$.
+
+**Example to Illustrate the Process:**
+Consider the array `X= [10, 4, 5, 90, 120, 80]`:
+- **Iteration 0 (`i = 0`):**
+    - Stack: empty
+    - Span `S[0] = 0 + 1 = 1`
+    - Push index `0` onto the stack.
+- **Iteration 1 (`i = 1`):**
+    - Stack: `[0]`
+    - `X[st.top()] = 10`, which is greater than `X[1] = 4`.
+    - Span: `S[1] = 1 - 0 = 1`
+    - Push index `1` onto the stack.
+- **Iteration 2 (`i = 2`):**
+    - Stack: `[0, 1]`
+    - `X[st.top()] = 4` (from index `1`) is less than or equal to `X[2] = 5`.
+    - Pop index `1`.
+    - `X[st.top()] = 10` (from index `0`) is greater than `X[2] = 5`.
+    - Span: `S[2] = 2 - 0 = 2`
+    - Push the index `2` onto the stack.
+- **Iteration 3 (`i = 3`):**
+    - Stack: `[0, 2]`
+    - `X[st.top()] = 5` is less than or equal to `X[3] = 90`.
+    - Pop index `2`.
+    - `X[st.top()] = 10` is less than or equal to `X[3] = 90`.
+    - Pop index `0`.
+    - Stack is now empty.
+    - Span `S[3] = 3 + 1 = 4`
+    - Push index `3` onto the stack.
+- **Iteration 4(`i = 4`):**
+    - Stack `[3]`
+    - `X[st.top()] = 90` is less than or equal to `X[4] = 120`.
+    - Pop index `3`.
+    - Stack is now empty.
+    - Span: `S[4] = 4 + 1 = 5`
+    - Push index `4` onto the stack.
+- **Iteration 5(`i = 5`):**
+    - Stack: `[4]`
+    - `X[st.top()] = 120` is greater than `X[5] = 80`.
+    - Span: `S[5] = 5 - 4 = 1`
+    - Push index `5` onto the stack.
+
+**Amortized Cost:**
+- Total Push Operations: 6 (one for each element)
+- Total Pop Operations: 5 (as elements are popped when a larger element is found)
+- The total number of stack operations is 11, which is less than `2n` (where `n = 6`)
