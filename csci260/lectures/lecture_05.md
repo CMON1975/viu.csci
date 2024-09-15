@@ -373,7 +373,7 @@ void swap(double A[], int i, int j) {
 **Definition:**
 An **in-place sorting algorithm** is one that sorts the elements by modifying the original data structure directly, using only a small, constant amount of extra memory. The algorithm may involve swapping, shifting, or moving elements within the data structure, but it doesn't require additional arrays or significant extra storage proportional to the input size.
 **Key Points:**
-1. **In-Place Sorting Definition:
+1. **In-Place Sorting Definition:**
     - An in-place sorting algorithm rearranges the elements within the original data structure (e.g., an array) and uses only a small, constant amount of extra memory--typically $O(1)$ space.
     - It directly modifies the input data without requiring significant additional storage.
 2. **Operations Beyond Swapping:**

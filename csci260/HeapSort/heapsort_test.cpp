@@ -19,7 +19,8 @@ int main()
     cout << endl;
 
     // Sort the array using heapSort
-    heapSort(dataArray, arraySize);
+    HeapSort sorter;
+    sorter.heapSort(dataArray, arraySize);
 
     // Output the sorted array
     cout << "Sorted array:" << endl;

@@ -4,8 +4,8 @@ Key questions for any ADT:
 - How to build it? (implementations with various concrete data structures and associated algorithms)
 - How to use it? (typical applications)
 
-==Concrete data strucutres==: arrays, structs, pointer-based lists.
-==Abstract data types==: stacks, queues, trees.
+**Concrete data strucutres**: arrays, structs, pointer-based lists.
+**Abstract data types**: stacks, queues, trees.
 ## Topics
 ### ADTs
 - Data objects as black boxes

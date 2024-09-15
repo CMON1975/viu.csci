@@ -1,6 +1,6 @@
 #include "HeapSort.h"
 
-void heapSort(double dataArray[], int arraySize)
+void HeapSort::heapSort(double dataArray[], int arraySize)
 {
     int currentIndex, heapSize, leftChildIndex, rightChildIndex, smallestIndex;
 
@@ -55,7 +55,7 @@ void heapSort(double dataArray[], int arraySize)
 }
 
 // helper function to swap two elements in the array A
-void swap(double A[], int i, int j)
+void HeapSort::swap(double A[], int i, int j)
 {
     double temp = A[i];
     A[i] = A[j];
