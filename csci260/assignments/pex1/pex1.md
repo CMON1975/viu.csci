@@ -12,7 +12,9 @@ When a program starts and waits to be executed, a job is created and inserted in
 * a user id (in the format of a Linux username) that indicates who started this job; (note: system jobs are usually started by root, but not necessarily so)
 * a command name (a string starts with a letter, consists of only letters and digits) used to start this job; and
 * a resource list (a one line string of printable characters) that describes the resources this job requires (an empty string means that this list is empty)
+
 When the computer is ready to process the next job in the job queue, it always processes system jobs ahead of any user jobs. Among the same typed jobs, the shortest job will be processed first. (Hint: a job's type and its estimated execution time determines the job's priority.)
+
 The program should interactively accept and handle the following commands:
 * *submit*: to submit a new job request. Your program should ask for the job's time, its estimated execution time, its user id, its command name and a line to describe the resources the job requires. Then your program should insert the job into the job queue. The program can give the job queue a pre-defined capacity. If the job queue is full when a new job request is submitted, the new submission should be denied its service with an explanation.
 * *execute*: to remove the job with the **highest priority** from the job queue to be executed. This command is designed to give the long and/or user jobs a chance to be executed earlier than its priority warrants.
