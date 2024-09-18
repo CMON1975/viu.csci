@@ -1,6 +1,10 @@
 #include "Job.h"
 #include "PriorityQueue.h"
+#include "JobUtils.h"
 #include <iostream>
+
+using std::cout;
+using std::endl;
 
 int main()
 {
@@ -14,12 +18,14 @@ int main()
     jobQueue.insert(job2);
     jobQueue.insert(job3);
 
-    std::cout << "Min job: " << jobQueue.getMin().commandName << std::endl;
+    submitNewJob(jobQueue);
+
+    cout << "Min job: " << jobQueue.getMin().commandName << endl;
 
     while (!jobQueue.isEmpty())
     {
         Job nextJob = jobQueue.extractMin();
-        std::cout << "Executing job: " << nextJob.commandName << std::endl;
+        cout << "Executing job: " << nextJob.commandName << endl;
     }
 
     return 0;

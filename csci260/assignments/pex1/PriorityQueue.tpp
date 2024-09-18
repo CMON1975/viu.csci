@@ -5,7 +5,7 @@ using std::swap;
 
 // maintains heap by moving index element upwards
 template <typename T>
-void MinHeap<T>::heapifyUp(int index)
+void MinHeap<T>::heapifyUp(size_t index)
 {
     if (index == 0)
         return; // root
@@ -13,18 +13,18 @@ void MinHeap<T>::heapifyUp(int index)
     int parentIndex = (index - 1) / 2;
     if (heap[index] < heap[parentIndex])
     {
-        std::swap(heap[index], heap[parentIndex]);
+        swap(heap[index], heap[parentIndex]);
         heapifyUp(parentIndex); // tail-recursive
     }
 }
 
 // maintains heap by moving index element downwards
 template <typename T>
-void MinHeap<T>::heapifyDown(int index)
+void MinHeap<T>::heapifyDown(size_t index)
 {
-    int leftChild = 2 * index + 1;
-    int rightChild = 2 * index + 2;
-    int smallest = index;
+    size_t leftChild = 2 * index + 1;
+    size_t rightChild = 2 * index + 2;
+    size_t smallest = index;
 
     if (leftChild < heap.size() && heap[leftChild] < heap[smallest])
     {
@@ -37,7 +37,7 @@ void MinHeap<T>::heapifyDown(int index)
 
     if (smallest != index)
     {
-        std::swap(heap[index], heap[smallest]);
+        swap(heap[index], heap[smallest]);
         heapifyDown(smallest); // tail-recursive
     }
 }
@@ -67,7 +67,7 @@ T MinHeap<T>::extractMin()
 {
     if (heap.empty())
     {
-        throw std::out_of_range("Heap is empty");
+        throw out_of_range("Heap is empty");
     }
     T minValue = heap[0];
     heap[0] = heap.back(); // move last element to root
@@ -84,4 +84,11 @@ template <typename T>
 bool MinHeap<T>::isEmpty() const
 {
     return heap.empty();
+}
+
+// heap size
+template <typename T>
+int MinHeap<T>::size() const
+{
+    return heap.size();
 }

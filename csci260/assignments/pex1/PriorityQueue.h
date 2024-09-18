@@ -14,10 +14,10 @@ private:
     vector<T> heap;
 
     // maintains heap by moving index element upwards
-    void heapifyUp(int index);
+    void heapifyUp(size_t index);
 
     // maintains heap by moving index element downwards
-    void heapifyDown(int index);
+    void heapifyDown(size_t index);
 
 public:
     // enqueue new element
@@ -31,6 +31,9 @@ public:
 
     // empty check
     bool isEmpty() const;
+
+    // heap size
+    int size() const;
 };
 
 #include "PriorityQueue.tpp"

@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++11 -Wall -Wextra
 TARGET = pex1
 
 # Source files
-SRCS = pex1.cpp
+SRCS = pex1.cpp JobUtils.cpp
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
