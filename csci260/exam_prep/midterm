@@ -1,0 +1,240 @@
+### Given an array of size $N$, each element in the array has the following struct data type:
+```
+struct Data {
+    int priority; // the smaller the number, the higher the priority
+    string content;
+};
+```
+Write a C++ function to illustrate an algorithm that checks whether all the elements in the array form a heap.
+`bool isHeap(Data A[], int N);`
+
+1. **Understand the Heap Data Structure:**
+    - **Heap Definition:** A heap is a specialized tree-based data structure that satisfied the *heap property*. In a **min-heap**, for any given node `i` (except the root), the priority of `i` is **not less than** the priority of its parent.
+    - **Given Context:** Since "the smaller the number, the higher the priority," we are dealing with a **min-heap** based on the `priority` field.
+2. **Array Representation of a Heap:**
+    - **Indexing:** heaps are commonly represented using arrays. For a node at index `i` (0-based indexing):
+        - **Left Child Index:** `2 * i + 1`
+        - **Right Child Index:** `2 * i + 2`
+        - **Parent Index:** `(i - 1) / 2` (integer division)
+
+| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+| --- | --- | --- | --- | --- | --- | --- | --- |--- |---|---|
+|i|left|right|
+| | i | | left | right|
+| | | i | | | left | right |
+| | | | i | | | | left | right |
+| | | | | i | | | | | left | right |
+
+3. **Algorithm to Check Heap Property:**
+    - **Objective**: Verify that every parent node has a `priority` less than or equal to its children.
+    - **Approach:**
+        - Iterate over all parent nodes (from index `0` to `(N - 2) / 2)`.
+        - For each parent node:
+            - Check if the left child exists and `A[i].priority <= A[left].priority`.
+            - Check if the right child exists and `A[i].prioity <= A[right].priority`.
+        - If any of these condtions fail, the array does not represent a heap.
+
+4. **Steps to Prepare:**
+    - **Review Heap Operations:**
+        - Understand insertion, deletion, and heafiy processes.
+        - Familiarize yourself with both min-heaps and max-heaps.
+    - **Practice Index Calculations:**
+        - Work on problems that require you to calculate parent and child indices.
+    - **Write Code by Hand:**
+        - Practice writing code without an IDE to simulate exam conditions.
+
+5. **Implementing the Function:
+Here's  a step-by-step guide to writing the `isHeap` function:
+```
+bool isHeap(Data A[], int N) {
+    // iterate over all parent nodes
+    for (int i = 0; i <= (N - 2) / 2; ++i) {
+        int left = 2 * i + 1;   // left child index
+        int right = 2 * i + 2;  // right child index
+
+        // check the left child
+        if (left < N && A[i].priority > A[left].priority)
+            return false;
+
+        // check the right child
+        if (right < N && A[i].priority > A[right].priority)
+            return false;
+    }
+    return true;    // all nodes satisfy the heap proprty
+}
+```
+**Explanation:**
+- **Loop Condition:** `i <= (N - 2) / 2` ensures we only check parent nodes.
+- **Left and Right Children:** Calculated using the heap property formula.
+- **Boundary Checks:** Ensure that child indices are within array bounds.
+
+6. **Test Your Understanding:**
+    - **Create Test Cases:**
+        - An array that is a valid heap.
+        - An array that violates the heap property.
+    - **Walk Through the Code:**
+        - Manually trace the function with your test cases.
+
+7. **Be Ready to Explain:**
+    - **Why `(N - 2) /2`?**
+        - In a complete binary tree, nodes from index `0` to `(N - 2) / 2` are parent nodes.
+    - **Integer Division:**
+        - Understand how integer division affects index calculations, especially in the parent index formula.
+8. **Practice Similar Problems:**
+    - **Heap Operations:**
+        - Implement functions like `insert`, `deleteMin`, and `heapify`.
+    - **Variations:**
+        - Adapt the function for a max-heap.
+        - Modifty the structure to use different data types.
+9. **Additional Tips:**
+    - **Edge Cases:**
+        - Consider empty arrays or arrays with a single element.
+    - **Time Complexity:**
+        - Understand that this function runs in O(N) time.
+
+### Each node in a binary tree has the data type `Node` as defined below:
+```
+struct Node {
+    Data *dataptr;
+    Node *left;
+    Node *right;
+};
+```
+Write a C++ function that performs the AVL tree's single left rotation on a critical node (passed into the function as a parameter).
+
+1. **Understand AVL Trees and Rotations:**
+    - **AVL Tree Basics:**
+        - An **AVL tree** is a self-balancing binary search tree.
+        - For every node, the difference in height between its left and right subtrees (balance factor) is at most 1.
+        - When this balance factor becomes grater than 1 or less than -1 after insertions or deletions, the tree needs to be rebalanced using rotations.
+    - **Rotations:**
+        - **Single Left Rotation (Right-Right Case):** Applied when a node becomes unbalanced due to an insertion in its right subtree's right child.
+        - **Single Right Rotation  (Left-Left Case):** Applied when a node becomes unbalanced due to an insertion in its left subtree's left child.
+        - **Double Rotations:** Combines both left and right rotations for more complex imbalance cases.
+
+2. **Visualize Single Left Rotation:**
+    - **Before Rotation:**
+```
+    x
+     \
+      y
+     / \
+    T2  T3
+```
+
+- **After Single Left Rotation:**
+
+```
+      y
+     / \
+    x   T3
+     \
+     T2
+```
+- **Explanation:**
+    - `x` is the critical node (unbalanced node).
+    - `y` is `x->right`.
+    - `T2` is `y->left`.
+    - The goal is to make `y` the new root of the subtree, with `x` as its left child.
+3. **Implementing the Function:**
+    - **Function Signature:**
+    `void singleLeftRotation(Node*& criticalNode);`
+    - **Why Use a Reference (`Node*&`):**
+        - Passing `Node*&` allows the function to modify the pointer to the critical node itself, which is necessary if the critical node is the root of the subtree or tree.
+4. **Step-by-Step Implementation:**
+```
+void singleLeftRotation(Node*& x) {
+    // x is the critical node
+    Node* y = x->right;         // y is x's right child
+    if (y == nullptr) return;   // cannot perform rotation if y is null
+
+    Node* T2 = y->left;         // T2 is y's left subtree
+
+    // perform rotation
+    y->left = x;
+    x->right = T2;
+
+    // update the critical node to point to the new root
+    x = y;
+}
+```
+**Explanation:**
+- **Line by Line:**
+    - `Node* y = x->right;`: Assigns `y` to be the right child of `x`.
+    - `if (y == nullptr) return;`: Checks if the rotation is possible.
+    - `Node* T2 = y->left;`: Saves `y`'s left subtree.
+    - `y->left = x;`: Makes `x` the left child of `y`.
+    - `x->right = T2;`: Assigns `T2` as the right child of `x`.
+    - `x = y;`: Updates `x` to point to `y`, the new root of the subtree.
+5. **Steps to Prepare:**
+    - **Deep Dive into Rotations:**
+        - **Understand the Conditions:** Know when each type of rotation is applied.
+        - **Practice Drawing Trees:** Visual diagrams help in understanding how nodes are rearranged.
+    - **Review Pointer Manipulation:**
+        - **Passing Pointers by Reference:** Essential for modifying tree structures.
+        - **Null Checks:** Always ensure pointers are valid before referencing.
+    - **Write Code by Hand:**
+        - **Simulate Exam Conditions:** Practice coding on paper to get comfortable without and IDE.
+    - **Understand Edge Cases:**
+        - **Null Pointers:** What if `x` or `y` is `nullptr`?
+        - **Single Node Trees:** How does the rotation affect minimal trees?
+6. **Test Your Implementation:**
+    - **Create Sample Trees:**
+        - Build trees that require a single left rotation.
+        - Manually perform the rotation to know the expected result.
+    - **Trace the Function:**
+        - Step through your code with the sample trees.
+        - Verify that the nodes are correctly rearranged.
+7. **Be Ready to Explain:**
+    - **Why Each Step is Necessary:**
+        - **Updating `x->right`:** To reattach `T2` after rotation.
+        - **Reassigning `x`:** Critical for updating the root of the subtree.
+    - **Impact on Balance Factors:**
+        - Although not included in the struct, understand how rotations affect node heights and balance factors.
+8. **Expand Your Knowledge:**
+    - **Implement Other Rotations:**
+        - **Single Right Rotation:**
+            - Function for the left-left case.
+        - **Double Rotations:**
+            - Left-Right and Right-Left rotations for more complex imbalances.
+    - **Modify the Struct for Practice:**
+        - Add a `height` or `balanceFactor` field to `Node` to simulate a full AVL implementation.
+9. **Additional Tips:**
+    - **Understand Tree Traversal:**
+        - Knowing how to traverse and modify trees is crucial.
+    - **Memory Management:**
+        - Be cautious with dynamic memory if allocation is involved.
+    - **Think About Integration:**
+        - Consider how this rotation function fits into the larger context of AVL tree insertions and deletions.
+---
+**Sample Function in Context:**
+Let's consider how this function might be used during an insertion that unbalances the tree.
+```
+void insert(Node*& root, Data* newDatat) {
+    // standard BST insertion code
+    // ...
+
+    // after insertion, check balance factors
+    // if unbalanced, perform rotations
+    int balance = getBalance(root);
+
+    // right right case
+    if (balance < -1 && newData->priority > root->right->dataptr->priority)
+        singleLeftRotation(root);
+
+    // other cases...
+}
+```
+**Note:**
+- `getBalance(Node* node)`: A function that calculates the balance factor of a node.
+- **Balance Factors:**
+    - `balance > 1`: Left-heavy tree.
+    - `balance < -1`: Right-heavy tree.
+---
+**Practice Problems:
+1. **Implement `getBalance(Node* node):**
+    - Write a function to calculate the balance factor of a node.
+2. **Write a Function for Single Right Rotation:**
+    - Similar to the single left rotation but for the left-left case.
+3. **Simulate Insertions:
+    - Insert nodes into an AVL tree and apply rotations when necessary.
