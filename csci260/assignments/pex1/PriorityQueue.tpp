@@ -1,3 +1,5 @@
+// PriorityQueue.tpp
+
 #include "PriorityQueue.h"
 
 using std::out_of_range;
@@ -7,14 +9,18 @@ using std::swap;
 template <typename T>
 void MinHeap<T>::heapifyUp(size_t index)
 {
-    if (index == 0)
-        return; // root
-
-    int parentIndex = (index - 1) / 2;
-    if (heap[index] < heap[parentIndex])
+    while (index > 0)
     {
-        swap(heap[index], heap[parentIndex]);
-        heapifyUp(parentIndex); // tail-recursive
+        size_t parentIndex = (index - 1) / 2;
+        if (heap[index] < heap[parentIndex])
+        {
+            swap(heap[index], heap[parentIndex]);
+            index = parentIndex;
+        }
+        else
+        {
+            break;
+        }
     }
 }
 
@@ -22,23 +28,32 @@ void MinHeap<T>::heapifyUp(size_t index)
 template <typename T>
 void MinHeap<T>::heapifyDown(size_t index)
 {
-    size_t leftChild = 2 * index + 1;
-    size_t rightChild = 2 * index + 2;
     size_t smallest = index;
+    size_t size = heap.size();
 
-    if (leftChild < heap.size() && heap[leftChild] < heap[smallest])
+    while (true)
     {
-        smallest = leftChild;
-    }
-    if (rightChild < heap.size() && heap[rightChild] < heap[smallest])
-    {
-        smallest = rightChild;
-    }
+        size_t leftChild = 2 * index + 1;
+        size_t rightChild = 2 * index + 2;
 
-    if (smallest != index)
-    {
-        swap(heap[index], heap[smallest]);
-        heapifyDown(smallest); // tail-recursive
+        if (leftChild < size && heap[leftChild] < heap[smallest])
+        {
+            smallest = leftChild;
+        }
+        if (rightChild < size && heap[rightChild] < heap[smallest])
+        {
+            smallest = rightChild;
+        }
+
+        if (smallest != index)
+        {
+            swap(heap[index], heap[smallest]);
+            index = smallest;
+        }
+        else
+        {
+            break;
+        }
     }
 }
 
@@ -88,7 +103,7 @@ bool MinHeap<T>::isEmpty() const
 
 // heap size
 template <typename T>
-int MinHeap<T>::size() const
+size_t MinHeap<T>::size() const
 {
     return heap.size();
 }

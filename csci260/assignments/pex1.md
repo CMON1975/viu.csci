@@ -17,7 +17,7 @@ When the computer is ready to process the next job in the job queue, it always p
 
 The program should interactively accept and handle the following commands:
 * *submit*: to submit a new job request. Your program should ask for the job's time, its estimated execution time, its user id, its command name and a line to describe the resources the job requires. Then your program should insert the job into the job queue. The program can give the job queue a pre-defined capacity. If the job queue is full when a new job request is submitted, the new submission should be denied its service with an explanation.
-* *execute*: to remove the job with the **highest priority** from the job queue to be executed. This command is designed to give the long and/or user jobs a chance to be executed earlier than its priority warrants.
+* *execute*: to remove the job with the **highest priority** from the job queue to be executed. To simulate the execution of a job, your program simply displays the job's information. If the job queue is empty when this command is entered, your program should show an appropriate message.
 * *lottery*: to randomly remove a lucky job from the job queue to be executed. This command is designed to give the long and/or user jobs a chance to be executed earlier than its priority warrants.
 * *quit*: to terminat the program. Before termination, the program should empty the job queue by removing them one by one as a simulation of forcibly killing all uncompleted jobs.
 This is an interactive program and it should shut down only when the *quit* command is entered.

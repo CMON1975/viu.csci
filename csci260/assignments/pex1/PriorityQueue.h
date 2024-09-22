@@ -1,3 +1,5 @@
+// PriorityQueue.h
+
 #ifndef PRIORITYQUEUE_H
 #define PRIORITYQUEUE_H
 
@@ -33,7 +35,7 @@ public:
     bool isEmpty() const;
 
     // heap size
-    int size() const;
+    size_t size() const;
 };
 
 #include "PriorityQueue.tpp"

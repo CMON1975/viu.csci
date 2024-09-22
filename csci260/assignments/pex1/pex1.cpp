@@ -1,31 +1,49 @@
-#include "Job.h"
-#include "PriorityQueue.h"
-#include "JobUtils.h"
-#include <iostream>
+// pex1.cpp
 
+#include "CommandHandler.h"
+#include <iostream>
+#include <string>
+
+using std::cin;
 using std::cout;
-using std::endl;
+using std::string;
 
 int main()
 {
-    MinHeap<Job> jobQueue;
+    CommandHandler handler;
+    string command;
 
-    Job job1 = {"system", 2.5, "root", "backup", "cpu,ram"};
-    Job job2 = {"user", 5.0, "john_doe", "compile", "cpu"};
-    Job job3 = {"system", 1.5, "root", "cleanup", "ram"};
-
-    jobQueue.insert(job1);
-    jobQueue.insert(job2);
-    jobQueue.insert(job3);
-
-    submitNewJob(jobQueue);
-
-    cout << "Min job: " << jobQueue.getMin().commandName << endl;
-
-    while (!jobQueue.isEmpty())
+    while (true)
     {
-        Job nextJob = jobQueue.extractMin();
-        cout << "Executing job: " << nextJob.commandName << endl;
+        // menu
+        cout << "\nAvailable commands:\n";
+        cout << "1. submit\n";
+        cout << "2. execute\n";
+        cout << "3. lottery\n";
+        cout << "4. quit\n";
+        cout << "Enter your choice: ";
+        cin >> command;
+
+        if (command == "submit" || command == "1")
+        {
+            handler.submit();
+        }
+        else if (command == "execute" || command == "2")
+        {
+            handler.execute();
+        }
+        else if (command == "lottery" || command == "3")
+        {
+            handler.lottery();
+        }
+        else if (command == "quit" || command == "4")
+        {
+            handler.quit();
+        }
+        else
+        {
+            cout << "Invalid command. Please try again.\n";
+        }
     }
 
     return 0;
