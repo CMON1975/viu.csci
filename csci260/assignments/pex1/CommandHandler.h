@@ -1,4 +1,6 @@
-// CommandHandler.h
+// CHRISTOPHER NILSSEN CommandHandler.h for ASSIGNMENT 01 CSCI 260 F2402
+
+// this header file declares the CommandHandler class and its methods, used to manage job commands
 
 #ifndef COMMANDHANDLER_H
 #define COMMANDHANDLER_H

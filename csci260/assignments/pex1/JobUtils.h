@@ -1,4 +1,6 @@
-// JobUtils.h
+// CHRISTOPHER NILSSEN JobUtils.h for ASSIGNMENT 01 CSCI 260 F2402
+
+// this header file declares utility functions for managing and processing job objects
 
 #ifndef JOBUTILS_H
 #define JOBUTILS_H

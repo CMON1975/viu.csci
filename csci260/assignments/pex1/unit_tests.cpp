@@ -1,4 +1,6 @@
-// unit_tests.cpp
+// CHRISTOPHER NILSSEN unit_tests.cpp for ASSIGNMENT 01 CSCI 260 F2402
+
+// This file implements unit tests to verify the functionality of the job queue system.
 
 #include "PriorityQueue.h"
 #include "Job.h"

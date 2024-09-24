@@ -1,4 +1,6 @@
-// PriorityQueue.h
+// CHRISTOPHER NILSSEN PriorityQueue.h for ASSIGNMENT 01 CSCI 260 F2402
+
+// this header file declares the PriorityQueue class, used to manage the priority of jobs in the queue
 
 #ifndef PRIORITYQUEUE_H
 #define PRIORITYQUEUE_H

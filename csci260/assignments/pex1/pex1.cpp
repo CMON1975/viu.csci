@@ -1,4 +1,6 @@
-// pex1.cpp
+// CHRISTOPHER NILSSEN pex1.cpp for ASSIGNMENT 01 CSCI 260 F2402
+
+// this file contains the main entry point for executing the job queue simulation program
 
 #include "CommandHandler.h"
 #include <iostream>

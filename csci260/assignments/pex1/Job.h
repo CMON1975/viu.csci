@@ -1,4 +1,6 @@
-// Job.h
+// CHRISTOPHER NILSSEN Job.h for ASSIGNMENT 01 CSCI 260 F2402
+
+// this header file declares the Job class, representing a job in the system with various attributes
 
 #ifndef JOB_H
 #define JOB_H

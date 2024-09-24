@@ -1,4 +1,6 @@
-// PriorityQueue.tpp
+// CHRISTOPHER NILSSEN PriorityQueue.tpp for ASSIGNMENT 01 CSCI 260 F2402
+
+// this file provides the implementation for template-based PriorityQueue class methods
 
 #include "PriorityQueue.h"
 

@@ -1,0 +1,61 @@
+# README for Assignment 01 - Job Queue Simulation
+CHRISTOPHER NILSSEN CSCI 260 F2402
+
+## Specification
+The goal of this application is to simulate a job queue system, where jobs are categorized as either system or user jobs. Jobs are prioritized based on their type and estimated execution time. The system should be able to handle job submission, execution of the highest-priority job, a lottery-based random job selection, and a shutdown that clears the queue.
+
+## Design
+This application is composed of several modules:
+- `CommandHandler`: Handles the various commands (submit, execute, lottery, etc.) and directs the system accordingly.
+- `Job`: Represents a job with various attributes such as type, execution time, and priority.
+- `PriorityQueue`: Manages the prioritized list of jobs using a priority queue data structure.
+- `JobUtils`: Contains utility functions for managing jobs and job attributes.
+
+This design was chosen for its modularity, ensuring that each module has a clear responsibility, making the code more maintainable and extensible.
+
+## Implementation
+Each module uses specific data structures:
+- **CommandHandler**: Uses basic control structures to handle input commands and execute the appropriate job operation.
+- **Job**: Uses simple class attributes to store job information like type, priority, and execution time.
+- **PriorityQueue**: Implements a binary heap to store jobs, ensuring O(log n) insertion and removal times for the job queue. This offers the advantage of efficient priority handling.
+- **JobUtils**: Uses helper functions to manipulate job data. No specialized data structures are employed here.
+
+### Advantages and Disadvantages
+- **PriorityQueue (Binary Heap)**:
+  - **Advantages**: Efficient for inserting and removing jobs by priority, offering O(log n) time complexity.
+  - **Disadvantages**: Complex to implement compared to simpler data structures like arrays or linked lists.
+- **Alternatives**: A linked list could have been used for job storage, but this would result in O(n) time complexity for both insertion and removal, making it less efficient for a priority-based system.
+
+## Analysis
+- **Submit Command**: Inserting a job into the priority queue is an O(log n) operation, where n is the number of jobs in the queue.
+- **Execute Command**: Removing the highest-priority job from the queue is an O(log n) operation.
+- **Lottery Command**: 
+    - **Random Selection**: Randomly selecting a job from the binary heap requires generating a random index, which is an O(1) operation.
+    - **Reordering**: After selecting a random job (not the highest-priority job), removing it from the binary heap requires O(log n) time to re-heapify the heap. This is because the binary heap structure needs to be adjusted to maintain its properties after the removal of the randomly selected job.
+
+## Accomplishment
+The following parts of the assignment have been completed:
+- Job submission
+- Job execution (removal of the highest-priority job)
+- Lottery-based random job execution
+- Proper handling of user input and output
+- Priority Queue implemented with a binary heap
+- Modular code structure with clear separation of concerns
+
+## Testing
+The program has been tested using the following test cases:
+1. **Submit system job**: Submitted a system job and verified it was correctly added to the priority queue with the appropriate priority.
+2. **Submit user job**: Submitted a user job and verified that it was correctly prioritized in the queue.
+3. **Execute job**: Submitted multiple jobs, executed the highest-priority job, and verified the remaining queue.
+4. **Lottery command**: Submitted multiple jobs, ran the lottery command, and ensured a random job was selected and executed.
+5. **Empty queue execution**: Tested behavior when attempting to execute or select a job from an empty queue, and verified that an appropriate message was shown.
+
+Refer to the `typescript` file for details on the test run and results.
+
+## Known Bugs
+- If a user enters data with spaces--particulary the User ID--the system reads the second word as the command name. Otherwise the system behaves as expected with job submissions, priority queue handling, and lottery execution. Further testing is recommended to ensure robustness in edge cases.
+
+## Note
+- The Makefile has been provided to automate the build process. Running `make` will generate the executable named `pex1`. 
+- The Makefile also contains directives to build the unit tests. Running `make unit_tests` will generate the executable named `unit_tests`.
+- Ensure all source files are present in the correct directory before building.

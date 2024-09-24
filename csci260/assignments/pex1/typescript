@@ -1,0 +1,159 @@
+# CHRISTOPHER NILSSEN typescript for ASSIGNMENT 01 CSCI 260 F2402
+
+Script started on 2024-09-24 10:37:17-07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="199" LINES="18"]
+[?2004h]0;c@CMON1975: /csci260/assignments/pex1[01;32mc@CMON1975[00m:[01;34m//csci260/assignments/pex1[00m$ make
+[?2004l
+g++ -std=c++11 -Wall -Wextra -I. -c pex1.cpp -o pex1.o
+g++ -std=c++11 -Wall -Wextra -I. -c JobUtils.cpp -o JobUtils.o
+g++ -std=c++11 -Wall -Wextra -I. -c CommandHandler.cpp -o CommandHandler.o
+g++ -std=c++11 -Wall -Wextra pex1.o JobUtils.o CommandHandler.o -o pex1
+[?2004h]0;c@CMON1975: /csci260/assignments/pex1[01;32mc@CMON1975[00m:[01;34m//csci260/assignments/pex1[00m$ ./make[K[K[K[K[K[Kmake unit_tests
+[?2004l
+g++ -std=c++11 -Wall -Wextra -I. -c unit_tests.cpp -o unit_tests.o
+g++ -std=c++11 -Wall -Wextra unit_tests.o JobUtils.o CommandHandler.o -o unit_tests
+[?2004h]0;c@CMON1975: /csci260/assignments/pex1[01;32mc@CMON1975[00m:[01;34m//csci260/assignments/pex1[00m$ ./unit_tests
+[?2004l
+testMinHeapInsertAndExtract passed!
+testJobPriority passed!
+Job 'data_backup' submitted successfully by user 'bob'.
+testSubmitNewJob passed!
+testExecuteJob passed!
+All tests passed!
+[?2004h]0;c@CMON1975: /csci260/assignments/pex1[01;32mc@CMON1975[00m:[01;34m//csci260/assignments/pex1[00m$ ./mex[K[K[Kpex1
+[?2004l
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: 1
+Enter job type (system/user): 123
+Invalid job type. Please enter 'system' or 'user': ABC
+Invalid job type. Please enter 'system' or 'user': system
+Enter estimated execution time: -100
+Invalid input. Please enter a positive number for execution time: 0
+Invalid input. Please enter a positive number for execution time: 10
+Enter your username: root
+Enter the command name: cd
+Enter resource list (comma-separated): 123,456
+Job 'cd' submitted successfully by user 'root'.
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: 1
+Enter job type (system/user): user
+Enter estimated execution time: 5
+Enter your username: joe
+Enter the command name: ls
+Enter resource list (comma-separated): 999,33A
+Job 'ls' submitted successfully by user 'joe'.
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: 2
+Executing job:
+Job Type: system
+Execution Time: 10
+User ID: root
+Command Name: cd
+Resource List: 123,456
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: 1
+Enter job type (system/user): user
+Enter estimated execution time: 100
+Enter your username: joe's bro
+Enter the command name: Enter resource list (comma-separated): 123,456
+Job 'bro' submitted successfully by user 'joe's'.
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: 2
+Executing job:
+Job Type: user
+Execution Time: 5
+User ID: joe
+Command Name: ls
+Resource List: 999,33A
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: 1
+Enter job type (system/user): system
+Enter estimated execution time: 99
+Enter your username: root
+Enter the command name: opion   tion -l 245 as
+Enter resource list (comma-separated): Job 'option' submitted successfully by user 'root'.
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: lottery
+Lucky job selected for execution:
+Job Type: user
+Execution Time: 100
+User ID: joe's
+Command Name: bro
+Resource List: 123,456
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: lottery
+Lucky job selected for execution:
+Job Type: system
+Execution Time: 99
+User ID: root
+Command Name: option
+Resource List: -l 245 as
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: lottery
+No jobs in the queue to execute.
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: execute
+No jobs to execute.
+
+Available commands:
+1. submit
+2. execute
+3. lottery
+4. quit
+Enter your choice: quit
+Terminating all remaining jobs...
+All jobs have been terminated. Exiting the program.
+[?2004h]0;c@CMON1975: /csci260/assignments/pex1[01;32mc@CMON1975[00m:[01;34m/csci260/assignments/pex1[00m$ exit
+[?2004l
+exit
+
+Script done on 2024-09-24 10:40:11-07:00 [COMMAND_EXIT_CODE="0"]

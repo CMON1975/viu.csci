@@ -1,4 +1,6 @@
-// JobUtils.cpp
+// CHRISTOPHER NILSSEN JobUtils.cpp for ASSIGNMENT 01 CSCI 260 F2402
+
+// this file implements utility functions for managing and processing job objects
 
 #include "JobUtils.h"
 #include <iostream>
@@ -19,18 +21,18 @@ void submitNewJob(MinHeap<Job> &jobQueue)
 {
     Job newJob;
 
-    // Get job type
+    // get job type
     cout << "Enter job type (system/user): ";
     cin >> newJob.jobType;
 
-    // Basic job type validation
+    // basic job type validation
     while (newJob.jobType != "system" && newJob.jobType != "user")
     {
         cout << "Invalid job type. Please enter 'system' or 'user': ";
         cin >> newJob.jobType;
     }
 
-    // Get execution time
+    // get execution time
     cout << "Enter estimated execution time: ";
     while (!(cin >> newJob.executionTime) || newJob.executionTime <= 0)
     {
@@ -39,26 +41,26 @@ void submitNewJob(MinHeap<Job> &jobQueue)
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    // Get user ID
+    // get user ID
     cout << "Enter your username: ";
     cin >> newJob.userID;
 
-    // Get command name
+    // get command name
     cout << "Enter the command name: ";
     cin >> newJob.commandName;
 
-    // Get resource list
+    // get resource list
     cout << "Enter resource list (comma-separated): ";
-    cin.ignore(); // Clear buffer
+    cin.ignore(); // clear buffer
     getline(cin, newJob.resourceList);
 
-    // Call the non-interactive version to insert the job
+    // call the non-interactive version to insert the job
     submitNewJob(jobQueue, newJob);
 }
 
 void submitNewJob(MinHeap<Job> &jobQueue, const Job &newJob)
 {
-    // Insert the passed-in Job into the queue
+    // insert the passed-in job into the queue
     jobQueue.insert(newJob);
     cout << "Job '" << newJob.commandName << "' submitted successfully by user '" << newJob.userID << "'.\n";
 }
