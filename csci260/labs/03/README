@@ -1,0 +1,64 @@
+# CHRISTOPHER NILSSEN README for LAB 03 CSCI 260 F2402
+
+# HashTable Implementation
+## Overview
+This project implements a basic **Hash Table** using **separate chaining** for collision resolution. The hash table maps integer keys to string values and handles collisions by maintaining a list of key-value pairs in each bucket.
+
+The key features of this implementation include:
+
+- **Separate Chaining**: Collisions are handled by using a vector of lists, where each list holds multiple key-value pairs that hash to the same index.
+- **Key Range**: The implementation assumes that keys are integers in the range [0, 1000].
+- **Capacity**: The hash table uses a fixed capacity of 79 buckets.
+- **Hash Function**: The hash function is a simple modulus operation (key % 79).
+- **Duplicate Keys**: If a key already exists, the value is updated rather than allowing duplicate keys.
+## Class Interface
+The `HashTable` class provides the following public methods:
+
+- **Constructor**: `HashTable()`
+    - Initializes the hash table with 79 buckets.
+- **Destructor**: `~HashTable()`
+    -Automatically cleans up resources.
+- **Insert**: `void insert(int k, string e)`
+    - Inserts a key-value pair into the hash table. If the key already exists, the associated value is updated.
+- **Lookup**: `string lookup(int k)`
+    - Retrieves the value associated with a given key. If the key is not found, an exception is thrown.
+## Error Handling
+- **Invalid Key Lookup: If an invalid key (one that does not exist) is looked up, the lookup method throws a std::runtime_error exception with an appropriate error message.
+- **Duplicate Key Insertion: When inserting a key that already exists in the table, the value is updated, and a message is printed to inform the user.
+## Example Usage
+The `lab03.cpp` file demonstrates how to use the `HashTable` class. Below is a brief example:
+```
+#include "HashTable.h"
+#include <iostream>
+
+int main() {
+    HashTable ht;
+
+    ht.insert(10, "earth");
+    ht.insert(20, "wind");
+    ht.insert(79, "fire");
+
+    std::cout << ht.lookup(10) << std::endl;  // Output: earth
+    std::cout << ht.lookup(79) << std::endl;  // Output: fire
+
+    return 0;
+}
+```
+### Handling Errors:
+If a key is not found during a lookup:
+```
+try {
+    std::cout << ht.lookup(100) << std::endl;  // Key 100 is not inserted
+} catch (const std::runtime_error& e) {
+    std::cout << e.what() << std::endl;        // Output: Key 100 not found.
+}
+```
+## How to Compile
+To compile the program, use the provided Makefile. Simply run the following command:
+```
+make
+```
+This will compile `lab03.cpp` and `Hashtable.cpp` into an executable called `lab03`. You can then run the program using:
+```
+./lab03
+```

@@ -1,0 +1,27 @@
+CHRISTOPHER NILSSEN typescript for LAB 03 CSCI 260 F2402
+Script started on 2024-09-26 10:48:23-07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="217" LINES="18"]
+
+./lab03
+
+Inserting key 10 with value 'earth'.
+Inserting new key 10 with value 'earth'.
+Inserting key 20 with value 'wind'.
+Inserting new key 20 with value 'wind'.
+Inserting key 79 with value 'fire'.
+Inserting new key 79 with value 'fire'.
+
+Attempting to lookup key 10 (exists).
+Result of lookup key 10: earth
+
+Attempting to lookup key 100 (does not exist).
+Key 100 not found.
+
+Inserting duplicate key 10 with new value 'water'.
+Key 10 already exists. Updating its value to 'water'.
+
+Attempting to lookup key 10 after updating its value.
+Result of lookup key 10: water
+
+exit
+
+Script done on 2024-09-26 10:48:28-07:00 [COMMAND_EXIT_CODE="0"]
