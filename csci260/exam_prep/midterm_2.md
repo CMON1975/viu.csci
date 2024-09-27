@@ -413,6 +413,94 @@ Key not found in the dictionary.
     - Practice coding and solving related problems to reinforce learning.
 
 ### (a) What is a heap? (Hint: describe the two main properties of a heap)
+A heap is a specialized tree-based data structure that satisfied specific proprties, making it useful for implementing priority queues and for efficient sorting algorithms like Heap Sort. Heaps are typically implemented as binary trees, known as **binary heaps**, but there are also types like binomial heaps and Fibonacci heaps.
+---
+#### Two Main Properties of a Heap
+A binary heap must satisfy two fundamental properties:
+##### 1. Structural Property (Shape Property)
+- **Complete Binary Tree**:
+    - A heap is a **complete binary tree**, which means all levels of the tree are fully filled except possibly for the last level, which is filled from left to right.
+    - **Implications**:
+        - Ensures that the tree has minimal height, leading to efficient operations.
+        - Allows the heap to be efficiently represented using an array.
+##### 2. Heap Property (Order Property)
+- **Heap Order Invariant**:
+    - The value of each node must be **greater than or equal to** (in a **max-heap**) or **less than or equal to** (in a **min-heap**) the values of its children.
+    - **Max_Heap**:
+        - The **largest** element is at the root.
+        - For every node $i$, the value of $i$ is greater than or equal to the values of its children.
+    - **Min-Heap**:
+        - The **smallest** element is at the root.
+        - For every node $i$, the value of $i$ is less than of equal to the values of its children.
+- **Implications**:
+    - Enables quick access to the highest (max-heap) or lowest (min-heap) priority element.
+    - Facilitates efficient implementation of priority queue operations.
+---
+#### Detailed Explanation
+##### Structural Property (Complete Binary Tree)
+- **Definition**:
+    - A binary tree where all levels are fully filled except possibly the last level.
+    - In the last level, all nodes are as far left as possible.
+- **Representation Using Arrays**:
+    - Because of its structure, a heap can be stored compactly in an array without pointers.
+    - Indexing:
+        - Parent of node at index $i$: $\lfloor \frac{i-1}{2} \rfloor$
+        - Left child of node at index $i$: $2i+1$
+        - Right child of node at index $i$: $2i+2$
+##### Heap Property (Order Property)
+- **Max-Heap Example**:
+    - Root node has the maximum value.
+    - Every parent node is greater than or equal to its child nodes.
+- **Min-Heap Example**:
+    - Root node has the minimum value.
+    - Ever parent node is less than or equal to its child nodes.
+- **Non-Sorted Order**:
+    - Heaps are not sorted structures; they only guarantee the heap property.
+    - This is no specific order between sibling nodes or across levels (other than parent-child relationships).
+---
+#### Visual Examples
+##### Max-Heap Example:
+```
+       50
+     /    \
+    30     20
+   /  \   /  \
+  15  10 8   16
+```
+- **Heap Property**:
+    - Root (50) $\geq$ Children (30, 20)
+    - Node 30 $\geq$ Children (15, 10)
+    - Node 20 $\geq$ Children (8, 16)
+
+##### Min-Heap Examples:
+```
+       5
+     /    \
+    10     15
+   /  \   /  \
+  20  25 30  35
+```
+- **Heap Property**:
+    - Root (5) $\leq$ Children (10, 15)
+    - Node 10 $\leq$ Children (20, 25)
+    - Node 15 $\leq$ Children (30, 35)
+---
+#### Common Operations on Heaps
+- **Insert (Push)**:
+    - Add a new element to the heap while maintaining the heap property.
+    - Time Complexity: $O(\log n)$
+- **Extract-Max / Extract-Min (Pop)**:
+    - Remove and return the root element (maximum or minimum).
+    - Reorganize the heap to maintain the heap property.
+    - Time Complexity: $O(\log n)$
+- **Peek**:
+    - Access the root element without removing it.
+    - Time Complexity: $O(1)$.
+- **Heapify**:
+    - Convert an arbitrary array into a heap.
+    - Time Complexity: $O(n)$.
+---
+#### Applications of Heaps
 
 ### (b) Heap can be used to implement the ADT priority queue. Compared with using sorted array, what is the advantage and disadvantage of using heap as the ADT priority queue's implementation?
 
