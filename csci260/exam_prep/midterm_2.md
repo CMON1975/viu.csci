@@ -501,18 +501,473 @@ A binary heap must satisfy two fundamental properties:
     - Time Complexity: $O(n)$.
 ---
 #### Applications of Heaps
+- **Priority Queues**:
+    - Implemented using heaps to manage elements with priorities efficiently.
+- **Heap Sort**:
+    - A comparison-based sorting algorithm that uses a heap to sort elements.
+    - Time Complexity: $O\left(n\log n\right)$
+- **Graph Algorithms**:
+    - **Dijkstra's Algorithm**: Uses a min-heap to find the shortes paths.
+    - **Prim's Algorithm**: Uses a min-heap to find the minimum spanning tree.
+---
+#### Study Guidance on Mastering Heap Concepts
+To effecitvely understand and master heaps, focus on the following areas:
+##### 1. Understand the Fundamentals
+- **Tree Structures**:
+    - Review binary trees, their properties, and traversal methods.
+- **Complete Binary Trees**:
+    - Grasp what makes a binary tree complete and how it differs from full and perfect binary trees.
+##### 2. Learn Heap Operations in Depth
+- **Insertion Algorithm**:
+    - Understand how to insert elements and restore the heap property (up-heap or sift-up operation).
+- **Deletion Algorithm**:
+    - Learn how to remove the root and restore the heap property (down-heap or sift-down operation).
+- **Heapify Process**:
+    - Study the methods to build a heap from an unordered array.
+##### 3. Practice Implementing Heaps
+- **Code from Scratch**:
+    - Write your own heap implementation in your preferred programming language.
+    - Implement both max-heap and min-heap variants.
+- **Use Arrays**:
+    - Practice representing heaps using arrays and perform operations without explicit tree nodes.
+##### 4. Analyze Time Complexities
+- **Operation Costs**:
+    - Know the time complexities for insertion, deletion, and heap construction.
+- **Amortized Analysis**:
+    - Understand how operations perform over a sequence of actions.
+##### 5. Study Applications
+- **Priority Queue**:
+    - Implement a priority queue using a heap and solve related problems.
+- **Heap Sort Algorithm**:
+    - Understand how heap sort works and implement it.
+- **Graph Algorithms**:
+    - Apply heaps in algorithms like Dijkstra's and Prim's.
+##### 6. Visual Learning
+- **Draw Heaps**:
+    - Visualize heaps by drawing them, especially after each operation.
+- **Traces Operations**:
+    - Step through insertion and deletion processess manually.
+##### 7. Explore Advanced Topics
+- **Heap Variants**:
+    - Study other heap types like binomial heaps, Fibonacci heaps, and their use cases.
+- **Parallel Heaps**:
+    - Look into concurrent heap implementations if interested in multi-threaded applications.
+##### 8. Implement Standard Library Heaps
+- **Language-Specific Heaps**:
+    - Use and understand heaps provided by standard libraries (e.g., `std::priority_queue` in C++ or `heapq` in Python).
+- **Compare Implementations**:
+    - Analyze how standard libraries implement heaps and their performance.
+##### 9. Test Your Knowledge
+- **Quizzes and Flashcards**:
+    - Create or use existing flashcards to memories key properties and algorithms.
+- **Explain Concepts**:
+    - Write a blog post to reinforce your understanding.
+---
+#### Key Takeaways
+- **Heaps are Complete Binary Trees**:
+    - This structural property ensures efficient storage and operations.
+- **Heap Order Property**:
+    - Determins whether the heap is a max-heap or min-heap, essential for priority management.
+- **Efficient Operations**:
+    - Heaps allow for efficient insertion and extraction of the highest or lowers priority elements.
+- **Practical Applications**:
+    - Used in priority queues, sorting algorithms, and graph algorithms, making them a vital concept in computer science.
 
 ### (b) Heap can be used to implement the ADT priority queue. Compared with using sorted array, what is the advantage and disadvantage of using heap as the ADT priority queue's implementation?
+#### Advantages of Using a Heap
+1. **Efficient Insertions**:
+    - **Time Complexity**:
+        - **Heap**: Inserting a new element into a heap takes $O(\log n)$ time.
+        - **Sorted Array**: Inserting into a sorted array requires $O(n)$ time because elements may need to be shifted to maintain order.
+    - **Explanation**:
+        - In a heap, the new element is added at the end (last position) and then "heapified" up to restore the heap property.
+        - In a sorted array, maintaining the sorted order necessitates finding the correct insertion point and shifting subsequent elements.
+2. **Efficient for Dynamic Data**:
+    - **Use Case**:
+        - Heaps are better suited for priority queues where the dataset changes frequently due to insertions and deletions.
+    - **Explanation**:
+        - The logarithmic time complexity for insertions and deletions makes heaps more adaptable to dynamic datasets.
+#### Disadvantages of Using a Heap
+1. **Slower Deletion of Highest Priority Element**:
+    - **Time Complexity**:
+        - **Heap**: Removing the highest priority element (the root) takes $O(\log n)$ time.
+        - **Sorted Array**: Deleting the highest priority element takes $O(1)$ time since it's at a known position (either start or end of the array).
+    - **Explanation**:
+        - In a heap, after removing the root, the last element replaces it, and the heap must be restructured ("heapified down") to maintain the heap property.
+        - In a sorted array, the highest prioirty element can be accessed and removed directly without additional restructuring.
+2. **Inefficient Order Traversal**:
+    - **Time Complexity**:
+        - **Heap**: Retrieving all elements in a prioirty order requires $O(n\log n)$ time, as each extraction is $O(\log n)$.
+        - **Sorted Array**: Traversing the array yields elements in priority order in $O(n)$ time.
+    - **Explanation**:
+        - Heaps do not store elements in a fully sorted order, so sequential access does not guarantee priority order.
+        - Sorted arrays maintain elements in order, allowing for efficient iteration over all elements by priority.
+3. **Higher Constant Factors**:
+    - **Overhead**:
+        - Heaps may have higher constant factors in their time complexities due to the overhead of maintaining the heap structure.
+    - **Explanation:**
+        - Operations like heapify involve more computational steps compared to the simple indexing in arrays.
+---
+#### Summary of Comparison
+| Operation | Heap | Sorted Array |
+| :--- | :--- | :--- |
+| Insertion | $O(\log n)$ | $O(n) |
+| Find Highest Prioirty | $O(1)$ | $O(1)$ |
+| Delete Highest Priority | $O(\log n)$ | $O(1)$ |
+| Iterate in Priority Order | $O(n\log n)$ | $O(n) |
+
+- **Heap Advantages**:
+    - Faster insertions for large datasets.
+    - Better for dynamic data with frequent insertions and deletions.
+- **Heap Disadvantages**:
+    - Slower deletions of the highest priority element compared to a sorted array.
+    - Less efficient for iterating over all elements in priority order.
+---
+#### Study Guidance on Mastering Heap and Priority Queue Implementations
+##### 1. Analyze Different Implementations of Prioirty Queues
+- **Understand Trade-offs**:
+    - Compare various data structures used for priority queues, such as heaps, sorted arrays, unsorted arrays, and balanced trees.
+    - Analyze their time complexities for different operations to understand when each implementation is most appropriate.
+- **Practical Applications**:
+    - Explore scenarios where one implementation outperforms others.
+    - Consider factors like the frequency of insertions vs. deletions and the need for ordered traversal.
+##### 2. Perform Empirical Analysis
+- **Implement Both Structures**:
+    - Code priority queues using both heaps and sorted arrays.
+    - Measure the actual runtime of operations with different dataset sizes.
+- **Experiment with Data Patterns**:
+    - Test your implementations with various input patterns: (e.g., random, sorted, reverse-sorted data) to observe performance differences.
 
 ### (c) In which heap operation do we need to perform the upHeap opration? What is the purpose of performing the upHeap operation?
+#### Answer:
+##### Heap Operation Requiring upHeap:
+- **Insertion Operation**: The **upHeap** operation is performed during the **insertion** of a new element into a heap.
+##### Purpose of Performing upHeap:
+- **Restoring the Heap Property**: The primary purpose of the upHeap operation is to **restore the heap property** after a new element has been added to the heap.
+- **Process**:
+    - **Placement of New Element**: When inserting, the new element is initially placed at the **next available position** at the bottom level of the heap (maintaining the complete binary tree structure).
+    - **Comparisons and Swapping**:
+        - The new element is compared with its **parent node**.
+        - If the heap property is violated (e.g., in a max-heap, if the new element is greater than its parent), the two nodes are **swapped**.
+        - This process continues **up the tree** until the heap property is satisfied at every level or the root is reached.
+- **Outcome**:
+    - Ensures that the heap remains a **valid max-heap** or **min-heap**.
+    - Maintains the **structural integrity** and **order property** of the heap.
+---
+#### Detailed Explanation:
+##### Insertion and upHeap in a Max-Heap:
+1. **Insert the New Element**:
+    - Place the new element at the **leftmost available spot** in the bottom level of the heap.
+    - This maintains the **complete binary tree** structure.
+2. **Perform upHeap(Sift-Up)**:
+    - **Compare** the new element with its parent.
+    - **Swap** if the new element is **greater** than its parent (for max-heap).
+    - **Repeat** this process with the new parent until:
+        - The new element is no longer greater than its parent.
+        - The root node is reached.
+3. **Result**:
+    - The heap property is restored.
+    - The new element is in the correct position according to the heap order.
+
+##### Visual Example:
+**Initial heap Before Insertion**:
+```
+       50
+      /  \
+     30  20
+    /  \
+   15  10
+```
+**Insert 40:**
+- Place 40 at the next available position:
+```
+        50
+      /   \
+     30    20
+    /  \   /
+   15  10 40
+```
+**Perform upHeap**:
+- **Compare 40 with Parent (20):
+    - Since 40 > 20, swap them.
+```
+        50
+      /   \
+     30    40
+    /  \   /
+   15  10 20
+```
+- **Compare 40 with new Parent (50)**:
+    - Since 40 < 50, no further action is needed.
+
+**Final Heap After upHeap:**
+```
+        50
+      /   \
+     30    40
+    /  \   /
+   15  10 20
+```
+---
+#### Study Guidance on Mastering upHeap and Heap Operations
+##### Focus Areas:
+1. **Understand Heap Properties**:
+    - **Structural Property**: Recognize that a heap must be a complete binary tree.
+    - **Heap Order Property**: Comprehend how the heap property (max-heap or min-heap) dictates parent-child relationships.
+2. **Master upHeap Mechanism**:
+    - **Algorithm Steps**:
+        - Placement of the new element.
+        - Iterative comparison and swapping with parent nodes.
+    - **Termination Conditions**:
+        - The heap property is restored.
+        - The root node is reached without further swaps.
+3. **Implement Heap Insertion and upHeap**:
+    - **Coding Practice**:
+        - Write functions to perform heap insertion and the upHeap operation.
+        - Test with various input values to see how the heap structure changes.
+4. **Trace Examples Manually**:
+    - **Step-by-Step Walkthroughs**:
+        - Manually insert elements into a heap and perform upHeap.
+        - Draw the heap at each step to visualize the changes.
+5. **Analyze Time Complexity**:
+    - **Insertion Operation**:
+        - Understand that the upHeap operation contributes to the $O(\log n)$ time complexity of insertion.
+        - Recognize that the height of the heap (logarithmic in terms of the number of nodes) determines the maximum number of swaps.
+6. **Differentiate Between upHeap and downHeap**:
+    - **upHeap (Sift-Up)**:
+        - Used during insertion.
+        - Moves a node **up the tree** to restore the heap property.
+7. **Relate to Real-World Applications**:
+    - **Priority Queues**:
+        - See how upHeap is essential for maintaining the correct order in priority queues implemented with heaps.
+    - **Algorithms**:
+        - Understand the role of heap operations in algorithms like Heap Sort.
+---
+
 
 ### (d) Describe the algorithm of the upHeap operation.
+#### Answer:
+##### Algorithm of the upHeap Operation
+The **upHeap** operation (also known as **sift-up** or **bubble-up**) is used in heap data structures during the **insertion** of a new element to restore the heap property. The algorithm moves the newly added element up the heap until the heap property is reestablished.
+###### Algorithm Steps:
+1. **Insert the New Element**:
+    - Place the new element at the next available position in the heap (as the last node in the heap), maintaining the complete binary tree structure.
+2. **Initialize Index Variables**:
+    - Let `i` be the index of the newly inserted element.
+    - Let `parent(i)` be the index of its parent node.
+3. **While the Heap Property is Violated**:
+    - **Condition**: While `i > 0` (i.e., `i` is not the root node) and the heap property is violated between `i` and `parent(i)`:
+        - For a **max-heap**, the heap property is violated if `heap[parent(i)] < heap[i]`.
+        - For a **min-heap**, the heap property is violated if `heap[parent(i)] > heap[i]`.
+4. **Swap the Element with its Parent**:
+    - Swap `heap[i]` with `heap[parent(i)]`.
+5. **Update the Index**:
+    - Set `i = parent(i)` to continue checking up the tree.
+6. **Termination**:
+    - The loop terminates when the heap property is satisfied or when the root node is reached.
+###### Pseudocode:
+```
+function upHeap(heap, i):
+    while i > 0 and heap[parent(i)] < heap[i]:
+        swap(heap[i], heap[parent(i)])
+        i = parent(i)
+```
+- **Note**: The comparison `heap[parent(i)] < heap[i]` is for a max-heap. For a min-heap, the comparison would need to be `heap[parent(i)] > heap[i]`.
+###### Parent Index Calculation:
+- For a heap stored in an array starting at index 0:
+    - `parent(i) = (i - 1) / 2`
+---
+#### Example of upHeap in a Max-Heap:
+##### Initial Heap Array:
+| Index | 0 | 1 | 2 | 3 | 4 |
+| :--- |  :--- | :--- | :--- | :--- | :--- |
+| Value | 50 | 30 | 40 | 10 | 20 |
+- **Heap Structure**:
+```
+        50
+       /  \
+      30   40
+     /  \
+    10  20
+```
+##### Insert new Element `60`:
+- **Add `60` at the next available index (5)**
+
+| Index | 0 | 1 | 2 | 3 | 4 | 5 |
+| :--- |  :--- | :--- | :--- | :--- | :--- | :--- |
+| Value | 50 | 30 | 40 | 10 | 20 | 60 |
+
+- **Heap Structure**:
+```
+         50
+       /   \
+      30    40
+     /  \   /
+    10  20 60
+```
+##### Perform upHeap:
+- **Step 1**: `i = 5`, `parent(i) = (5 -1) / 2 = 2`
+    - Compare `heap[2]` (40) with `heap[5]` (60)
+    - Since `60 > 40`, swap them.
+- **Heap after swap**:
+
+| Index | 0 | 1 | 2 | 3 | 4 | 5 |
+| :--- |  :--- | :--- | :--- | :--- | :--- | :--- |
+| Value | 50 | 30 | 60 | 10 | 20 | 40 |
+
+- **Heap Structure**:
+```
+         50
+       /   \
+      30    60
+     /  \   /
+    10  20 40
+```
+
+- **Step 2**: Update `i = parent(i) = 2`
+    - `parent(i) = (2 - 1) / 2 = 0`
+    - Compare `heap[0]` (50) with `heap[2]` (60)
+    - Since `60 > 50`, swap them.
+- **Heap after swap**:
+
+| Index | 0 | 1 | 2 | 3 | 4 | 5 |
+| :--- |  :--- | :--- | :--- | :--- | :--- | :--- |
+| Value | 60 | 30 | 50 | 10 | 20 | 40 |
+
+- **Heap Structure**:
+```
+         60
+       /   \
+      30    50
+     /  \   /
+    10  20 40
+```
+
+- **Step 3**: Update `i = parent(i) = 0`
+    - Now `i = 0`, so `i > 0` is false.
+    - Terminate the upHeap operation.
+##### Result:
+- The heap property is restored.
+- The new element `60` is correctly positioned at the root of the heap.
+---
+#### Purpose and Properties of upHeap:
+- **Restores Heap Order**:
+    - Ensures that after insertion, the heap maintains the max-heap or min-heap property.
+- **Efficiency**:
+    - The upHeap operation has a time complexity of $O(\log n)$, where $n$ is the number of elements in the heap.
+    - This is because the maximum number of swaps is proportional to the height of the heap, which is $\log n$ for a complete binary tree.
+---
+#### Key Points:
+- **When to Use**:
+    - upHeap is used during the insertion of a new element into a heap.
+- **How it Works**:
+    - Moves the newly inserted element up the tree by swapping it with its parent until the heap property is satisfied.
+- **Why it's Necessary**:
+    - Insertion at the bottom of the heap may violate the heap property.
+    - upHeap corrects this by moving the element to its proper position.
+---
+#### Study Guidance:
+1. **Understand the Heap Structure**:
+    - Know how heaps are represented as arrays.
+    - Understand parent and child index calculations.
+2. **Master the upHeap Logic**:
+    - Practice writing the upHeap function.
+    - Remember the termination conditions.
+3. **Work Through Examples**:
+    - Manually perform upHeap operations on sample heaps.
+    - Visualize the heap at each step.
+4. **Time Complexity Analysis**:
+    - Understand why upHeap has $O(\log n)$ complexity.
+5. **Differentiate Between upHeap and downHeap**:
+    - Recognize when each is used and how they differ.
+6. **Implement and Test**:
+    - Code the heap insertion and upHeap operation.
+    - Test with various datasets
+
 
 ### (a) Describe a typical application that uses a hash table as its implementation.
+A common application that uses a hash table is the implementation of a **symbol table** in compilers and interpreters.
+- **Explanation**:
+    - **Symbol Table**:
+        - Stores identifiers such as variable names, function names, and object instances.
+        - Associates these identifiers with information like scope level, memory location, type, and value.
+    - **Usage in Compilers**:
+        - During compilation, quick access to symbol information is crucial for tasks like syntax checking, scope resolution, and code generation.
+        - Hash tables provide efficient **average-case** $O(1)$ time complexity for insertion, lookup, and deletion operations.
 
+Other applications include:
+- **Database Indexing**: Fast retrieval of records using hashed keys.
+- **Caching Mechanisms**: Quick storage and retrieval of frequently accessed data.
+- **Implementing Dictionaries**: Key-value storage structures in programming languages (e.g., Python's `dict`, Java's `HashMap`).
+---
 ### (b) What is a collision in a hash table? Why is collision a problem in hash table?
-
+- **What is a Collision?**
+    - A **collision** occurs when two different keys are mapped to the **same index** in a hash table by the hash function.
+- **Why Collisions Are a Problem**:
+    - **Data Overwrite Risk**:
+        - Without proper handling, a new key-value pair could overwrite an existing one at the same index.
+    - **Increased Search Time**:
+        - Collisions can degrade the performance of the hash table.
+        - Instead of constant time $O(1)$, operations may take longer, approaching $O(n)$ in the worst case.
+    - **Retrieval Errors**:
+        - If collisions are not correctly managed, retrieving a value using a key may return incorrect data or fail entirely.
+---
 ### (c) Describe the two distinct methods commonly used to solve the collision problem in hash table.
+1. **Separate Chaining (Open Hashing)**:
+    - **Concept**:
+        - Each slot in the hash table array contains a **linked list** or another secondary data structure (e.g., a dynamic array).
+    - **How It Works**:
+        - When a collision occurs, the new key-value pair is appended to the list at that index.
+        - During lookup, the linked list is traversed to find the key.
+    - **Advantages**:
+        - Simple to implement.
+        - The hash table can handle an unlimited number of entries (limited by memory).
+    - **Disadvantages**:
+        - Potentially increased memory usage due to additional data structures.
+        - Lookup time becomes $O(k)$, where $k$ is the number of keys hashed to the same index.
+2. **Open Addressing (Closed Hashing)**:
+    - **Concept**:
+        - All key-value pairs are stored within the hash table array itself.
+        - When a collision occurs, a probing sequence is used to find the next available slot.
+    - **Common Probing Techniques**:
+        - **Linear Probing**:
+            - Checks the next slot sequentially: $\text{Index} = (\text{hash(key)} + i) \text{mod table\_size}$, where $i$ increments by 1 each time.
+        - **Quadratic Probing**:
+            - Uses a quadratic function: $\text{Index} = (\text{hash(key)}+c_1i+c_2i^2) \text{mod table\_size}$.
+        - **Double Hashing**:
+            - Applies a second hash function: $\text{Index} = (\text{hash}_1(\text{key})+ i \times \text{hash}_2(\text{key}))\text{table\_size}$.
+    - **Advantages**:
+        - Avoids the overhead of additional data structures.
+        - Better cache performance due to data locally.
+    - **Disadvantages**:
+        - Deletion is more complex (may require special markers like "tombstones").
+        - Performance degrades as the table becomes fuller; requires maintaining a low load factor.
+---
+#### Study Guidance
+##### Focus Areas:
+1. **Hash Table Fundamentals**:
+    - **Hash Functions**:
+        - Understand how hash functions map keys to indices.
+        - Learn characteristics of good hash functions: uniform distribution and low computation cost.
+2. **Collision Handling Techniques**:
+    - **Separate Chaining**:
+        - Practice implementing hash tables using linked lists at each index.
+        - Analyze how collision chains affect performance.
+    - **Open Addressing:**
+        - Master Different probing methods (linear, quadratic, double hashing).
+        - Recognize issues like clustering and how they impact efficiency.
+3. **Practical Implementation**:
+    - **Coding Exercise**:
+        - Write code for both separate chaining and open addressing hash tables.
+        - Test with datasets designed to cause collisions.
+4. **Performance Analysis**:
+    - **Load Factor Impact**:
+        - Study how the load factor (number of elements divided by table size) influences performance.
+        - Understand strategies for resizing and rehashing.
+5. **Applications and Use Cases**:
+    - **Real-World Examples**:
+        - Explore how hash tables are used in compilaers, databases, and caching.
+        - Examine the consequences of poor collision handling in these contexts.
 
 ### Given the following C++ function-like algorithm:
 ```
@@ -525,17 +980,220 @@ int fun(int n)
 ```
 Write the recurrence equation for the running time of the above algorithm.
 
+#### Recurrence Equation for the Running Time
+Let $T(n)$ represent the running time of the function `fun(n)`.
+
+The recurrence relation for $T(n)$ can be expressed as:
+1. **Base Case $(n \le 1)$**:
+\[
+T(n)=c_0    
+\]
+    - **Explanation**: When $n \le 1$, the function executes the `if` condition and returns `1`. The running time is a constant $c_0$, accounting for the comparison and return statement.
+2. **Recursive Case $(n > 1)$**:
+\[
+T(n)=T(n - 1) + c
+\]
+    - **Explanation**:
+        - **Recursive Call**: The function makes a call to `fun(n - 1)`, which takes times $T(n - 1)$.
+        - **Multiplication**: The operation `n * fun(n - 1)` takes constant time $c_1$.
+        - **Condition Check**: The `if` statement takes constant time $c_2$.
+        - **Total Constant Time**: Combine $c_1$ and $c_2$ into a single constant $c = c_1 + c_2$.
+
+Therefore, the recurrence equation is:
+\[
+    T(n)=T(n-1)+c, \text{ for } n > 1
+\]
+with the base case:
+\[
+    T(1)=c_0
+\]
+
+---
+##### Solving the Recurrence
+To find $T(n)$, we can solve the recurrence by **unrolling** it:
+$$
+\begin{align}
+    T(n) & = T(n-1)+c \nonumber \\
+    &= [T(n-2+c)] + c \nonumber \\
+    &= T(n-2) + 2c \nonumber \\
+    &= [T(n-3)=c]+2c \nonumber \\
+    &=T(n-3) + 3c \nonumber \\
+    &\vdots \nonumber \\
+    &=T(n-k)+kc \nonumber \\
+\end{align}
+$$
+When $k=n-1$:
+$$
+T(n) = T(1) + (n-1)c
+$$
+Substitute $T(1) = c_0$:
+$$
+T(n) = c_0+(n-1)c
+$$
+
+---
+##### Time Complexity
+- The function `fun(n)` has a running time that grows linearly with $n$.
+- Therefore:
+$$
+T(n)=c_0+c(n-1)=Θ(n)
+$$
+- **Big O Notation**:
+$$
+T(n) \in O(n)
+$$
+
+---
+#### Study Guidance
+##### Key Focus Areas
+1. **Setting Up Recurrence Relations**
+    - **Identify Base and Recursive Cases**: Recognize where the function stops recursing (base case) and how the recursive case relates to smaller inputs.
+    - **Account for All Operations**: Include the time taken by all operations in the function, both recursive calls and constant-time operations.
+2. **Solving Linear Recurrences**:
+    - **Unrolling the Recurrence**: Expand the recurrence step by step to find a pattern.
+    - **Closed-Form Solution**: Derive a non-recursive expression representing $T(n)$.
+3. **Understanding Time Complexity**:
+    - **Linear Time**: Recognize that a recurrence of the form $T(n) = T(n -1)+c$ leads to a linear time complexity.
+    - **Big O Notation**: Be comfortable expressing the final time complexity using Big O notation.
+4. **Analyzing Recursive Algorithms**
+    - **Recursive Calls**: Understand how the number of recursive calls affects the overall running time.
+    - **Work Done per Call**: Note the operations performed in each call outside the recursion.
+---
+
 ### An AVL tree that stores integer numbers in its nodes is shown below:
 ```
           7
         /   \
-       5    20
-      / \   / \
-     3   7 15  25
-          /  \
-         10  17
+       5     20
+      / \    / \
+     3   7  15  25
+           /  \
+          10  17
 ```
 Inserting numbers in which range (or ranges) would case a double rotation? Show the tree (or trees) after the rotation (You can use x to represent the newly inserted number).
+
+#### Ranges Causing a Double Rotation:
+- **First Range**: Inserting numbers **between 9 and 14** (i.e., 9 < x < 15).
+    - **Explanation**: These numbers will be inserted into the **right subtree of node 10**, causing an imbalance at node 20 that requires a **Left-Right (LR) rotation**.
+- **Second Range**: Inserting numbers between **16 and 19** (i.e., 16 < x < 20).
+    - **Explanation**: These numbers will be inserted into the **left subtree of node 17**, leading to an imbalance at node 20 that necessitates a **Left-Right (LR) rotation**.
+
+#### Trees After the Double Rotation**:
+##### Example 1: Inserting x between 9 and 14 (e.g., x = 12)
+1. **Initial Insertion**:
+- Insert **x = 12** into the tree.
+- Path: 7 → 20 →  15 → 10 →  **Insert x as the right child of 10**.
+
+**Tree After Insertion**:
+```
+          7
+        /   \
+       5     20
+      / \    / \
+     3   7  15  25
+           /  \
+          10   17
+           \
+            x
+```
+2. **Imbalance Occurs**:
+- **Node 20** becomes unbalanced with a balance factor of +2 (left-heavy).
+- The imbalance is in the **Left-Right** case:
+    - Left child (**15**) is left-heavy due to its right-heavy subtree (**10** with right child x).
+
+3. **Performing Double Rotation (Left-Right Rotation at Node 20):**
+
+**Step 1: Left Rotation on Node 10**
+- Rotate left at node 10 to move x up.
+```
+          7
+        /   \
+       5     20
+      / \    / \
+     3   7  15  25
+           /  \
+          x    17
+         / 
+        10
+```
+**Step 2: Rotate right at node 20 to balance the tree
+```
+          7
+        /   \
+       5      x
+      / \    / \
+     3   7  15  20
+           /   /  \
+          10  17  25
+```
+**Balanced Tree After Rotation:**
+- The AVL tree is now balanced.
+- x has become the new parent of nodes 15 and 20.
+---
+##### Example 2: Inserting x between 16 and 19 (e.g., x = 18)
+1. **Initial Insertion**:
+- Insert **x = 18** into the tree.
+- Path: 7 → 20 → 15 → 17 → **Insert x as the left child of 17**.
+
+**Tree After Insertion:**
+```
+          7
+        /   \
+       5     20
+      / \    / \
+     3   7  15  25
+           /  \
+          10   17
+               /
+              x
+```
+2. **Imbalance Occurs:**
+- **Node 20** becomes unbalanced with a balance factor of **+2** (left-heavy).
+- The imbalance is a **Left-Right** case:
+    - Left child (**15**) is right-heavy due to its left-heavy subtree (17 with left child x).
+
+3. **Performing Double Rotation (Left-Right Rotation at Node 20):**
+
+**Step 1: Right Rotation on Node 17**
+- Rotate right at node 17 to move x up.
+```
+          7
+        /   \
+       5     20
+      / \    / \
+     3   7  15  25
+           /  \
+          10   x
+                \
+                17
+```
+**Step 2: Left Rotation on Node 20**
+- Rotate left at node 20 to balance the tree.
+```
+          7
+        /   \
+       5      x
+      / \    / \
+     3   7  15  20
+           /    / \
+          10   17 25
+```
+**Balanced Tree After Rotation**:
+- The AVL tree is now balanced.
+- **x** has become the new parent of nodes 15 and 20.
+---
+#### Explanation of the Double Rotation:
+- **Left-Right Rotation**: Occurs when a node's left subtree is right-heavy.
+    - **First Rotation (Left or Right)**: Performed on the child to align the heavy subtree.
+    - **Second Rotation (Right or Left)**: Performed on the unbalanced node to restore balance.
+- In both examples, the imbalance at node 20 requires a Left-Right rotation to maintain the AVL property.
+---
+#### Key Points:
+- **Double Rotations** are needed when a single rotation is insufficient to restore balance.
+- **Identifying Ranges**:
+    - Insertions causing the heavier subtree to be opposite the imbalance direction necessitate double rotations.
+- **Understanding Rotations**:
+    - Visualizing the tree before and after rotations helps in mastering AVL tree balancing.
 
 ### Given the following recurrence equation that defines $T(N)$ as:
 \[
@@ -545,3 +1203,71 @@ T(N-1)+2N & \text{if } N > 1
 \end{cases}
 \]
 Prove, by induction, that $T(N) = N^2+N$
+
+**Base Case $(N=1)$:**
+Compute $T(1)$ using both the recurrence and the proposed formula.
+1. **Using the Recurrence**:
+$$
+T(1) = 2
+$$
+2. **Using the Proposed Formula**:
+$$
+T(1) =1^2 +1 = 1 + 1 = 2
+$$
+
+Since both computations yield $T(1)=2$, the base case holds.
+
+---
+**Inductive Hypothesis**
+Assume that the formula holds for some integer $k \geq 1$:
+$$
+T(k) = k^2 + k
+$$
+
+---
+**Inductive Step $(N=k+1)$:**
+We need to show that:
+$$
+T(k+1)=(k+1)^2+(k+1)
+$$
+**Compute $T(k+1)$ using the recurrence:**
+$$
+T(k+1) = T(k)+2(k+1)
+$$
+**Substitute the inductive hypothesis $T(k) = k^2+k$:**
+$$
+\begin{align}
+T(k+1) & = (k^2+k) + 2(k+1) \nonumber \\
+    &= k^2 + k + 2k + 2 \nonumber \\
+    &= k^2 + 3k + 2 \nonumber \\
+\end{align}
+$$
+**Simplify the right-hand side of the proposed formula:**
+$$
+\begin{align}
+(k+1)^2 + (k + 1) & = (k^2+2k+1) + k+1 \nonumber \\
+    &= k^2 + k + 2k + 2 \nonumber \\
+    &= k^2 + 3k + 2 \nonumber \\
+\end{align}
+$$
+**Conclusion:**
+$$
+T(k+1) = k^2+3k+2 = (k+1)^2 + (k+1)
+$$
+Thus, $T(k + 1) = (k+1)^2 + (k+1)$.
+
+Since the inductive step holds, by mathematical induction, the formula $T(N) = N^2+N$ is true for all integers $N\ge1$.
+
+---
+#### Study Guidance
+To master proofs by induction and recurrence relations:
+1. **Understand Mathematical Induction**:
+    - Recognize the structure base case, inductive hypothesis, and inductive step.
+    - Ensure the base case is valid.
+    - Clearly show how the inductive step replies on the hypothesis.
+2. **Work with Recurrence Relations**:
+    - Learn to identify patterns in recursive definitions.
+    - Practice solving recurrences by expanding terms and finding closed-form solutions.
+3. **Algebraic Manipulation**:
+    - Strengthen skills in simplifying expressions.
+    - Carefully perform substitutions and simplifications.
