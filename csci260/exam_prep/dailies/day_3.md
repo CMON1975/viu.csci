@@ -24,13 +24,13 @@ The $O(n\log n)$ lower bound for comparison-based sorting algorithms arises from
 - **Applying to Sorting:** So, the decision tree must have a height $h \ge \log _2n!$ to accommodate all $n!$ permutations.
 #### 4. Calculating $\log _2n!$
 - **Using Stirling's Approximation:**
-\[
+$$
 \log_2n! \approx n\log _2n-n\log _2 e+\frac{1}{2}\log _2n+\frac{1}{2}\log _2(2\pi)
-\]
+$$
 - **Simplifying:**
-\[
+$$
 \log _2n! = Θ(n\log n)
-\]
+$$
 (Since constants and lower-order terms are negligible for large $n$)
 #### 5. Implications for Time Complexity
 - **Lower Bound on Comparisons:** The minimum number of comparisons (tree height) required is $Ω(n\log n)$.
@@ -46,7 +46,7 @@ The $O(n\log n)$ lower bound for comparison-based sorting algorithms arises from
 Because any comparison-based sort must make enough comparisons to distingush among all n! possible orderings--which requires at least O(n log n) time--so O(n log n) is the fundamental lower bound for such algorithms.
 
 ---
-2. How do Counting Sort and Radix Sort achieve linear time under certain conditions?
+2. **How do Counting Sort and Radix Sort achieve linear time under certain conditions?**
 
 Counting Sort and Radix Sort can achieve linear time complexity--specifically, $O(n)$--under certain conditions by leveraging additional information about the input data, which allows them to bypass the $O(n\log n)$ lower bound that applies to comparison-based sorting algorithm. Here's how they do it:
 
