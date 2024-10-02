@@ -25,7 +25,8 @@ In an **unsorted array**, the **removal operation** can be inefficient compared 
 ### Example of Removal with Replacement by Last Element:
 Consider an unsorted array `[7, 3, 8, 5, 2]`, and we want to remove the element `8`.
 1. **Search:** We scan the array and find `8` at the index `2`.
-2. **Replace with the last element:** We replace `8` with the last element (`2`), giving us the array `[7, 3, 2, 5]`.
+2. **Replace with the last element:** We replace `8` with the last element (`2`), giving us the array `[7, 3, 2, 5, 8]`.
+4. **Remove the last element:** We remove `8` from the array, making the array `7, 3, 2, 5]`.
 3. **Update the size:** We decrement the size by 1, so the array is now `[7, 3, 2, 5]` with 4 elements.
 
 The result is effient removal but with the order of elements altered.

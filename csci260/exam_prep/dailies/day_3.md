@@ -20,17 +20,17 @@ The $O(n\log n)$ lower bound for comparison-based sorting algorithms arises from
 - **Total Possible Orderings:** For $n$ distinct elements, there are $n!$ possible permutations (ways the elements can be ordered).
 - **Leaf Nodes Requirement:** To correctly sort any possible input, the decision tree must have at least $n!$ leaf nodes, each corresponding to a unique permutation.
 #### 3. Height of the Decision Tree
-- **Minimum Height:** The minimum height $h$ of a binary tree with $L$ leaves is at lease $\lceil \log _2 L \rceil$.
+- **Minimum Height:** The minimum height $h$ of a binary tree with $L$ leaves is at least $\lceil \log _2 L \rceil$.
 - **Applying to Sorting:** So, the decision tree must have a height $h \ge \log _2n!$ to accommodate all $n!$ permutations.
 #### 4. Calculating $\log _2n!$
 - **Using Stirling's Approximation:**
-$$
+\[
 \log_2n! \approx n\log _2n-n\log _2 e+\frac{1}{2}\log _2n+\frac{1}{2}\log _2(2\pi)
-$$
+\]
 - **Simplifying:**
-$$
+\[
 \log _2n! = Θ(n\log n)
-$$
+\]
 (Since constants and lower-order terms are negligible for large $n$)
 #### 5. Implications for Time Complexity
 - **Lower Bound on Comparisons:** The minimum number of comparisons (tree height) required is $Ω(n\log n)$.
