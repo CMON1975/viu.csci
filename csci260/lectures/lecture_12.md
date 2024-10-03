@@ -330,6 +330,271 @@ $$
 T(n) = aT(\frac{n}{b}) + f(n), \text{ if } n \ge d
 $$
 
-1. If there is a small constant $\epsilon > 0$, such that $f(n)$ is $O(n^{\log_ba- \epsilon})$, then $T(n)$ is $\Theta (n^{\log_ba})$.
-2. If there is a constant $k \ge 0$, such that $f(n)$ is $\Theta (n^{\log_ba} \times \log^kn)$, then $T(n)$ is $\Theta (n^{\log_ba} \times \log^{k+1}n)$
-3. If there are small constants $\epsilon > 0$ and $\delta < 1$, such that $f(n)$ is $\Omega(nlog_ba+\epsilon)$ and $af(\frac{n}{b}) \le \delta f(n)$ for $n \ge d$, then $T(n)$ is $\Theta(f(n))$.
+1. **Case 1:** If there exists a small constant $\epsilon > 0$, such that $f(n)=O(n^{\log_ba- \epsilon})$, then $T(n)$ is $\Theta (n^{\log_ba})$.
+2. **Case 2:** If there exists a constant $k \ge 0$, such that $f(n)=\Theta (n^{\log_ba}  \log^kn)$, then $T(n)$ is $\Theta (n^{\log_ba} \log^{k+1}n)$
+3. **Case 3:** If there exist small constants $\epsilon > 0$ and $\delta < 1$, such that $f(n) = \Omega(n^{\log_ba+\epsilon})$ and $af(\frac{n}{b}) \le \delta f(n)$ for $n \ge d$, then $T(n)=\Theta(f(n))$.
+
+---
+### Expanding on the Master Theorem
+The Master Theorem provides a way to determine the asymptotic behavior of recurrences of the form:
+$$
+T(n) = aT\left(\frac{n}{b}\right)+f(n)\text{, for n }\ge d
+$$
+Where:
+- $T(n)$ is the recurrence relation that describes how the time to solve a problem of size $n$ is related to the time to solve its subproblems, along with any additional work done at each level of the recursion.
+- $a \ge 1$: Number of recursive calls.
+- $b > 1$: Factor by which the problem size is reduced.
+- $f(n)$: Cost of the work done outside the recursive calls.
+
+Define:
+$$
+k=log_ba
+$$
+
+**Case 1: Polynomially Smaller** $f(n)$
+- **Condition:** $f(n)=O(n^{k-\epsilon})$ for some $\epsilon > 0$.
+- **Interpretation:** $f(n)$ grows significantly slower than $n^k$.
+- **Conclusion:** The recursive part dominates, so:
+    $$
+    T(n) = \Theta(n^k)
+    $$
+- **Example:**
+    $$
+    T(n) = 2T\left(\frac{n}{2}\right) + n
+    $$
+    Here, $a=2,b=2,\text{ so }k=\log_2 2=1$, and $f(n) = n = O(n^{1-\epsilon})\text{ for }\epsilon=0.5$. 
+    Thus, $T(n)=\Theta(n^1)=\Theta(n)$.
+
+**Case 2: Polynomially Equivalent** $f(n)$
+- **Condition:** $f(n) =\Theta(n^k\log^pn)$ for some $p\ge0$
+- **Interpretation:** $f(n)$ grows at the same rate as $n^k$ up to logarithmic factors.
+- **Conclusion:** Both the recursive and non-recursive parts contribute equally, so:
+    $$
+    T(n) = \Theta(n^k\log^{p+1}n)
+    $$
+- **Example:**
+    $$
+    T(n) = 2T\left(\frac{n}{2}\right)+n\log n
+    $$
+    Here, $f(n) = n\log n=\Theta(n^1\log^1n)$, so $T(n) = \Theta(n\log^2n)$.
+
+**Case 3: Polynomially Larger** $f(n)$
+- **Condition:**
+    - $f(n)=\Omega(n^{k+\epsilon})$ for some $\epsilon > 0$.
+    - There exists a constant $\delta < 1$ such that $af(\frac{n}{b}) \le \delta f(n)$ for $n\ge d$.
+- **Interpretation:** $f(n) grows faster than $n^k$.
+- **Conclusion:** The non-recursive part dominates, so:
+    $$
+    T(n) = \Theta(f(n))
+    $$
+- **Example:**
+    $$
+    T(n)=2T\left(\frac{n}{2}\right)+n^2
+    $$
+    Here, $k=1$, but $f(n)=n^2=\Omega(n^{1+\epsilon})$ with $\epsilon = 1$.
+    Also, $af(\frac{n}{b}) = 2(\frac{n}{b})^2=\frac{n^2}{2}\le \delta n^2$ with $\delta = 0.5$.
+    Thus, $T(n)=\Theta(n^2)$.
+
+---
+### Tips and Tricks for Applying the Master Theorem
+1. **Identify $a$, $b$, and $f(n)$:**
+    - Carefully extract these values from your recurrence.
+2. **Compute $k = log_ba$:**
+    - Remember that $log_ba=\frac{\ln a}{\ln b}$.
+3. **Compare $f(n)$ with $n^k$:**
+    - Determine if $f(n)$ is polynomially smaller, equivalent, or larger than $n^k$.
+4. **Check the Regularity Condition for Case 3:**
+    - Verify $af(\frac{n}{b})\le \delta f(n)$ for some $\delta < 1$.
+5. **Use the Correct Case:**
+    - Apply the case that fits based on your comparison.
+6. **Handling Logarithms:**
+    - Use logarithm properties to simplify expressions.
+    - Remember that $log_bn=\frac{\ln n}{\ln b}$
+7. **Polynomial Multiples of Logarithms:**
+    - Recognize that terms like $n^k\log^pn$ indicate Case 2.
+8. **Practicing with Examples:**
+    - Solve various examples to become familiar with identifying and applying the correct case.
+
+---
+### Example Problems
+**Example 1:**
+$$
+T(n)=3T\left(\frac{n}{2}\right)+n
+$$
+**Solution:**
+**1. Identify $a$, $b$, and $f(n):**
+- $a = 3$: This is the number of recursive calls in the recurrence.
+- $b = 2$: This is the factor by which the problem size is reduced in each recursive call.
+- $f(n) = n$: This is the cost of the work done outside the recursive calls.
+
+**2. Compute $k = \log_ba$:**
+- $k = \log_ba = \log_23 \approx 1.58496$
+
+**3. Compare $f(n)$ with $n^k$:**
+- **Calculate $n^{k-\epsilon}$ for some $\epsilon > 0$:**
+Let's choose $\epsilon=0.08496$ (so $\epsilon$ is small and positive).
+    - $k- \epsilon = 1.58496 - 0.08496 = 1.5$.
+    - $n^{k-\epsilon} = n^{1.5}$
+- **Check if $f(n) = O(n^{k-\epsilon})$:**
+    - $f(n) = n$.
+    - Since $n = O(n^{1.5})$ (because $n^1$ grows slower than $n^{1.5}$), this condition holds.
+
+**4. Determine which case applies:**
+- Since $f(n) = O(n^{k-\epsilon})$ for some $\epsilon > 0$, **Case 1** of the Master Theorem applies.
+
+**5. Apply the conclusion of Case 1:**
+- $T(n) = \Theta(n^k) = \Theta(n^{\log_23})$
+
+**6. Final Answer:**
+- Therefore, $T(n) = \Theta(n^{log_23}) \approx \Theta(n^{1.58496})$
+
+---
+**Example 2:**
+$$
+T(n) = 2T\left(\frac{n}{4}\right)+\sqrt n
+$$
+**Solution**
+**1. Identify $a$, $b$, and $f(n)$:**
+- $a = 2$: Number of recursive calls.
+- $b = 4$: Reduction factor.
+- $f(n) = \sqrt n = n^{0.5}$: Cost of non-recursive work.
+
+**2. Compute $k=\log_ba$:**
+- $k=\log_ba=\log_42$.
+    - Recall that $\log_ba=\frac{\ln a}{\ln b}$.
+    - So, $k=\frac{\ln 2}{\ln 4} = \frac{\ln 2}{2\ln2}=\frac{1}{2}=0.5$
+
+**3. Compare $f(n)$ with $n^k$:**
+- $n^k=n^{0.5}$.
+- $f(n)=n^{0.5}$.
+- Thus, $f(n)=\Theta(n^k)$.
+
+**4. Check for logarithmic factors in $f(n)$:**
+- Since $f(n) = \Theta(n^k\log^pn)$ with $p=0$.
+
+**5. Determine which case applies:**
+- Since $f(n) = \Theta(n^k\log^pn)$, **Case 2** applies.
+
+**6. Apply the conclusion of Case 2:**
+- The result is $T(n)=\Theta(n^k\log^{p+1}n)$.
+- Substituting $k=0.5$ and $p=0$:
+    - $T(n) = \Theta(n^{0.5}\log^1n)$.
+
+**7. Final Answer:**
+- Therefore, $T(n)=\Theta(\sqrt n\log n)$
+
+---
+**Example 3:**
+$$
+T(n)=T\left(\frac{n}{2}\right)+n
+$$
+**Solution**
+**1. Identify $a$, $b$, and $f(n)$:**
+- $a = 1$: One recursive call.
+- $b = 2$: Problem size is halved each time.
+- $f(n) = n$: Non-recursive work.
+
+**2. Compute $k=\log_ba$:**
+- $k=\log_ba=\log_21=0$
+
+**3. Compare $f(n)$ with $n^k$:**
+- $n^k=n^0=1$.
+- $f(n)=n$
+- So $f(n)=n=\Omega(n^{k+\epsilon})$ for any $\epsilon > 0$ because $n=\Omega(n^{0+\epsilon})=\Omega(n^\epsilon)$
+Let's choose $\epsilon = 0.5$:
+    - $n^{k+\epsilon} = n^{0+0.5}= n^{0.5}$
+    - Since $n=\Omega(n^{0.5})$ (because $n$ grows faster than $n^{0.5}), the condition holds.
+
+**4. Verify the Regularity Condition:**
+- **Regularity Condition:** $af(\frac{n}{b})\le \delta f(n)$ for some $\delta < 1$ and sufficiently large $n$.
+- Compute $af(\frac{n}{b})$:
+    - $af(\frac{n}{b})=1 \times f(\frac{n}{b})=f(\frac{n}{b})=\frac{n}{b}$.
+- Compare $af(\frac{n}{b})$ with $\delta f(n)$:
+    - $\delta f(n)=\delta n$.
+    - We need $\frac{n}{2} \le \delta n$.
+    - Simplify: $\frac{1}{2}n\le \delta n$.
+    - Divide both sides by $n$ (assuming $n > 0$):
+        - $\frac{1}{2} \le \delta$.
+    - So any $\delta \ge \frac{1}{2}$ satisfied the inequality.
+- Choose $\delta = \frac{1}{2} < 1$, which satisfies the condition.
+
+**5. Determine which case applies:**
+- Since $f(n)=\Omega(n^{k+\epsilon})$ and the regularity condition is satisfied, **Case 3* applies.
+
+**6. Apply the conclusion of Case 3:**
+- $T(n)=\Theta(f(n))=\Theta(n)$.
+
+**7. Final Answer:**
+- Therefore, $T(n) = \Theta(n).$
+
+---
+**Example 4:**
+$$
+T(n)=4T\left(\frac{n}{2}\right) + n^2
+$$
+**Solution**
+**1. Identify $a$, $b$, and $f(n)$:**
+- $a = 4$.
+- $b = 2$.
+- $f(n) = n^2$
+
+**2. Compute $k=\log_ba$:**
+- $k=\log_24=2$
+
+**3. Compare $f(n)$ with $n^k$:**
+- $n^k=n^2$
+- $f(n)=n^2$
+- Therefore, $f(n)=\Theta(n^k)$
+
+**4. Check for logarithmic factors in $f(n)$:**
+- $f(n)=\Theta(n^k\log^0n)$ (since there is no logarithmic factor, $p=0$)
+
+**5. Determine which case applies:**
+- Since $f(n)=\Theta(n^k\log^pn)$, **Case 2** applies.
+
+**6. Apply the conclusion of Case X:**
+- $T(n)=\Theta(n^k\log^{p+1}n)$
+- Substituting $k=2$ and $p=0$:
+    - $T(n)=\Theta(n^2\log n)$
+
+**7. Final Answer:**
+- Therefore, $T(n)=\Theta(n^2\log n)$
+
+---
+### Key Takeaways
+- **Always identify $a$, $b$, and $f(n)$ first.**
+- **Compute $k=\log_ba$ accurately.**
+- **Compare $f(n)$ with $n^k$ by considering whether $f(n)$ is polynomially smaller, equivalent, or larger than $n^k$.**
+- **Check the regularity condition in Case 3 carefully.**
+- **Apply the appropriate case of the Master Theorem based on your analysis.**
+- **Include all calculations and comparisons in your solution to make your reasoning clear.**
+
+---
+### Final Tips for Exams
+* **Memorize the Conditions:**
+    - Understand the conditions for each case instead of rote memorization.
+- **Practice Different Scenarios:**
+    - Work through examples with varying $a$, $b$, and $f(n).
+- **Understand Underlying Concepts:**
+    - Grasp why each case leads to its conclusion (e.g., which part of the recurrence dominates).
+- **Time Management:**
+    - In examples, quickly identify $k$ and compare $f(n)$ to $n^k$ to decide on the case.
+- **Check Edge Cases:**
+    - Be cautious with logarithmic factors and constants that might affect which case applies.
+- **Write Clearly:**
+    - Show your steps in applying the theorem to potentially earn partial credit.
+- **Write Down All Steps:**
+    - Even if steps seem straightforward, write them down to ensure you haven't overlooked anything.
+- **Be Precises with Inequalities:**
+    - When stating that $f(n) = O(n^{k-\epsilon})$ or $f(n)=\Omega(n^{k+\epsilon})$, specify the value of $\epsilon$ and verify the inequality.
+- **Calculating $\log_ba$:**
+    - Use change of base formula if necessary:
+        - $\log_ba = \frac{\ln a}{\ln b}$
+- **Regularity Condition in Case 3:**
+    - Explicitly compute $af(\frac{n}{b})$ and compare it to $\delta f(n)$.
+- **State Your Conclusion Clearly:**
+    - After determining which case applies, write down the final asymptotic behavior of $T(n)$.
+- **Practice with Different Functions $f(n)$:**
+    - Try examples where $f(n)$ includes logarithmic factors, exponential terms, or other complexities.
+
+---
