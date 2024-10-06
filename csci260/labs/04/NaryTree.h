@@ -1,3 +1,4 @@
+// CHRISTOPHER NILSSEN NaryTree.h for LAB 04 CSCI 260 F2402
 #ifndef NARYTREE_H
 #define NARYTREE_H
 

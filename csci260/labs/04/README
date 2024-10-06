@@ -1,0 +1,41 @@
+# NaryTree Project
+CHRISTOPHER NILSSEN README for LAB 04 CSCI 260 F2402
+
+This project implements an N-ary tree data structure in C++. It includes two main files:
+- `NaryTree.cpp`: Contains the implementation of the N-ary tree class and methods.
+- `NaryTree.h`: The header file declaring the N-ary tree class and its methods.
+
+## Requirements
+
+- C++11 or later
+- GNU Make (for compiling the project)
+
+## How to Build
+
+To compile the project, simply run:
+```
+make
+```
+This will compile the source files and produce an executable named `NaryTreeApp`.
+
+## How to Run
+After building the project, you can run the executable with:
+```
+./NaryTreeApp
+```
+
+## How to Clean
+
+To remove the generated files, run:
+```
+make clean
+```
+
+## File Structure
+```
+.
+├── NaryTree.cpp     # Implementation of the NaryTree class
+├── NaryTree.h       # Header file for NaryTree class
+├── makefile         # Build instructions for the project
+└── README.md        # This README file
+```

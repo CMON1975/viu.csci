@@ -1,3 +1,4 @@
+// CHRISTOPHER NILSSEN NaryTree.cpp for LAB 04 CSCI 260 F2402
 #include "NaryTree.h"
 #include <iostream>
 
@@ -29,7 +30,7 @@ void Tree::insert(string data) {
     Node *newNode = new Node();
     newNode->data = data;
     if (root != nullptr) {
-        if (newNode->children.size() >= n) {
+        if (newNode->children.size() >= static_cast<size_t>(n)) {
             cout << "Cannot add old root as child, max children reached\n";
             delete newNode;
             return;
@@ -49,7 +50,7 @@ void Tree::insert(const string parentData, string childData) {
         cout << "Parent not found\n";
         return;
     }
-    if (parentNode->children.size() >= n) {
+    if (parentNode->children.size() >= static_cast<size_t>(n)) {
         cout << "Cannot add child, max children reached\n";
         return;
     }
