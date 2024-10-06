@@ -3,3 +3,4 @@
 - GPT-created Flashcards
 - LeetCode, HackerRank
 - Check textbooks for BST remove
+- Ask GPT for in-order + post- or pre- order traversal sequences and practice rebuilding binary trees.
