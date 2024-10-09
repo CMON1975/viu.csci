@@ -31,7 +31,7 @@ Write a C++ function to illustrate an algorithm that checks whether all the elem
 
    - **Objective**: Verify that every parent node has a `priority` less than or equal to its children.
    - **Approach:**
-     - Iterate over all parent nodes (from index `0` to `(N - 2) / 2)`.
+     - Iterate over all parent nodes (from index `0` to `(N - 2) / 2`).
      - For each parent node:
        - Check if the left child exists and `A[i].priority <= A[left].priority`.
        - Check if the right child exists and `A[i].prioity <= A[right].priority`.
