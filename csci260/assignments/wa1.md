@@ -130,6 +130,41 @@ int findMissingInt(const int A[], int N) {
 | abstract | 0
 | methodology | 9
 
+- Attempt to insert `brute` at index 10. No collision. Insert at index 10.
+- Attempt to insert `force` at index 11. No collision. Insert at index 11.
+- Attempt to insert `greedy` at index 7. No collision. Insert at index 7.
+- Attempt to insert `backtracking` at index 10. Collision. 
+    - Probe index 11. Collision.
+    - Probe index 12. No collision. Insert at index 12.
+- Attempt to insert `dynamic` at index 7. Collision.
+    - Probe index 8. No collision. Insert at index 8.
+- Attempt to insert `programming` at index 8. Collision.
+    - Probe index 9. No collision. Insert at index 9.
+- Attempt to insert `abstract` at index 0. No collision. Insert at index 0.
+- Attempt to insert `methodology` at index 9. Collision.
+    - Probe index 10. Collision.
+    - Probe index 11. Collision.
+    - Probe index 12. Collsion.
+    - Wrap around and probe index 0. Collision.
+    - Probe index 1. No collision. Insert at index 1.
+
+Resulting array:
+| index | string
+| :- | :-
+| 0 | abstract
+| 1 | methodology
+| 2 | empty
+| 3 | empty
+| 4 | empty
+| 5 | empty
+| 6 | empty
+| 7 | greedy
+| 8 | dynamic
+| 9 | programming
+| 10 | brute
+| 11 | force
+| 12 | backtracking
+
 ---
 #### 4. Find a Big-O characterization of the running time for the function shown below. Explain briefly how you reached your conclusion, including how you chose the problem size to perform the analysis.
 ```

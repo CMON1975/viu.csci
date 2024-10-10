@@ -309,7 +309,7 @@ $$
 - $c$: Constant time to move one disk.
 
 **Derivation:**
-This recurrence does not fir the Master Theorem because the subproblem size decreases by 1, not by a constant factor of $n$.
+This recurrence does not fit the Master Theorem because the subproblem size decreases by 1, not by a constant factor of $n$.
 
 **Solution via Iterative Substitution:**
 1. **Expand the Recurrence:**
