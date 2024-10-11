@@ -178,12 +178,43 @@ Algorithm AIForward
     for (int i = 0; i < N; i++) {
         p = 0
         for (int j = 0; j < M; j++) {
-            p = p + weight[j][i] * inputs[j]
+            p = p + weights[j][i] * inputs[j]
         }
         outputs[i] = 1/(1+pow(e, -p));
     }
 }
 ```
+**Problem Size:**
+- $M$: Number of neurons in the previous layer.
+- $N$: Number of neurons in the current layer.
+
+**Algorithm Analysis:**
+1. **Outer Loop ($i$ from $0$ to $N - 1$):**
+    - Runs $N$ times, for each neuron in the current layer.
+2. **Inner Loop ($j$ from $0$ to $M - 1$):**
+    - Runs $M$ times for each iteration of the outer loop.
+    - Calculates the weighted sum for each neuron in the current layer.
+    - **Operations inside the inner loop:**
+        - Multiplication: `weight[j][i] * inputs[j]` O(1)
+        - Addition: `p = p + ...` O(1)
+        - Total time per inner loop iteration: O(1)
+3. **Operations after the Inner Loop:**
+    - Activation function computation: `outputs[i] = 1 / (1 + pow(e, -p))`
+    - Exponential and division operations are considered O(1) (constant time) in algorithmic analysis.
+
+**Total Computations:**
+- **Inner Loop Operations:**
+    - $N$ (outer loop iterations) * $M$ (inner loop iterations) * O(1) = O($M \times N)$
+- **Outer Loop Operations (excluding inner loop):**
+    - $N$ * O(1) = O($N$)
+- **Combined Total Operations:**
+    - $O(M\times N) + O(N) \approx O(M\times N)$ since $M\times N$ dominates if $M\ge 1$.
+
+**Conclusion:**
+The running time of the `AIForward` function grows proportionally with the product of $M$ and $N$. Therefore, the Big-O characterization is:
+$$
+O(M \times N)
+$$
 
 ---
 #### 5. Consider the following recurrence equation that defines $T(N)$ as

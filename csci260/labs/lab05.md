@@ -22,5 +22,5 @@ private:
 
     TreeNode *root;
 };
-
+```
 To simplify the implementation, we assume that the AVL tree will be used to store numbers only.
