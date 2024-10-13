@@ -226,6 +226,53 @@ $$
 $$
 Prove by induction that $T(N) = N^{(N+1)}-2$.
 
+**Base Case $(N = 1)$**
+
+First, we verify that the formula holds for $N=1$.
+
+**Left Side (Recurrence Relation):**
+
+Given $T(1) = 2$.
+
+**Right Side (Closed-Form Formula):**
+$$
+T(1) = 2^{1+1} - 2 = 2^2 - 2 = 4 - 2 = 2.
+$$
+
+**Conclusion:**
+
+Since both sides equal 2, the formula holds for $N = 1$.
+
+**Inductive Step:**
+
+Assume that the formula holds for some integer $N = k\ge 1$; that is,
+$$
+T(k) = 2^{k+1} - 2.
+$$
+
+This assumption is the **inductive hypothesis**.
+
+We need to show that the formula also holds for $N = k + 1$; that is,
+$$
+T(k+1) = 2^{(k+1)+1}-2 = 2^{k+2}-2
+$$
+
+**Proof:**
+
+Starting with the recurrence relation for $T(k+1)$:
+$$
+\begin{aligned}
+T(k+1) &= 2T(k) + 2 \\
+&= 2(2^{k+1}-2) + 2 \text( {by the inductive hypothesis}) \\
+&= 2 \cdot 2^{k+1} - 4 + 2 \\
+&= 2^{k+2} - 2 
+\end{aligned}
+$$
+
+Since $T(k+1) = 2^{k+2} -2$, the formula holds for $N = k + 1$.
+
+By the principle of mathermatical induction, the formula $T(N) = 2^{N+1} - 2$ holds for all integers $N\ge 1$.
+
 ---
 #### 6. Consider the following recurrence equation that defines $T(N)$ as
 $$
