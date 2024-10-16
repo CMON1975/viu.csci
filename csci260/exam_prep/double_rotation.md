@@ -17,7 +17,7 @@ Inserting numbers in which range (or ranges) would case a double rotation? Show 
     - **Explanation**: These numbers will be inserted into the **left subtree of node 17**, leading to an imbalance at node 20 that necessitates a **Left-Right (LR) rotation**.
 
 #### Trees After the Double Rotation**:
-##### Example 1: Inserting x between 9 and 14 (e.g., x = 12)
+##### Example 1: Inserting x between 9 and 15 (e.g., x = 12)
 1. **Initial Insertion**:
     - Insert **x = 12** into the tree.
     - Path: 7 → 20 →  15 → 10 →  **Insert x as the right child of 10**.
