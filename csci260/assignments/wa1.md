@@ -283,11 +283,92 @@ $$
 $$
 Solve this recurrence equation and prove your solution by induction.
 
+- $T(1) = 2$
+- $T(2) = T(1) + 2(2) = 2 + 4 = 6$
+- $T(3) = T(2) + 2(3) = 6 + 6 = 12$
+- $T(4) = T(3) + 2(4) = 12 + 8 = 20$
+- $T(5) = T(4) + 2(5) = 20 + 10 = 30$
+
+**Pattern and assumed closed-form solution:**
+$$
+T(N) = N(N+1) 
+$$
+
+**Base Case $N = 1$**
+
+First, we verify that the formula holds for $N = 1$.
+
+**Left Side (Recurrence Relation):**
+
+Given T(1) = 2.
+
+**Right Side (Closed-Form Formula)**
+$$
+1(1+1) = 1\times 2 = 2
+$$
+
+**Conclusion:**
+
+Since both sides equal 2, the formula holds for $N = 1$.
+
+**Inductive Step:**
+
+Assume that the formula holds for some integer $N = k\ge 1$; that is,
+$$
+T(k) = k(k+1)
+$$
+
+This assumption is the **Inductive hypothesis**.
+
+We need to show that the formula also holds for $N=k+1$, i.e., we need to show:
+$$
+T(k+1) = (k+1)((k+1)+1) = (k+1)(k+2)
+$$
+
+Using the recurrence relation, we know:
+$$
+T(k+1) = T(k) + 2(k+1).
+$$
+
+Substitute the inductive hypothesis $T(k) = k(k+1)$ into this equation:
+$$
+T(k+1) = k(k+1) + 2(k+1)
+$$
+
+Factor out $(k+1)$:
+$$
+T(k+1) = (k+1)(k+2)
+$$
+
+This matches the closed-form solution for $T(k+1)$, so the inductive step holds.
+
+**Conclusion:**
+By the principle of mathematical induction, the closed-form solution to the recurrence relation is:
+$$
+T(N) = N(N+1).
+$$
+
+
 ---
 #### 7. Characterize each of the following recurrence equations using the master theorem (assuming that $T(N) = c \text{ for } N \le d \text{, for constants } c > 0 \text{, and } d \ge 1$). Explain your reasons briefly.
 - $T(N) = 2T(N/2) + 100$
+    - $a = 2, b = 2, f(N) = 100$
+    - $N^{\log_ba} = N^{\log_22} = N^1 = N$
+    - $f(N)$ grows slower than $N$ (since $f(N) = 100 is constant), this is Case 1 of the Master Theorem.
+    - Since $f(N) = O(N^{\log_ba-\epsilon})$ for some $\epsilon > 0$, then $T(N) = \Theta(N^{\log_ba})$
+    - Thus, $T(N) = \Theta(N)$
 - $T(N) = 2T(N/2) + N$
+    - $a = 2, b = 2, f(N) = N$
+    - $N^{\log_ba} = N^{\log_22} = N^1 = N$
+    - $f(N)$ grows at the same rate as $N$, this is Case 2 of the Master Theorem.
+    - $f(N) = \Theta(N^{\log_ba} \cdot \log^kN)$ for some $k\ge 0$.
+    - Thus, $T(N) = \Theta(N\log N)$
 - $T(N) = 6T(N/3) + N^2$
+    - $a =6, b =3, f(N) = N^2$
+    - $N^{\log_ba} = N^{\log_36} < N^2$
+    - $f(N)$ grows faster than $N$, this is Case 3 of the Master Theorem.
+    - Since $f(N) = \Omega(N^{\log_ba+\epsilon})$ for some $\epsilon > 0$, and $f(N)$ satisfies the regularity condition, we conclude:
+    - Thus, $T(N) = \Theta(f(N)) = \Theta(N^2)$
 - $T(N) = 4T(N/2) + (N\log N)^3$
 - $T(N) = T(N/2) + \log^2N$
 - $T(N) = 8T(N/2) + N^2\log N$
