@@ -1,0 +1,35 @@
+************************************************************************************************
+
+File: README
+Author: Christopher Nilssen (Jack)
+Date: February 27, 2017
+Updated: February 27, 2017
+
+************************************************************************************************   
+How to compile: from Linux prompt, "make".
+
+How to run: from Linux prompt, ./Pex3 will launch the program.
+
+Overview: This program utilizes a C++ class whose objects represent math sets.
+
+Design: This program consists of a main.cc and a Set class.
+
+Implementation: There are methods in the Set for construction, destruction, assignment, union, and
+display. There are also helper functions in Set for sorting and extending arrays, as well as debug
+display. The Set class has friend functions for I/O that are implemented in the main.cc.
+
+Accomplishment: The big win in this assignment was a better understanding of how arrays work, esp.
+how they can be passed into functions. Furthermore the introduction to friend functions and practice
+with operator overloading has been extremely valuable.
+
+Testing: Simple, no-error-checking I/O in the main allows for 2 Sets to be defined, values* checked
+for duplication, union, insertion of a single value, and reporting of Set contents. 
+
+Known Bugs: Non-integer input for order items causes recursive loop error.
+
+Note: 
+
+Marker's attention: Sometimes it works properly, and sometimes it misses a value, causing weird
+results and failure to correctly union, report, and insert.
+
+*value here refers to signed integers

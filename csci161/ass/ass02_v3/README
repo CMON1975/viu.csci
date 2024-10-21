@@ -1,0 +1,51 @@
+************************************************************************************************
+
+File: README
+Author: Christopher Nilssen (Jack)
+Date: February 11, 2017
+Updated:
+
+************************************************************************************************   
+How to compile: from Linux prompt, "make".
+
+How to run: from Linux prompt, ./Pex2 will launch the program.
+
+Overview: This program loads data from three files called burger.txt, sidedish.txt and drink.txt
+respectively. These three files provide the information about available menu items and their 
+price. The program prompts the user to make orders, presenting the available menu items (plus a 
+choice of "none of the above") and gets the user's choice for burger, sidedish and drink 
+respectively. If the user chooses "none of the above" for all three entries, the program 
+displays an error message and discards the order. Otherwise, the order is OK and the program 
+assigns an order number to the order, displays the order number and the price to the customer, 
+and submits the order as the newest one to the order list. The price of the order is calculated 
+as the sum	of the price of each item plus five percent of sales tax. When the program 
+terminates, it displays both the total number of orders processed and the total amount of sales 
+made in the run. 
+
+Design: There are five classes and a main. I believe I've over-designed and over-complicated the 
+structure of this due to this being my first exposure to object-oriented programming, so I 
+cannot say why I chose this current design other than the fact that it was what ended up 
+compiling and filling the spec requiements.
+
+Implementation: I've used doubly-linked lists for all data handling as this has seemed, to me, 
+the easiest way to insert and retrieve. I've privatized all variable data, simply for practice. 
+I was unable to use a variety of things learned over the course of this assignment, in 
+particular: pass-by-value vs. pass-by-reference and exception handling, because I couldn't fully 
+understand how to implement them. I hope to improve my skill with those techniques in the next 
+assignment. As an aside, I'm still struggling with concrete assumptions - while I'm able to end 
+up traversing my linked lists appropriately, I feel like I'm setting them up inelegantly 
+inserting forward and reading backward, for example). This would cause major issues in a team 
+environment.
+
+Accomplishment: I believe I've completely fulfilled the spec requirements for this assignment.
+
+Testing: All menu items work as intended. Order storage and retrieval works as intended. Empty 
+order reporting works as intended.
+
+Known Bugs: Non-integer input for order items causes recursive loop error.
+
+Note: This has been, by far, the most complicated thing I've tried to do "correctly" in my years 
+of programming. It really highlights how much more attention to detail is required to code with 
+robustness.
+
+Marker's attention: Thank you for the various extensions.

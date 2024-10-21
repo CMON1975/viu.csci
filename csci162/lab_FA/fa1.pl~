@@ -1,0 +1,10 @@
+transition(s,a,p).
+transition(s,b,s).
+transition(p,a,s).
+transition(p,b,p).
+
+final(s).
+
+computation(P, [H|T], Q):-
+    transition(P,H,X),
+    computation(X,T,Q).

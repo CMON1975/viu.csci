@@ -1,0 +1,19 @@
+class QueueException {
+public:
+  QueueException(string msg);
+  string what();
+protected:
+  string message;
+}
+
+#include "queue_exception.h"
+class EmptyQueue : public QueueException {
+public:
+  EmptyQueue() : QueueException("It's an empty queue") { }
+};
+
+#include "queue_exception.h"
+class FullQueue : public QueueException {
+public:
+  FullQueue() : QueueException("Full queue") { }
+}

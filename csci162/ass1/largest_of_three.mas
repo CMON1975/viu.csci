@@ -1,0 +1,37 @@
+﻿Input /take 1st input
+Store 0100 /store 1st input
+Clear /clear ac
+Input /take 2nd input
+Store 0101 /store 2nd input
+Clear /clear ac
+Input /take 3rd input
+Store 0102 /store 3rd input
+Clear /clear ac
+Load 0100 /load 1st in
+Subt 0101 /subtract 2nd in
+Skipcond 800 /if result greater than 0
+Jump SecondIsBiggestOfFirstTwo /else
+Jump FirstIsBiggestOfFirstTwo
+FirstIsBiggestOfFirstTwo, Clear /clear ac
+Load 0100 /load 1st in
+Subt 0102 /subtract 3rd in
+Skipcond 800 /if result greater than 0
+Jump ThirdIsBiggest /else
+Jump FirstIsBiggest 
+SecondIsBiggestOfFirstTwo, Clear /clear ac
+Load 0101 /load 2nd in
+Subt 0102 /subtract 3rd in
+Skipcond 800 /if result greater than 0
+Jump ThirdIsBiggest /else
+Jump SecondIsBiggest
+FirstIsBiggest, Clear /clear ac
+Load 0100 /load 1st in
+Jump Report /go to report
+SecondIsBiggest, Clear /clear ac
+Load 0101 /load 2nd in
+Jump Report /go to report
+ThirdIsBiggest, Clear /clear ac
+Load 0102 /load 3rd in
+Jump Report /go to report
+Report, Output /report output
+Halt

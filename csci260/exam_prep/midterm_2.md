@@ -1073,7 +1073,7 @@ $$
 Inserting numbers in which range (or ranges) would case a double rotation? Show the tree (or trees) after the rotation (You can use x to represent the newly inserted number).
 
 #### Ranges Causing a Double Rotation:
-- **First Range**: Inserting numbers **between 9 and 14** (i.e., 9 < x < 15).
+- **First Range**: Inserting numbers **between 9 and 15** (i.e., 9 < x < 15).
     - **Explanation**: These numbers will be inserted into the **right subtree of node 10**, causing an imbalance at node 20 that requires a **Left-Right (LR) rotation**.
 - **Second Range**: Inserting numbers between **16 and 19** (i.e., 16 < x < 20).
     - **Explanation**: These numbers will be inserted into the **left subtree of node 17**, leading to an imbalance at node 20 that necessitates a **Left-Right (LR) rotation**.

@@ -1,0 +1,38 @@
+************************************************************************************************
+
+File: README
+Author: Christopher Nilssen (Jack)
+Date: Mar 12, 2017
+Updated: Mar 13, 2017
+
+************************************************************************************************   
+How to compile: from Linux prompt, "make".
+
+How to run: from Linux prompt, ./Pex4 will launch the program.
+
+Overview: This program takes a command-line argument of an input file, then checks
+for mismatched or missing brackets from the set (), [], and {}. The program uses a
+stack to manage the bracket data, which consists of the bracket itself, and the
+line and column where it sits. If a missing or mismatched bracket is found, the
+program reports the location of the error.
+ 
+
+Design: There is a single template class and a main. The data is handled via stack, and
+the program iterates through the input file character-by-character, pushing new open
+brackets onto the stack and popping matching open-close pairs off as they are found. Mis-
+matches are recorded and reported accordingly.
+
+Implementation: A generic template class was used (mostly as practice from in-class lecture)
+and the entirety of the program function was implemented in the main.cc file. This could have
+been further split into classes but I felt that demonstrating understanding of stack and 
+template was enough for this exercise.
+
+Accomplishment: I believe I've completely fulfilled the spec requirements for this assignment.
+
+Testing: The program has only been tested on very limited-sized (100 characters or less) files.
+
+Known Bugs: The column count is sometimes off by +1 and I have no idea why.
+
+Note: I forgot to implement a growing array for the stack.
+
+Marker's attention: +1 error on column count, no growing array implementation for stack.

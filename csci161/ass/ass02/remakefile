@@ -1,0 +1,10 @@
+pex2: main.o order.o order_list.o
+	g++ main.o order.o order_list.o -o pex2
+main.o: main.cc order_list.h
+	g++ -c main.cc
+order_list.o: order_list.cc order.h
+	g++ -c order_list.cc
+order.o: order.cc
+	g++ -c order.cc
+clean:
+	rm *.o main

@@ -1,0 +1,8 @@
+Pex4: main.o stack.o
+	g++ main.o stack.o -o Pex4
+main.o: main.cc stack.h
+	g++ main.cc
+stack.o: stack.cc stack.h
+	g++ -c stack.cc
+clean:
+	rm *.o main

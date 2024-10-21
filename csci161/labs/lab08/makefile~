@@ -1,0 +1,8 @@
+lab8: main.o person.o
+	g++ main.o person.o -o lab8
+main.o: main.cc person.h
+	g++ -c main.cc
+person.o: person.cc person.h
+	g++ -c person.cc
+clean:
+	rm *.o main

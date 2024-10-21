@@ -1,0 +1,43 @@
+﻿Input
+Store 0100
+Clear
+Input
+Store 0101
+Clear
+Input
+Store 0102
+Clear
+Load 0100
+Subt 0101
+Skipcond 800
+Jump SecondIsBiggestOfFirstTwo
+Jump FirstIsBiggestOfFirstTwo
+FirstIsBiggestOfFirstTwo, Clear
+Load 0100
+Subt 0102
+Skipcond 800
+Jump ThirdIsBiggest
+Jump FirstIsBiggest
+SecondIsBiggestOfFirstTwo, Clear
+Load 0101
+Subt 0102
+Skipcond 800
+Jump ThirdIsBiggest
+Jump SecondIsBiggest
+FirstIsBiggest, Clear
+Load 0100
+Jump Report
+SecondIsBiggest, Clear
+Load 0101
+Jump Report
+ThirdIsBiggest, Clear
+Load 0102
+Jump Report
+Report, Output
+Halt
+
+
+
+
+Output
+Halt

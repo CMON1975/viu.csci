@@ -1,0 +1,61 @@
+#include "complexnum.h"
+using namespace std;
+ComplexNum::ComplexNum()
+{
+  a = 0;
+  b = 0;
+}
+ComplexNum::~ComplexNum() { }
+ComplexNum::ComplexNum(double x, double y)
+{
+  a = x;
+  b = y;
+}
+ComplexNum & ComplexNum::operator = (const ComplexNum & obj)
+{
+  a = obj.a;
+  b = obj.b;
+  return *this;
+}
+ComplexNum & ComplexNum::operator ++ ()
+{
+  a = a + 1;
+  b = b + 1;
+  return *this;
+}
+ComplexNum ComplexNum::operator ++ (int dummy)
+{
+  //ComplexNum tmp;
+}
+ComplexNum & ComplexNum::operator + (const ComplexNum & obj)
+{
+  ComplexNum *tmp = new ComplexNum();
+  tmp->a = a + obj.a;
+  tmp->b = b + obj.b;
+  return *tmp;
+}
+ComplexNum & ComplexNum::operator - (const ComplexNum & obj)
+{
+  ComplexNum *tmp = new ComplexNum();
+  tmp->a = a - obj.a;
+  tmp->b = b - obj.b;
+  return *tmp;
+}
+ComplexNum & ComplexNum::operator * (const ComplexNum & obj)
+{
+  ComplexNum *tmp = new ComplexNum();
+  tmp->a = (a * obj.a) - (b * obj.b);
+  tmp->b = (b * obj.a) - (a * obj.b);
+  return *tmp;
+}
+istream & operator >> (istream & in, ComplexNum & obj)
+{
+  in >> obj.a;
+  in >> obj.b;
+  return in;
+}
+ostream & operator << (ostream & out, ComplexNum & obj)
+{
+  out << obj.a << " + " << obj.b << "i";  
+  return out;
+}  

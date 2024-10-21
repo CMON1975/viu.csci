@@ -1,0 +1,36 @@
+********************************************************************
+
+File: README
+Author: Christopher Nilssen (Jack)
+Date: Apr 4, 2017
+Updated: Apr 4, 2017
+
+********************************************************************
+How to compile: from Linux prompt, "make".
+
+How to run: from Linux prompt, ./Pex5 will launch the program.
+
+Overview: This program manages a users homework assignments. It
+takes a .txt file as a command-line argument. If the file doesn't
+exist, it will be created. The user can then (assuming data exists
+in some cases) list the assignments in the file, show a detailed
+list of an assignment's data, remove an assignment from the system,
+add an assignment to the system, display the options, and export
+back to the file and exit. The system uses a dictionary ADT to 
+manage the data.
+
+Design: The bulk of the program is carry-over from Lab 10, implement
+Dictionary ADT. I chose a simple template, exception, and main
+structure.
+
+Implementation: Dictionary ADT with array for data management. 
+
+Accomplishment: The program works as specified.
+
+Testing: Tested up to 100 entries using random strings. 
+
+Known Bugs: None.
+
+Note: Very happy with this final attention.
+
+Marker's attention: Thank you for all your extra help with this one.

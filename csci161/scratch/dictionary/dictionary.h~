@@ -1,0 +1,27 @@
+#ifndef DICTIONARY_H
+#define DICTIONARY_H
+#include <iostream>
+#include "dict_except.h"
+using namespace std;
+template <class K, class T>
+class Dictionary {
+ public:
+  Dictionary();
+  ~Dictionary();
+  void Insert(K, T &) throw (DuplicateKey, DictionaryFull);
+  T & Lookup(K) throw (NotFound);
+  T & Remove(K) throw (NotFound);
+ private:
+  int Search(K);
+  struct Entry {
+    K key;
+    T * obj;
+  };
+  Entry * data;
+  int cap; //capacity
+  int size;
+  void GrowArray();
+};
+template <class K, class T>
+Dictionary
+#endif

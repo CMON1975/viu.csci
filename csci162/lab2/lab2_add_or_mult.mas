@@ -1,0 +1,24 @@
+﻿  Clear
+  Input
+  Store x
+  Clear
+  Input
+  Store y
+  Clear
+  Load x
+  Subt y
+  Skipcond 400
+  Jump subtract
+  Jump multiply
+multiply, Clear
+  Load x
+  Add y
+  Output
+  Halt
+subtract, Clear
+  Load y
+  Subt x
+  Output
+  Halt
+x, DEC 0
+y, DEC 0

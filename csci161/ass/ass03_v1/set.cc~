@@ -1,0 +1,147 @@
+#include "set.h"
+using namespace std;
+Set::Set() { }
+Set::Set(unsigned int members, string set_in) 
+{
+  stringstream set_out(set_in); //put input into a stringstream
+  size = members; //sync sizes
+  data = new int[size]; //init array
+  int n;
+  int i = 0;
+  while(set_out >> n) {
+    data[i] = n;
+    i++;
+  }
+}
+Set::Set(unsigned int members, int* arr_in)
+{
+  size = members;
+  data = new int[size];
+  for(int i=0;i<size;i++) data[i] = arr_in[i];
+  }
+Set::Set(const Set &set_in)
+{
+  size = set_in.size;
+  data = new int[size];
+  for(int i=0;i<size;i++) data[i] = set_in.data[i];
+}
+Set::~Set() 
+{
+  delete [] data;
+}
+Set & Set::operator =(const Set &set_in)
+{
+  size = set_in.size;
+  data = new int[size];
+  for(int i=0;i<size;i++) data[i] = set_in.data[i];
+  return *this;
+}
+Set Set::operator +(const Set &set_in)
+{
+  int new_size = set_in.size + size;
+  int new_data[new_size];
+  int j = 0; //index for new array
+  for(int i=0;i<size;i++){
+    new_data[j] = data[i];
+    j++;
+  }
+  for(int i=0;i<set_in.size;i++){
+    new_data[j] = set_in.data[i];
+    j++;
+  }
+  Sort(new_size, new_data); //sort in ascending order
+  int uniques = CountDuplicates(new_size, new_data); //count dupes
+  int final[uniques]; //init final array 
+  RemoveDuplicates(new_size, new_data, final); //remove dupes for true, sorted union
+  Set return_set = Set(uniques, final);
+  return return_set;
+}
+bool Set::operator ==(const Set&set_in) const
+{
+  if(size != set_in.size) return false;
+  bool match;
+  for (int i=0;i<size;i++){
+    match = false;
+    for (int j=0;j<size;j++){
+      if(data[i] == set_in.data[j]) match = true;
+    }
+    if(!match) return false;
+  }
+  return true;
+}
+bool Set::Exists(int int_in)
+{
+  for(int i=0;i<size;i++){
+    if(data[i] == int_in) return true;
+  }
+  return false;
+}
+bool Set::Add(int int_in)
+{
+  if(Exists(int_in)) return false; //already exists, cannot add
+  size = size+1; //increment size to accomodate new value
+  int new_data[size]; //new array with +1 size
+  for(int i=0;i<size;i++){ //put old values and new value into new array
+    if(i<size-1) new_data[i] = data[i];
+    else new_data[i] = int_in;
+  }
+  delete [] data;
+  data = new int[size];
+  for(int i=0;i<size;i++){
+    data[i] = new_data[i];
+  }  
+  Sort(size, data); //run a sort
+  return true;
+}
+void Set::Display()
+{
+  cout << "{ ";
+  for(int i=0;i<size;i++) {
+    cout << data[i];
+    if(i==size-1) cout << " }" << endl;
+    else cout << ", ";
+  }
+}
+/*void Set::Display(int size_in, int *arr_in) //DEBUG
+{
+  cout << "{ ";
+  for(int i=0;i<size_in;i++) {
+    cout << arr_in[i];
+    if(i==size_in-1) cout << " }" << endl;
+    else cout << ", ";
+  }
+  }*/
+void Set::Sort(int size_in, int* arr_in)
+{
+  int tmp; //"holding" int
+  for(int i=0;i<size_in;i++) {
+    for(int j=0;j<size_in;j++) {
+      if(arr_in[j]>arr_in[j+1]) {
+	tmp = arr_in[j];
+	arr_in[j] = arr_in[j+1];
+	arr_in[j+1] = tmp;
+      }
+    }
+  }
+  //cout << "First sort produced: "; //DEBUG
+  //Display(size_in, arr_in); //DEBUG
+}
+int Set::CountDuplicates(int size_in, int* arr_in)
+{
+  //iterate through, counting only unique values
+  unsigned int unique_size = 0; //counts unique values
+  for(int i=0;i<size_in;i++) {
+    if(arr_in[i]!=arr_in[i+1]) unique_size++;
+  }
+  return unique_size;
+}
+void Set::RemoveDuplicates(int size_in, int* arr_in, int* final_in)
+{
+  int k = 0; //uniques index
+  for (int i=0;i<size_in;i++){
+    if(arr_in[i]!=arr_in[i+1]) {
+      final_in[k] = arr_in[i];
+      k++;
+    }
+  }  
+}

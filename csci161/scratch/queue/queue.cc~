@@ -1,0 +1,32 @@
+#include "queue.h"
+using namespace std;
+Queue::Queue() { }
+Queue::Queue(int cap) { }
+Queue::Queue(const Queue &q_in) { }
+Queue::~Queue() { }
+bool Enqueue(Data &obj)
+{
+  return true;
+}
+Data &Dequeue()
+{
+
+}
+Data &Peek()
+{
+
+}
+bool IsEmpty()
+{
+
+  return true;
+}
+bool IsFull()
+{
+
+  return true;
+}
+int GetSize()
+{
+  return 0;
+}

@@ -1,0 +1,14 @@
+#include <iostream>
+#include "growing_array.h"
+
+int main()
+{
+  GrowingArray array = GrowingArray(5);
+  array.Insert(22.5);
+  array.Insert(1.5);
+  array.Insert(0.0);
+  array.Insert(3.5);
+  array.Insert(99.532);
+  std::cout << "Size of array is: " << array.GetSize() << std::endl;
+  array.Show();
+}

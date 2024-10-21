@@ -1,0 +1,30 @@
+#include "person.h"
+using namespace std;
+Person::Person()
+{
+  cout << "Parent default constructor called." << endl;
+}
+Person::~Person()
+{
+  cout << "Parent default destructor called." << endl;
+}
+Person::Person(string the_name)
+{
+  cout << "Parent overloaded constructor called." << endl;
+}
+Person::Person(const Person & Pobj)
+{
+  cout << "Parent copy constructor called." << endl;
+}
+string Person::GetName() const
+{
+  return name;
+}
+void Person::SetName(string the_name)
+{
+  name = the_name;
+}
+void Person::Display() const
+{
+  cout << "The person's name is " << name << "." << endl;
+}

@@ -1,0 +1,50 @@
+#ifndef STACK_H
+#define STACK_H
+#include <iostream>
+using namespace std;
+template <class T>
+class Stack {
+ public:
+  Stack();        //default constructor
+  ~Stack();       //default destructor
+  void Push(T);   //push object in
+  T Pop();        //pop object out
+  T Peek();       //peek at top of stack
+  bool IsEmpty(); //check for empty stack
+ private:
+  static const int N = 100; //TODO make dynamic
+  int top;    //top of stack  
+  T data[N]; //empty stack
+};
+
+template <class T>
+Stack<T>::Stack():top(0) { }
+
+template <class T>
+Stack<T>::~Stack() { }
+
+template <class T>
+void Stack<T>::Push(T d) 
+{
+  data[top++] = d;
+}
+
+template <class T>
+T Stack<T>::Peek()
+{
+  return (data[top]);
+}
+
+template <class T>
+T Stack<T>::Pop()
+{
+  top--;
+  return (data[top]);
+}
+
+template <class T>
+bool Stack<T>::IsEmpty()
+{
+  return (top == 0);
+}
+#endif

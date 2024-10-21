@@ -1,0 +1,13 @@
+#ifndef QUEUE_EXCEPTION_H
+#define QUEUE_EXCEPTION_H
+#include <iostream>
+using namespace std;
+class QueueException {
+public:
+  QueueException(string msg);
+  virtual ~QueueException();
+  string what();
+protected:
+  string message;
+};
+#endif

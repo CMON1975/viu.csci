@@ -1,0 +1,4 @@
+queue: queue.o
+	g++ queue.o -o queue
+queue.o: queue.cc queue.h
+	g++ -c queue.cc

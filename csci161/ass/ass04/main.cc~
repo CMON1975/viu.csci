@@ -1,0 +1,87 @@
+#include <iostream>
+#include <fstream>
+#include "stack.h"
+using namespace std;
+struct Data {
+  char bracket;
+  int line;
+  int pos;
+};
+void Display(Data obj)
+{
+  cout << "Found " << obj.bracket << " at line "
+       <<  obj.line << ", position " << obj.pos << endl;
+}
+int main(int argc, char *argv[])
+{
+  int match_length = 3;
+  char open_brackets[3] = { '(','[','{' };
+  char close_brackets[3] = { ')',']','}' };
+  //init bracket stack
+  Stack<Data> brackets;
+  //check for appropriate command-line input
+  if(argc != 2) 
+    cout << "correct use is " << argv[0] << " infile" << endl;
+
+  //file opening
+  char * source_file = argv[1];
+  FILE * fin; //pointer to position in file
+  fin = fopen(source_file, "r"); //attempt to open input file, set to read
+  if(!fin)
+    cout << "No input file detected, aborting." << endl;
+  else 
+    cout << source_file << " opened, continuing." << endl;
+
+  //counting
+  int line_count = 0;
+  int char_count = -1; //init to -1 to account for zeroeth position
+  char current_char; //container for current char
+  do {
+    
+    Data tmp;
+    current_char = getc(fin); //set the current char from file
+    if(current_char == '\n'){
+      char_count = -1;
+      line_count++;
+    }
+    for(int i=0;i<match_length;i++){
+      if(current_char == open_brackets[i]){
+	tmp.bracket = current_char;
+	tmp.line = line_count;
+	tmp.pos = char_count;
+	brackets.Push(tmp);
+      }
+      if(current_char == close_brackets[i]){
+	bool pop_pair = false; //switch for popping matched pairs
+	char tmp = brackets.Peek().bracket;
+	switch(current_char){
+	case ')':
+	  if(tmp == '(') //match
+	    pop_pair = true;
+	  break;
+	case ']':
+	  if(tmp == '[') //match
+	    pop_pair = true;
+	  break;
+	case '}':
+	  if(tmp == '{') //match
+	    pop_pair = true;
+	  break;
+	}
+	if(pop_pair) {
+	  brackets.Pop(); //pop the previous off
+	  cout << "Poppin' off!" << endl;
+      }
+    }
+    char_count++;      
+  } while (!feof(fin));
+
+  //file closing
+  fclose(fin); 
+  cout << source_file << " closed." << endl;
+  
+  //end the program
+  return 0;
+}
+
+

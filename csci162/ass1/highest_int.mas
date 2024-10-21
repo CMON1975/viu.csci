@@ -1,0 +1,20 @@
+﻿Input
+Store 0100
+Clear
+Input
+Store 0101
+Clear
+Input
+Store 0102
+Clear
+Load 0100
+Subt 0101
+Skipcond 000
+Load 0101
+Load 0100
+Subt 0102
+Skipcond 000
+Load 0102
+Load 0100
+Output
+Halt

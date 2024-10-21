@@ -27,68 +27,48 @@ struct TreeNode {
     Data *data;
     TreeNode *left;
     TreeNode *right;
-}
+};
 
 // binary search tree checker
 bool isBST(TreeNode *node, TreeNode *minNode, TreeNode *maxNode) {
-    if (node == NULL)
+    if (node == nullptr)
         return true;
 
-    if ((minNode != NULL && node->key <= minNode->key) || (maxNode != NULL && node->key >= maxNode->key))
+    if ((minNode != nullptr && node->key <= minNode->key) || (maxNode != nullptr && node->key >= maxNode->key))
         return false;
 
     // recursively go through tree
     return isBST(node->left, minNode, node) && isBST(node->right, node, maxNode);
 }
 
-// tree height calculator
-int getHeight(TreeNode *node) {
-    if (node == NULL)
+// tree height and balance checker (optimized)
+int checkHeightAndBalance(TreeNode *node, bool &isBalanced) {
+    if (node == nullptr)
         return 0;
 
-    // recursive checks
-    int leftHeight == getHeight(node->left);
-    int rightHeight == getHeight(node->right);
+    int leftHeight = checkHeightAndBalance(node->left, isBalanced);
+    int rightHeight = checkHeightAndBalance(node->right, isBalanced);
 
-    int height;
-    if (leftHeight > rightHeight)
-        height = leftHeight + 1;
-    else
-        height = rightHeight + 1;
+    // check balance at current node
+    if (abs(leftHeight - rightHeight) > 1)
+        isBalanced = false;
 
-    return height;
-}
-
-// tree balance check
-bool isBalanced(TreeNode *node) {
-    if (node == NULL)
-        return true;
-
-    int leftHeight = getHeight(node->left);
-    int rightHeight = getHeight(node->right);
-
-    int heightDifference = leftHeight - rightheight;
-    if (heightDifference < 0)
-        heightDifference = -heightDifference; // absolute value fix
-
-    if (heightDifference > 1)
-        return false;
-
-    return isBalanced(node->left) && isBalanced(node->right);
+    // return the height of the current node
+    return std::max(leftHeight, rightHeight) + 1;
 }
 
 // AVL tree check
 bool isAVLTree(TreeNode *root) {
-    if (root == NULL)
+    if (root == nullptr)
         return true;
 
-    if (!isBST(root, NULL, NULL))
+    if (!isBST(root, nullptr, nullptr))
         return false;
     
-    if (!isBalanced(root))
-        return false;
-
-    return true;
+    bool balanced = true;
+    checkHeightAndBalance(root, balanced);
+    
+    return balanced;
 }
 ```
 ---
@@ -98,23 +78,24 @@ A binary search ($\Theta\log N$) is in order:
 ```
 int findMissingInt(const int A[], int N) {
     int low = 0;
-    int high = N - 1; // A has N elements
+    int high = N - 1;  // A has N elements (so the valid index range is 0 to N-1)
 
     while (low <= high) {
         int mid = low + (high - low) / 2;
     
         if (A[mid] > mid) {
-            // target int at or before mid
+            // missing integer must be at or before index 'mid'
             high = mid - 1;
         } else {
-            // target is after mid
+            // missing integer must be after index 'mid'
             low = mid + 1;
         }
     }
 
-    // low is the smallest index where A[i] > i, thus the target int
+    // 'low' now points to the missing integer
     return low;
 }
+
 ```
 ---
 #### 3. Given the following strings and their corresponding hash codes, draw the resulting 13-cell hash table by inserting these strings in the given order to the hash table and using linear probing to resolve (possible) collisions.
@@ -149,8 +130,9 @@ int findMissingInt(const int A[], int N) {
     - Probe index 1. No collision. Insert at index 1.
 
 Resulting array:
+
 | index | string
-| :- | :-
+| :--- | :---
 | 0 | abstract
 | 1 | methodology
 | 2 | empty
@@ -263,7 +245,7 @@ Starting with the recurrence relation for $T(k+1)$:
 $$
 \begin{aligned}
 T(k+1) &= 2T(k) + 2 \\
-&= 2(2^{k+1}-2) + 2 \text( {by the inductive hypothesis}) \\
+&= 2(2^{k+1}-2) + 2 \text{( by the inductive hypothesis)} \\
 &= 2 \cdot 2^{k+1} - 4 + 2 \\
 &= 2^{k+2} - 2 
 \end{aligned}
@@ -370,5 +352,27 @@ $$
     - Since $f(N) = \Omega(N^{\log_ba+\epsilon})$ for some $\epsilon > 0$, and $f(N)$ satisfies the regularity condition, we conclude:
     - Thus, $T(N) = \Theta(f(N)) = \Theta(N^2)$
 - $T(N) = 4T(N/2) + (N\log N)^3$
+    - $a = 4$, $b = 2$, $f(N) = (N\log N)^3$
+    - $N^{\log_b a} = N^{\log_2 4} = N^{2}$
+    - $f(N) = N^3 (\log N)^3$
+    - Since $f(N)$ grows faster than $N^{2}$ (because of the extra $N$ and $\log N$ factors), this is Case 3 of the Master Theorem.
+    - We verify the regularity condition:
+        - Compute $a f(N/b)$:
+            - $f(N/b) = \left(\frac{N}{2}\log\frac{N}{2}\right)^3 = \left(\frac{N}{2}\left(\log N - 1\right)\right)^3$
+            - $a f(N/b) = 4 \times \left(\frac{N}{2}\left(\log N - 1\right)\right)^3 = N^3 \left(\log N - 1\right)^3$
+        - Compute $c f(N)$:
+            - $f(N) = N^3 (\log N)^3$
+            - For large $N$, $\left(\log N - 1\right)^3 \approx (\log N)^3$, so $a f(N/b) \leq c f(N)$ with $c = 1$
+        - Since $c < a$, the regularity condition is satisfied.
+    - Thus, $T(N) = \Theta(f(N)) = \Theta\left(N^3 (\log N)^3\right)$
 - $T(N) = T(N/2) + \log^2N$
+    - $a = 1$, $b = 2$, $f(N) = \log^2 N$
+    - $N^{\log_b a} = N^{\log_2 1} = N^{0} = 1$
+    - Since $f(N) = \Theta(N^{0} \log^k N)$ with $k = 2$, this is Case 2 of the Master Theorem.
+    - Therefore, $T(N) = \Theta(N^{0} \log^{k+1} N) = \Theta(\log^{3} N)$
 - $T(N) = 8T(N/2) + N^2\log N$
+    - $a = 8$, $b = 2$, $f(N) = N^2\log N$
+    - $N^{\log_b a} = N^{\log_2 8} = N^{3}$
+    - Since $f(N) = N^2 \log N$ grows slower than $N^{3}$, this is Case 1 of the Master Theorem.
+    - Because $f(N) = O\left(N^{\log_b a - \epsilon}\right)$ for some $\epsilon > 0$, we have $T(N) = \Theta\left(N^{\log_b a}\right)$
+    - Thus, $T(N) = \Theta(N^{3})$
