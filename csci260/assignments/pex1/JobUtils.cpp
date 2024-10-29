@@ -86,42 +86,38 @@ void execute(MinHeap<Job> &jobQueue, bool suppressOutput)
     }
 }
 
-void lottery(MinHeap<Job> &jobQueue)
-{
-    if (jobQueue.isEmpty())
-    {
-        cout << "No jobs in the queue to execute.\n";
+void lottery(MinHeap<Job> &jobQueue) {
+    if (jobQueue.isEmpty()) {
+        std::cout << "No jobs in the queue to execute.\n";
         return;
     }
 
-    // random number seed
+    // Seed random number generator if not seeded
     static bool seeded = false;
-    if (!seeded)
-    {
+    if (!seeded) {
         srand(static_cast<unsigned int>(time(0)));
         seeded = true;
     }
 
-    size_t queueSize = jobQueue.size();
-    size_t randomIndex = static_cast<size_t>(rand()) % queueSize; // range 0 to queueSize - 1
-
-    vector<Job> tempJobs;
-
-    // remove jobs until selected job
-    for (size_t i = 0; i < randomIndex; ++i)
-    {
-        Job tempJob = jobQueue.extractMin();
-        tempJobs.push_back(tempJob);
+    // Step 1: Copy jobs into a temporary vector
+    std::vector<Job> tempJobs;
+    while (!jobQueue.isEmpty()) {
+        tempJobs.push_back(jobQueue.extractMin());
     }
 
-    // extract the random joob
-    Job luckyJob = jobQueue.extractMin();
+    // Step 2: Randomly select a lucky job
+    size_t queueSize = tempJobs.size();
+    size_t randomIndex = static_cast<size_t>(rand()) % queueSize;
+    Job luckyJob = tempJobs[randomIndex];
 
-    // re-insert the temp removed jobs
-    for (size_t i = 0; i < tempJobs.size(); ++i)
-    {
-        jobQueue.insert(tempJobs[i]);
+    // Step 3: Rebuild the priority queue, excluding the lucky job
+    for (size_t i = 0; i < tempJobs.size(); ++i) {
+        if (i != randomIndex) {
+            jobQueue.insert(tempJobs[i]);
+        }
     }
+
+    // Display lucky job information
     displayJobInfo(luckyJob, "Lucky job selected for execution:");
 }
 
