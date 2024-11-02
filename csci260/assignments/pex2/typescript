@@ -1,0 +1,83 @@
+# CHRISTOPHER NILSSEN typescript for ASSIGNMENT 02 CSCI 260 F2402
+
+Script started on 2024-11-01 12:14:34-07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="217" LINES="23"]
+
+Available commands:
+  subscribe        - Subscribe a new customer
+  show <ID>        - Show customer details by ID
+  list             - List all customers by ID
+  spam             - List active customers by email
+  unsubscribe <ID> - Unsubscribe a customer by ID
+  help             - Display this help message
+  quit             - Exit the program
+Enter command: help
+Available commands:
+  subscribe        - Subscribe a new customer
+  show <ID>        - Show customer details by ID
+  list             - List all customers by ID
+  spam             - List active customers by email
+  unsubscribe <ID> - Unsubscribe a customer by ID
+  help             - Display this help message
+  quit             - Exit the program
+Enter command: subscribe
+Enter email: john@example.com
+Enter name: John Doe
+Subscription successful. Your customer ID is 100001.
+Enter command: subscribe
+Enter email: jane@example.com
+Enter name: Jane Smith
+Subscription successful. Your customer ID is 100002.
+Enter command: subscribe
+Enter email: alice@example.com
+Enter name: Alice Johnson
+Subscription successful. Your customer ID is 100003.
+Enter command: subscribe
+Enter email: john@example.com
+Enter name: Johnny Doe
+Error: Customer with this email already exists and is active.
+Enter command: list
+Customer ID: 100001, Name: John Doe
+Customer ID: 100002, Name: Jane Smith
+Customer ID: 100003, Name: Alice Johnson
+Enter command: unsubscribe 100002
+Customer ID 100002 unsubscribed successfully.
+Enter command: subscribe
+Enter email: jane@example.com
+Enter name: Jane Smith
+Customer reactivated. Customer ID: 100002
+Enter command: show 100001
+Customer ID: 100001
+Email: john@example.com
+Name: John Doe
+Status: Active
+Enter command: show 100002
+Customer ID: 100002
+Email: jane@example.com
+Name: Jane Smith
+Status: Active
+Enter command: unsubscribe 100001
+Customer ID 100001 unsubscribed successfully.
+Enter command: unsubscribe 100001
+Error: Customer ID 100001 is already inactive.
+Enter command: list
+Customer ID: 100001, Name: John Doe
+Customer ID: 100002, Name: Jane Smith
+Customer ID: 100003, Name: Alice Johnson
+Enter command: spam
+Email: alice@example.com, Name: Alice Johnson
+Email: jane@example.com, Name: Jane Smith
+Enter command: unsubscribe 100002
+Customer ID 100002 unsubscribed successfully.
+Enter command: unsubscribe 100003
+Customer ID 100003 unsubscribed successfully.
+Enter command: spam
+No active customers found.
+Enter command: show 999999
+Error: Customer ID 999999 not found.
+Enter command: unknowncommand
+Invalid command. Type 'help' to see the list of available commands.
+Enter command: quit
+
+exit
+
+Script done on 2024-11-01 12:18:41-07:00 [COMMAND_EXIT_CODE="0"]
