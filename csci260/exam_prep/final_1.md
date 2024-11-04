@@ -99,3 +99,202 @@
                 return i 
         return -1
     ```
+
+4. **In the international telephone system, each country is assigned with a country calling code. The following table shows some examples of the codes and corresponding names:**
+
+    | Country Code | Country Name 
+    | :- | :-
+    | 1 | USA and Canada
+    | 52 | Mexico
+    | 44 | UK
+    | 86 | China
+    | 91 | India
+    | 355 | Albania
+    | 359 | Bulgaria
+    | 855 | Cambodia
+
+    It is guaranteed that none of the country codes is the prefix of other country codes.
+    1. Define a concrete data structure for node used in a standard trie for the purpose of mapping the country codes to the corresponding country names.
+    ```cpp
+    struct TrieNode {
+        TrieNode* children[10]; // pointers for digits 0-9
+        string countryName;     // nonempty if node represents a country code
+        TrieNode() : countryName("") {
+            for (int i = 0; i < 10; ++i)
+                children[i] = nullptr;
+        }
+    };
+    ```
+    - **Children**: An array of 10 pointers (`children[0]` to `children[9]`) for each possible digit.
+    - **Country Name**: Stores the country name if the node represents the end of a country code.
+
+    2. Suppose that a standard trie has been constructed using the concrete data structure you defined in the previous question. Using C++ pseudocode, describe an algorithm that takes a string of country code as its parameter and returns the corresponding country name. If the country code provided is invalid, return an empty string.
+    ```cpp
+    string getCountryName(TrieNode* root, string code) {
+        TrieNode* node = root;
+        for (char c : code) {
+            int index = c - '0';    // convert digit character to index
+            if (node->children[index] == nullptr)
+                return "";  // invalid country code
+            node = node->children[index];
+        }
+        return node->countryName;   // returns empty string if invalide
+    }
+    ```
+    - **Traverse the Trie**:
+        - For each digit in the input `code`, mode to the corresponding child node.
+        - If a child does not exist (`nullptr`), the code is invalid.
+    - **Return Value:**
+        - If traversal complete, return `node->countryName`.
+        - If `countryName` is empty, the code is invalid.
+    
+5. **Consider the following recurrence equation, defining $T(n)$ as:**
+    $$
+    T(n) = 
+    \begin{cases} 
+        1 & \text{if } n = 1 \\ 
+        T(n-1) + n & \text{if } n > 1 
+    \end{cases}
+    $$
+    Solve $T(n)$, and prove your solution by induction.
+
+    **Closed-form Expression**:
+    $T(n) = \frac{n(n+1)}{2}$ (found by expanding $T(n)$ which results in the sum of the first $n$ natural numbers.
+
+    **Proof by Induction**:
+    **Base Case $(n=1)$:
+    $T(1) = 1$
+    Closed-form calculation:
+    $\frac{1\times (1+1)}{2}=\frac{1\times 2}{2}=1$
+    Thus, the base case holds.
+    **Inductive Step:**
+    Assume the formula holds for some $k\ge 1$:
+    $T(k) = \frac{k(k+1)}{2}$
+    We need to show that:
+    $T(k+1) = \frac{(k+1)(k+2)}{2}$
+    Compute $T(k+1)$:
+    $$ 
+        \begin{align}
+        T(k+1)  &= T(k)+(k+1) \\
+        &= \frac{k(k+1)}{2}+(k+1) \text{ (by induction hypothesis)} \\
+        &= (k+1)\left(\frac{k}{2}+1\right) \\
+        &= (k+1)\left(\frac{k+2}{2}\right) \\
+        &= \frac{(k+1)(k+2)}{2} \\
+        \end{align}
+    $$
+
+    Therefore, $T(k+1)$ satisfies the closed-form expression.
+
+6. **Using Lempel-Ziv algorithm to encode (compress) the following message string:**
+    `around the house there are three green trees`
+    with the following requirements:
+    - The alphabet consists of 12 characters (shown below):
+        $\sum = \{ , a, d, e, g, h, n, o, r, s, t, u\}$
+    - 5 bits should be used to code each entry in the dictionary.
+    - When fully filled, the dictionary should simply stop accepting new entries.
+
+    Show both the final dictionary entries and sequence of the codes.
+
+    **Final Dictionary Entries**:
+    | Index | Entry
+    | :- | :-
+    | 1 | a
+    | 2 | r
+    | 3 | o
+    | 4 | u
+    | 5 | n
+    | 6 | d
+    | 7 | ' '
+    | 8 | t
+    | 9 | h
+    | 10 | e
+    | 11 | ' h'
+    | 12 | ou
+    | 13 | s
+    | 14 | e'
+    | 15 | th
+    | 16 | er
+    | 17 | e a
+    | 18 | re
+    | 19 | 't'
+    | 20 | hr
+    | 21 | ee
+    | 22 | ' g'
+    | 23 | ree
+    | 24 | n '
+    | 25 | tr
+    | 26 | ees
+
+    **Sequence of Codes:**
+    1. (0, a)
+    2. (0, r)
+    3. (0, o)
+    4. (0, u)
+    5. (0, n)
+    6. (0, d)
+    7. (0, ' ')
+    8. (0, t)
+    9. (0, h)
+    10. (0, e)
+    11. (7, h)
+    12. (3, u)
+    13. (0, s)
+    14. (10, ' ')
+    15. (8, h)
+    16. (10, r)
+    17. (14, a)
+    18. (2, e)
+    19. (7, t)
+    20. (9, r)
+    21. (10, e)
+    22. (7, g)
+    23. (18, e)
+    24. (5, ' ')
+    25. (8, r)
+    26. (21, s)
+
+    **Explanation:**
+    - **Alphabet**: $\sum = \{ , a, d, e, g, h, n, o, r, s, t, u\}$
+    - **Dictionary Limit**: 5 bits per entry ⇒ max 32 entries.
+    - **Encoding Process:** Used LZ78 algorithm to encode the message.
+    - **Dictionary Filling:** Stopped adding new entries after reaching the limit or when the message ended.
+
+7. **Given the following adjacency matrix of the graph G, where A to F are identities of the vertices in G, a positive number in row i and column j represents a directed edge from vertex i to vertex j with a given weight, and 0 means no such edge from vertex i to vertex j.**
+
+    | | A | B | C | D | E | F
+    | :- | :- | :- | :- | :- | :- | :-
+    | A | 0 | 0 | 15 | 12 | 0 | 0
+    | B | 5 | 0 | 0 | 0 | 6 | 0
+    | C | 0 | 0 | 0 | 0 | 0 | 25
+    | D | 0 | 19 | 0 | 0 | 0 | 0
+    | E | 0 | 0 | 0 | 0 | 0 | 8
+    | F | 0 | 0 | 0 | 0 | 0 | 0
+
+    1. Draw the graph G that is consistent with the above given adjacency matrix.
+    2. Order the vertices as they are visited in a DFS (depth first search) traversal starting at vertex A.
+    3. Draw the minimum spanning tree of the graph G. For the purpose of the question only, treat all the edges as undirected ones.
+    4. Using C/C++ pseudocode, describe an algorithm that determines whether there is a cyclic path in graph G that involves a given vertex (passed through a parameter).
+    ```cpp
+    bool isCyclicUtil(int v, bool visited[], bool recStack[], int adj[][6], int numVertices) {
+        visited[v] = true;
+        recStack[v] = true;
+
+        for (int neighbor = 0; neighbor < numVertices; ++neighbor) {
+            if (adj[v][neighbor] != 0) {    // if edge exists
+                if (!visited[neighbor] && isCyclicUtil(neighbor, visited, recStack, adj, numVertices))
+                    return true;
+                else if (recStack[neighbor])
+                    return true;
+            }
+        }
+        recStack[v] = false;
+        return false;
+    }
+
+    bool hasCycleFromVertex(int start, int adj[][6], int numVertices) {
+        bool visited[6] = {false};  // tracks visited nodes
+        bool recStack[6] = {false}; // tracks current recursion path
+
+        return isCyclicUtil(start, visited, recStack, adj, numVertices);
+    }
+    ```
