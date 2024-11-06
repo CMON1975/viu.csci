@@ -1,4 +1,9 @@
-// CHRISTOPHER NILSSEN BST.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// CHRISTOPHER NILSSEN - BST.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// Implements a binary search tree (BST) for managing Customer objects by email. 
+// Provides functionality to insert customers, search by email, perform in-order traversal to 
+// display active customers, and release memory upon deletion. The in-order traversal outputs 
+// active customers' emails and names.
+
 #include "BST.h"
 #include <iostream>
 

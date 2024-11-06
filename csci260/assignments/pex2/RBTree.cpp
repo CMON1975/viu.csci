@@ -1,4 +1,8 @@
-// CHRISTOPHER NILSSEN RBTree.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// CHRISTOPHER NILSSEN - RBTree.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// Implements a red-black tree (RBTree) to manage Customer objects by customerID. 
+// Provides methods for insertion, ID-based search, in-order traversal, and memory cleanup. 
+// Maintains red-black properties through rotations and color adjustments, ensuring balanced tree structure.
+
 #include "RBTree.h"
 #include <iostream>
 

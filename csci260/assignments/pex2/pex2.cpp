@@ -1,4 +1,9 @@
-// CHRISTOPHER NILSSEN pex2.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// CHRISTOPHER NILSSEN - pex2.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// This program implements a customer management system with commands to subscribe, show, list, spam, 
+// unsubscribe, and exit. It uses a Red-Black Tree (RBTree) to store customers by ID and a Binary Search 
+// Tree (BST) for email-based operations, ensuring efficient data retrieval and updates. The system 
+// includes memory management for dynamically allocated Customer instances.
+
 #include <iostream>
 #include <string>
 #include "Customer.h"

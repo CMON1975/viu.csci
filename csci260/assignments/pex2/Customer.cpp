@@ -1,7 +1,7 @@
-// CHRISTOPHER NILSSEN Customer.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// CHRISTOPHER NILSSEN - Customer.cpp for ASSIGNMENT 02 CSCI 260 F2402
+// Defines the Customer class, representing a customer with an ID, email, name, 
+// and active status. Refactored from tree code to improve modularity and manageability.
 
-// formerly individually implemented in tree code, refactored here for
-// better management
 #include "Customer.h"
 
 // implementation of the Customer constructor

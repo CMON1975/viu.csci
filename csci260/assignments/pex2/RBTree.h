@@ -1,4 +1,8 @@
-// CHRISTOPHER NILSSEN RBTree.h for ASSIGNMENT 02 CSCI 260 F2402
+// CHRISTOPHER NILSSEN - RBTree.h for ASSIGNMENT 02 CSCI 260 F2402
+// Defines a red-black tree (RBTree) class for managing Customer objects by customerID. 
+// Includes node rotations and fix-up operations to maintain red-black properties for balanced insertion. 
+// Provides insertion, search by customerID, in-order traversal, and memory cleanup via a sentinel NIL node.
+
 #ifndef RBTREE_H
 #define RBTREE_H
 

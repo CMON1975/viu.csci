@@ -1,4 +1,8 @@
-// CHRISTOPHER NILSSEN BST.h for ASSIGNMENT 02 CSCI 260 F2402
+// CHRISTOPHER NILSSEN - BST.h for ASSIGNMENT 02 CSCI 260 F2402
+// Defines a binary search tree (BST) class for managing Customer objects by email. 
+// Includes methods for insertion, email-based search, in-order traversal, and memory cleanup. 
+// Uses a BSTNode structure to store each Customer and its child nodes.
+
 #ifndef BST_H
 #define BST_H
 
