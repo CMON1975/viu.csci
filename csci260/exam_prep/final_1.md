@@ -271,30 +271,62 @@
     | F | 0 | 0 | 0 | 0 | 0 | 0
 
     1. Draw the graph G that is consistent with the above given adjacency matrix.
+        **Edges:**
+        - A → C (weight 15)
+        - A → D (weight 12)
+        - B → A (weight 5)
+        - B → E (weight 6)
+        - C → F (weight 25)
+        - D → B (weight 19)
+        - E → F (weight 8)
     2. Order the vertices as they are visited in a DFS (depth first search) traversal starting at vertex A.
+        Traversal Order: A, C, F, D, B, E
+        **Explanation:**
+        - Start at A.
+        - Visit C from A.
+        - Visit F from C.
+        - Backtrack to A.
+        - Visit D from A.
+        - Visit B from D.
+        - Visit E from B.
     3. Draw the minimum spanning tree of the graph G. For the purpose of the question only, treat all the edges as undirected ones.
+        **Edgest in MST:**
+        - B—A (weight 5)
+        - B—E (weight 6)
+        - E—F (weight 8)
+        - A—D (weight 12)
+        - A—C (weight 15)
     4. Using C/C++ pseudocode, describe an algorithm that determines whether there is a cyclic path in graph G that involves a given vertex (passed through a parameter).
-    ```cpp
-    bool isCyclicUtil(int v, bool visited[], bool recStack[], int adj[][6], int numVertices) {
-        visited[v] = true;
-        recStack[v] = true;
+        ```cpp
+        bool isCyclicUtil(int v, bool visited[], bool recStack[], int adj[][6], int numVertices) {
+            visited[v] = true;
+            recStack[v] = true;
 
-        for (int neighbor = 0; neighbor < numVertices; ++neighbor) {
-            if (adj[v][neighbor] != 0) {    // if edge exists
-                if (!visited[neighbor] && isCyclicUtil(neighbor, visited, recStack, adj, numVertices))
-                    return true;
-                else if (recStack[neighbor])
-                    return true;
+            for (int neighbor = 0; neighbor < numVertices; ++neighbor) {
+                if (adj[v][neighbor] != 0) {    // if edge exists
+                    if (!visited[neighbor] && isCyclicUtil(neighbor, visited, recStack, adj, numVertices))
+                        return true;
+                    else if (recStack[neighbor])
+                        return true;
+                }
             }
+            recStack[v] = false;
+            return false;
         }
-        recStack[v] = false;
-        return false;
-    }
 
-    bool hasCycleFromVertex(int start, int adj[][6], int numVertices) {
-        bool visited[6] = {false};  // tracks visited nodes
-        bool recStack[6] = {false}; // tracks current recursion path
+        bool hasCycleFromVertex(int start, int adj[][6], int numVertices) {
+            bool visited[6] = {false};  // tracks visited nodes
+            bool recStack[6] = {false}; // tracks current recursion path
 
-        return isCyclicUtil(start, visited, recStack, adj, numVertices);
-    }
-    ```
+            return isCyclicUtil(start, visited, recStack, adj, numVertices);
+        }
+        ```
+        **Explanation:**
+        - `isCyclicUtil` **Function**: Performs DFS, using `visited` and `recStack` to detect back edges indicating cycles.
+        - **Parameters:**
+            - `v`: Current vertex.
+            - `visited`: Marks visited vertices.
+            - `recStack`: Keeps track of the recursion stack.
+            - `adj`: Adjacency list of the graph.
+        - `hasCycleFromVertex` **Function**: Initializes `visited` and `recStack`, calls `isCyclicUtil` starting from the given vertex.
+        - **Cycle Detection**: If during traversal, a vertex is found in `recStack`, a cycle involving the given vertex exists.
