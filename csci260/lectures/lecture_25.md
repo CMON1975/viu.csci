@@ -89,3 +89,74 @@ V_1-----V_3
 - weighted: the edge has some value associated with it
 - unweighted
 - can contain data or be a simple index
+
+## Data Encoding/Compressing Algorithms
+Given an alphabet $\sum$ (typically ASCII or Unicode) and a string X over this alphabet, we want to encode X into a small binary string Y (using only 0 and 1), and guarantee Y is lossless encoding and as small as possible.
+
+In general, there are three different encoding schemes:
+- using fixed length binary string to encode fixed length (1) character, such as ASCII or Unicode systems. Usually, these kind of schemes don't compress data and are considered lossless.
+- using a variable length binaryh string to encode fixed length (1) character, such as Huffman encoding.
+- using fixed length binary string to encode variable length characters, such as Lempel-Ziv encoding.
+
+The Huffman encoding algorithm uses optimized variable length bit strings to encode characters in a given string X over some alphabet $\sum$. The optimization is based on the frequencies of the characters used in string X. The basic idea of the optimization is to use fewer digits to represent the characters with high frequencies. It is a greedy algorithm.
+
+It must be guaranteed that any Huffman code generated is NOT the prefix of any other Huffman code. We use a tree to satisfy this requirement.
+
+Algorithm to generate a Huffman code tree:
+```
+1. Assign a weighgt to each character inthe alphabet. The more often 
+the character appears in the target string X, the heavier the weight 
+should be.
+2. Create a node for each character and store the weight of the character
+in the node. Put all the nodes into a set S.
+3. Repeat until there is only one node left in S:
+    3.1 Remove two nodes with the smallest weights from S;
+    3.2 Create a new node, take the previously removed two nodes
+        as the new node's two children; the weight of the new node
+        is the sum of the weights of its children nodes;
+    3.3 Put the new node into set S.
+```
+
+Theorem: Huffman's algorithm always produces optimal code trees.
+
+Assuming that the symbols in a message string X have independent probability to appear, then Huffman encoding is the optimal one. But the above assumption is rarely true in natural languages.
+
+Huffman encoding always requires apriori knowledge about the frequenceies of the character appearance in a message. Sometimes, we don't have this knowledge.
+
+In natural languages, many words and phrases are repeated sometimes. Lempel-Ziv algorithm tries to take advantage of this feature.
+
+### Lempel-Ziv Encoding Algorithm:
+```
+1. Initialize the dictionary to contain all blocks of length one character
+    in the alphabet;
+2. Create an empty code string Y;
+3. curWord = longest block W which has appeared in the dictionary;
+4. Y = Y + curWord's index in the dictionary;
+5. preWord = curWord;
+6. Repeat until reaching the end of the string X:
+    6.1 curWord = longest block W which has appeared in the dictionary;
+    6.2 Y = Y + curWord's index in the dictionary;
+    6.3 Encode curWord by W's index in the dictionary;
+    6.4 codeWord = preWord + first symbol of curWord;
+    6.5 If the dictionary is not full and codeWord is not in the dictionary,
+        then Add codeWord into the dictionary;
+    6.6 preWord = curWord;
+```
+
+### Lempel-Ziv Decoding Algorithm:
+```
+1. Initialize the dictionary to contain all blocks of length one character
+    in the alphabet;
+2. Create an empty message string X;
+3. Read the first code C;
+4. curWord = Dictionary[C];
+5. X = X + curWord;
+6. preWord = curWord;
+7. Repeat until reaching the end of the code string Y:
+    7.1 read the next code C;
+    7.2 curWord = Dictionary[C];
+    7.3 X = X + curWord;
+    7.4 codeWord = preWord + first symbol of curWord;
+    7.5 If the dictionary is not full and codeWord is not in the dictionary, 
+        then Add codeWord into the dictionary;
+    7.6 preWord = curWord;
