@@ -34,3 +34,45 @@ c. What is an example of the minimum number of data item insertions that would c
 - Let's insert at the [4, 5] leaf so as to avoid duplication.
 - Inserting 6 and 7 causes an overflow and split, promoting 6 to the parent and causing an overflow and split.
 **Conclusion:** It would take at least 3 data items to cause an internal node split ({34, 6, 7}).
+
+#### 2. Compute a table representing the KMP failure function for the following pattern string:
+`tattarrattat`
+
+I used the KMP algorithm from the class notes (http://csci.viu.ca/~liuh/260/Lectures/Lec09-StringMatching.html) and modified `failure` by adding this:
+
+```cpp
+// print the failure function
+cout << "Failure function for pattern \"" << p << "\": ";
+for (int k = 0; k < lenp; ++k) {
+    cout << f[k] << " ";
+}
+cout << endl;
+```
+
+And then I assembled this `main`:
+
+```cpp
+int main() {
+    string pattern;
+
+    // Input the pattern
+    cout << "Enter the pattern: ";
+    getline(cin, pattern);
+
+    // Prepare the failure array
+    int lenp = pattern.length();
+    int f[lenp];
+
+    // Compute and display the failure function
+    failure(f, pattern);
+
+    return 0;
+}
+```
+
+This produced:
+
+```
+Enter the pattern: tattarrattat
+Failure function for pattern "tattarrattat": 0 0 1 1 2 0 0 0 1 1 2 3
+```
