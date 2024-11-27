@@ -35,6 +35,8 @@ c. What is an example of the minimum number of data item insertions that would c
 - Inserting 6 and 7 causes an overflow and split, promoting 6 to the parent and causing an overflow and split.
 **Conclusion:** It would take at least 3 data items to cause an internal node split ({34, 6, 7}).
 
+---
+
 #### 2. Compute a table representing the KMP failure function for the following pattern string:
 `tattarrattat`
 
@@ -76,3 +78,52 @@ This produced:
 Enter the pattern: tattarrattat
 Failure function for pattern "tattarrattat": 0 0 1 1 2 0 0 0 1 1 2 3
 ```
+
+---
+
+#### 3. Given the following text string:
+
+huffman encoding algorithm uses optimized variable length bit strings to encode characters in a given string x over some alphabet. the optimization is based on the frequencies of the characters used in string x. the basic idea of the optimization is to use fewer digits to represent the characters with high frequencies. it is a greedy algorithm.
+
+a. Assume the alphabet contains only lower-case letters. Compute the frequency table for letters appearing in the text only. Show both the algorithm used and the resulting table.
+b. Draw the Huffman tree based on the frequency table.
+c. Show the Huffman code assigned to each letter.
+
+**Algorithm:**
+**Input:** A string `S` consisting of lower-case characters, possibly including punctuation and spaces.
+**Output:** A frequency table `F` mapping each letter `'a'` to `'z'` to its count in `S`.
+**Steps:**
+1. **Initialize** an array `F[0..25]` of integers to zero. This array will represent the counts of each letter from `'a'` to `'z'`.
+2. **For** each character `c` in the string `S`:
+    1. **If** `c` is a lower-case letter between `'a'` and `'z'` (i.e., `if 'a' ≤ c ≤ 'z'`):
+        1. Compute the index `i` corresponding to the letter: `i = ord(c) - ord('a')`.
+        2. Increment `F[i]` by `1`.
+3. **After processing all the characters**, the array `F` contains the frequency of each letter. The frequency of letter `chr(ord('a') + i)` is `F[i]` from `0` to `25`.
+4. **Output** the frequency table `F`. Represent as a list of pairs `(letter, count)` for readability.
+
+| char | freq
+| :- | :-
+| e | 37
+| i | 31
+| t | 29
+| s | 21
+| a | 20
+| r | 19
+| h | 17
+| n | 17
+| o | 17
+| c | 11
+| g | 11
+| d | 8
+| f | 7
+| m | 7
+| u | 6
+| b | 5
+| l | 5
+| p | 5
+| v | 3
+| z | 3
+| q | 2
+| w | 2
+| x | 2
+| y | 1

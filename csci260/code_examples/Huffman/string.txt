@@ -1,0 +1,1 @@
+huffman encoding algorithm uses optimized variable length bit strings to encode characters in a given string x over some alphabet. the optimization is based on the frequencies of the characters used in string x. the basic idea of the optimization is to use fewer digits to represent the characters with high frequencies. it is a greedy algorithm.

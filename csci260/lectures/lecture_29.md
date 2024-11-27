@@ -140,3 +140,24 @@ int Fibo(int n) {
 
 ---
 
+## Prof's Notes
+### Programming Methodologies
+A problem can be viewed as a sequence of decisions to be made.
+
+A **Brute Force** algorithm solves a problem by exhaustively ennumerating all the possibilities.
+Example: brute force string matching.
+
+A **Greedy** algorithm always makes the (seemingly) best choice in each decision. Once a decision has been made, that decision is never reconsidered.
+Example: hill climbing; Huffman encoding; Dijkstra's shortest path.
+
+A **Backtracking** algorithms systematically considers all possible outcomes for each decision, just like the brute force algorithms. But backtracking algorithms can deted when an exhaustive search is unnecessary. Therefore, backtracking algorithms can perform much better than brute force ones when solving the same problem.
+Example: eight queen; depth first traversal.
+
+A **Divide and Conquer** algorithm divides a problem into several (usually smaller) sub-problems, solves each sub-problem independently, then combines the solutiuons to obtain the solution to the original problem. Divide and conquer algorithms are often implemented using recursion. And generally, the sub-problems are non-overlapping.
+Example: quick sort; merge sort.
+
+A **Dynamic Programming** algorithm solves a series of sub-problems to solve the original problem. The series of sub-rpobleems is devised carefully in such a way that each subsequent solution is obtained by combining the solutions to one or more of the sub-problems that have already been solved. All intermediate solutions are kept in a table in order to prevent unnecessary duplication of efforts.
+Example: matrix chain product, all pairs shortest path (Floyd-Warshall).
+
+A **Randomized** algorithm has an element of randomness involved in solving a problem.
+Example: skip list.
