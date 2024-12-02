@@ -176,3 +176,171 @@ t(29) i(31)   N12(31) e(37)     N13(34)          N14(37)        N15(41)         
 | m | 111111
 | z | 1111100
 | v | 1111101
+
+#### 4. Use Lempel-Ziv to decode the following binary code string (account for whitespace):
+```
+010000 010010 001111 000010 000001 000010 001100 000101 000000 001001 001101 010000 001111 010011 010011 001001 000010 001001 001100 001001 010100 001001 000101 010011 000000 000001 010010 100010 010100 001111 000000 000010 100010 011011 000101 000110 000101 010010 110101 000100 000000 110111 100011 100101 011100 011110 100000 111011 100111 101001 101011 101101 101111 110001
+```
+
+a. probable impossibilities are to be performed
+b. I took the provided pseudocode in the lecture notes and came up with this C++:
+```
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+using std::ifstream;
+using std::stringstream;
+using std::string;
+using std::cout;
+using std::endl;
+
+// initialize the dictionary
+void initializeDictionary(string dictionary[64], int& dictSize) {
+    dictionary[0] = " ";  // whitespace as the first entry
+    for (int i = 0; i < 26; ++i) {
+        dictionary[i + 1] = string(1, 'a' + i);  // a-z
+    }
+    dictSize = 27;  // initial dictionary size
+}
+
+// convert a binary string to an integer
+int binaryToInt(const string& binary) {
+    int value = 0;
+    for (char c : binary) {
+        value = value * 2 + (c - '0');  // convert each bit to int
+    }
+    return value;
+}
+
+// decode function
+string decode(const string& binaryString, string dictionary[64], int& dictSize) {
+    stringstream ss(binaryString);  // use stringstream to process codes
+    string code;                    // for storing each 6-bit code
+    string decodedMessage;
+    string preWord, curWord;
+
+    // read the first code
+    if (ss >> code) {
+        int codeInt = binaryToInt(code);
+        curWord = dictionary[codeInt];
+        decodedMessage += curWord;
+        preWord = curWord;
+    }
+
+    // process remaining codes
+    while (ss >> code) {
+        int codeInt = binaryToInt(code);
+        curWord = dictionary[codeInt];
+        decodedMessage += curWord;
+
+        // create new dictionary entry
+        if (dictSize < 64) {
+            string codeWord = preWord + curWord[0];
+            dictionary[dictSize++] = codeWord;
+        }
+
+        preWord = curWord;
+    }
+
+    return decodedMessage;
+}
+
+int main() {
+    // open the input file
+    ifstream inputFile("code.txt");
+    if (!inputFile) {
+        cout << "Error: Unable to open file code.txt." << endl;
+        return 1;
+    }
+
+    // read the binary string
+    string binaryString, temp;
+    while (getline(inputFile, temp)) {
+        binaryString += temp + " ";  // concatenate lines with a space
+    }
+    inputFile.close();
+
+    // initialize dictionary
+    string dictionary[64];
+    int dictSize = 0;
+    initializeDictionary(dictionary, dictSize);
+
+    // decode the binary string
+    string decodedMessage = decode(binaryString, dictionary, dictSize);
+
+    // output the decoded message
+    cout << "Decoded message: " << decodedMessage << endl;
+
+    return 0;
+}
+```
+
+#### 5. Draw a standard trie and a compressed trie to store:
+```
+{compassion, concern, confidence, consideration, content, honest, honor, humility, integrity, intelligence, modesty, morality }
+```
+a. standard trie:
+```
+(root)
+ |                   \               \       \
+'c'                  'h'             'i'     'm'
+ |                    |      \        |       |
+'o'                  'o'     'u'     'n'     'o'
+ |  \                 |       |       |       |  \
+'m' 'n'              'n'     'm'     't'     'd' 'r'
+ |   |   \   \   \    |  \    |  \    |       |   |
+'p' 'c' 'f' 's' 't'  'e' 'o' 'i' 'o' 'e'     'e' 'a'
+ |   |   |   |   |    |   |   |   |   |  \    |   |
+'a' 'e' 'i' 'i' 'e'  's' 'r' 'l' 'r' 'g' 'l' 's' 'l'
+ |   |   |   |   |    |       |       |   |   |   |
+'s' 'r' 'd' 'd' 'n'  't'     'i'     'r' 'l' 't' 'i'
+ |   |   |   |   |    |       |       |   |   |   |
+'s' 'n' 'e' 'e' 't'  'y'     't'     'i' 'i' 'y' 't'
+ |       |   |                |       |   |       |
+'i'     'n' 'r'              'y'     't' 'g'     'y'
+ |       |   |                        |   |
+'o'     'c' 'a'                      'y' 'e'
+ |       |   |                            |
+'n'     'e' 't'                          'n'
+             |                            |
+            'i'                          'c'
+             |                            |
+            'o'                          'e'
+             |
+            'n'
+```
+
+b. compressed trie:
+```
+(root)
+|
+"co"
+|           \
+"mpassion"  "n"
+             |      \         \
+             "cern" "fidence" "sideration"
+
+(root)
+|
+"h"
+|           \
+"on"        "um"
+|     \      |     \
+"esty" "or" "ility" "or"
+
+(root)
+|
+"inte"
+|       \
+"grity" "lligence"
+
+(root)
+|
+"mo"
+|       \
+"desty" "rality"
+```
+
+**Please note that for b. above, the drawing is a representation of the four resulting subtrees, and the (root) is same for all four.**
