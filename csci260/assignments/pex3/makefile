@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -Wall -O2 -std=c++11
 
 # Target executable
-TARGET = network_analysis
+TARGET = pex3
 
 # Source files
 SRCS = network_analysis.cpp

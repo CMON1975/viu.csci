@@ -14,27 +14,27 @@ using std::endl;
 const int MAX_SERVERS = 100; // maximum number of servers
 double costMatrix[MAX_SERVERS][MAX_SERVERS]; // adjacency matrix for costs
 int capacityMatrix[MAX_SERVERS][MAX_SERVERS]; // adjacency matrix for capacities
-bool visited[MAX_SERVERS]; // visited array for dfs
 int totalVolume[MAX_SERVERS][MAX_SERVERS] = {0}; // accumulated required volume of demands
 
-// function to find server index
+// function to find the index of a server name in the servers array
 int findServerIndex(string servers[], int serverCount, const string &name) {
     for (int i = 0; i < serverCount; ++i) {
         if (servers[i] == name) {
             return i;
         }
     }
-    return -1;
+    return -1; // return -1 if the server name is not found
 }
 
-// dijkstra's algorithm to find the lowest cost path
+// dijkstra's algorithm to find the lowest cost path between two nodes
 bool dijkstra(int source, int destination, int serverCount, int path[], int &pathLength) {
     double dist[MAX_SERVERS];
     int prev[MAX_SERVERS];
     bool visited[MAX_SERVERS] = {false};
 
+    // initialize distance and previous node arrays
     for (int i = 0; i < serverCount; ++i) {
-        dist[i] = 1e9; // set to a very large value
+        dist[i] = 1e9; // set distances to a large value
         prev[i] = -1;
     }
 
@@ -72,6 +72,7 @@ bool dijkstra(int source, int destination, int serverCount, int path[], int &pat
     for (int v = destination; v != -1; v = prev[v]) {
         path[pathLength++] = v;
     }
+
     // reverse path to get source -> destination
     for (int i = 0; i < pathLength / 2; ++i) {
         int temp = path[i];
@@ -82,7 +83,7 @@ bool dijkstra(int source, int destination, int serverCount, int path[], int &pat
     return true;
 }
 
-// function to analyze and write results
+// function to analyze infrastructure and generate a report
 void analyzeInfrastructure(const string &filename) {
     ifstream inputFile(filename.c_str());
     if (!inputFile) {
@@ -129,23 +130,6 @@ void analyzeInfrastructure(const string &filename) {
         capacityMatrix[index2][index1] = capacity;
     }
 
-    // debug: print matrices
-    std::cout << "Cost Matrix:" << endl;
-    for (int i = 0; i < serverCount; ++i) {
-        for (int j = 0; j < serverCount; ++j) {
-            std::cout << std::setw(10) << costMatrix[i][j] << " ";
-        }
-        std::cout << endl;
-    }
-
-    std::cout << "Capacity Matrix:" << endl;
-    for (int i = 0; i < serverCount; ++i) {
-        for (int j = 0; j < serverCount; ++j) {
-            std::cout << std::setw(10) << capacityMatrix[i][j] << " ";
-        }
-        std::cout << endl;
-    }
-
     // read demand data
     int demandCount;
     inputFile >> demandCount;
@@ -161,11 +145,11 @@ void analyzeInfrastructure(const string &filename) {
     outputFile << "by current infrastructure due to lack of routes" << endl;
     outputFile << "between the two servers:" << endl;
 
-    bool canMeetAll = true;
     int additionalCapacity[MAX_SERVERS][MAX_SERVERS] = {0};
     int path[MAX_SERVERS], pathLength;
 
-    // Loop to process all demands
+    // loop to process all demands
+    bool canMeetAll = true;
     for (int i = 0; i < demandCount; ++i) {
         string server1 = demands[i][0];
         string server2 = demands[i][1];
@@ -179,7 +163,7 @@ void analyzeInfrastructure(const string &filename) {
                 int from = path[j];
                 int to = path[j + 1];
 
-                // Accumulate the volume for each link in the path
+                // accumulate the volume for each link in the path
                 totalVolume[from][to] += volume;
                 totalVolume[to][from] += volume;
             }
@@ -189,7 +173,7 @@ void analyzeInfrastructure(const string &filename) {
         }
     }
 
-    // Compute additional capacities after processing all demands
+    // compute additional capacities after processing all demands
     for (int i = 0; i < serverCount; ++i) {
         for (int j = 0; j < serverCount; ++j) {
             if (totalVolume[i][j] > capacityMatrix[i][j]) {
@@ -198,45 +182,24 @@ void analyzeInfrastructure(const string &filename) {
         }
     }
 
-    // Generate the final report
+    // generate the final report
     outputFile << endl;
     outputFile << "In order to meet the rest of the communication demands" << endl;
     outputFile << "with the lowest cost, the following direct link(s)" << endl;
     outputFile << "must expand their capacity:" << endl;
 
-    bool capacityExpansionNeeded = false;
     for (int i = 0; i < serverCount; ++i) {
         for (int j = i + 1; j < serverCount; ++j) { // ensure no duplicates
             if (additionalCapacity[i][j] > 0) {
-                capacityExpansionNeeded = true;
                 outputFile << servers[i] << " to " << servers[j]
-                        << " from " << capacityMatrix[i][j]
-                        << " to " << (capacityMatrix[i][j] + additionalCapacity[i][j]) << endl;
+                           << " from " << capacityMatrix[i][j]
+                           << " to " << (capacityMatrix[i][j] + additionalCapacity[i][j]) << endl;
             }
         }
     }
-
 
     if (canMeetAll) {
         outputFile << "None" << endl;
-    }
-
-    std::cout << "Additional Capacity Matrix:" << endl;
-    for (int i = 0; i < serverCount; ++i) {
-        for (int j = 0; j < serverCount; ++j) {
-            std::cout << std::setw(10) << additionalCapacity[i][j] << " ";
-        }
-        std::cout << endl;
-    }
-
-    std::cout << "Final Capacity Matrix (after updates):" << endl;
-    for (int i = 0; i < serverCount; ++i) {
-        for (int j = 0; j < serverCount; ++j) {
-            if (additionalCapacity[i][j] > 0) {
-                std::cout << servers[i] << " to " << servers[j] << " requires capacity expansion to "
-                        << capacityMatrix[i][j] + additionalCapacity[i][j] << endl;
-            }
-        }
     }
 
     outputFile << "=== End of Report ===" << endl;
