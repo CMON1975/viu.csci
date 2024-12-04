@@ -1,0 +1,4 @@
+1 // number of servers
+ServerA
+0 // number of direct links
+0 // number of communication demands

@@ -1,0 +1,13 @@
+4 // number of servers
+W
+X
+Y
+Z
+4 // number of direct links
+W X 10.0 100
+X Y 5.0 50
+Y Z 2.0 50
+W Z 50.0 100
+2 // number of communication demands
+W Z 40
+X Z 25

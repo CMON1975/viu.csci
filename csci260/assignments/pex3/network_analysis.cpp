@@ -1,20 +1,36 @@
+// CHRISTOPHER NILSSEN - network_analysis.cpp for ASSIGNMENT 03 CSCI 260 F2402
+// This program analyzes the infrastructure of a communication network based on input data. It uses 
+// adjacency matrices to represent costs and capacities between servers and employs Dijkstra's algorithm 
+// to determine the lowest-cost paths. The program identifies demands that cannot be met due to insufficient 
+// routes or capacities and generates a report suggesting capacity expansions for critical links to 
+// accommodate the unmet demands. The results are written to an output file for easy review.
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdlib>
-#include <iomanip>
-#include <algorithm>
+#include <limits>
 
 using std::ifstream;
 using std::ofstream;
 using std::string;
 using std::cerr;
 using std::endl;
+using std::numeric_limits;
+using std::streamsize;
 
 const int MAX_SERVERS = 100; // maximum number of servers
 double costMatrix[MAX_SERVERS][MAX_SERVERS]; // adjacency matrix for costs
 int capacityMatrix[MAX_SERVERS][MAX_SERVERS]; // adjacency matrix for capacities
 int totalVolume[MAX_SERVERS][MAX_SERVERS] = {0}; // accumulated required volume of demands
+
+// helper to allow comments in an input file as per spec
+int readSingleIntegerFromLine(ifstream &inputFile) {
+    int value;
+    inputFile >> value;  // read the first integer
+    inputFile.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the rest of the line
+    return value;
+}
 
 // function to find the index of a server name in the servers array
 int findServerIndex(string servers[], int serverCount, const string &name) {
@@ -106,16 +122,14 @@ void analyzeInfrastructure(const string &filename) {
     }
 
     // read server data
-    int serverCount;
-    inputFile >> serverCount;
+    int serverCount = readSingleIntegerFromLine(inputFile);
     string servers[MAX_SERVERS];
     for (int i = 0; i < serverCount; ++i) {
         inputFile >> servers[i];
     }
 
     // read link data
-    int linkCount;
-    inputFile >> linkCount;
+    int linkCount = readSingleIntegerFromLine(inputFile);
     for (int i = 0; i < linkCount; ++i) {
         string server1, server2;
         double cost;
@@ -131,8 +145,7 @@ void analyzeInfrastructure(const string &filename) {
     }
 
     // read demand data
-    int demandCount;
-    inputFile >> demandCount;
+    int demandCount = readSingleIntegerFromLine(inputFile);
     string demands[demandCount][3]; // stores demands as {server1, server2, volume}
     for (int i = 0; i < demandCount; ++i) {
         inputFile >> demands[i][0] >> demands[i][1] >> demands[i][2];
@@ -149,7 +162,6 @@ void analyzeInfrastructure(const string &filename) {
     int path[MAX_SERVERS], pathLength;
 
     // loop to process all demands
-    bool canMeetAll = true;
     for (int i = 0; i < demandCount; ++i) {
         string server1 = demands[i][0];
         string server2 = demands[i][1];
@@ -169,7 +181,6 @@ void analyzeInfrastructure(const string &filename) {
             }
         } else {
             outputFile << server1 << " " << server2 << " " << volume << endl;
-            canMeetAll = false;
         }
     }
 
@@ -196,10 +207,6 @@ void analyzeInfrastructure(const string &filename) {
                            << " to " << (capacityMatrix[i][j] + additionalCapacity[i][j]) << endl;
             }
         }
-    }
-
-    if (canMeetAll) {
-        outputFile << "None" << endl;
     }
 
     outputFile << "=== End of Report ===" << endl;

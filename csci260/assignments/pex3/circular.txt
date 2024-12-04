@@ -1,0 +1,16 @@
+5 // number of servers
+A
+B
+C
+D
+E
+5 // number of direct links
+A B 4.0 50
+B C 3.0 50
+C D 2.0 50
+D E 1.0 50
+E A 5.0 50
+3 // number of communication demands
+A D 30
+B E 45
+C A 60

@@ -1,0 +1,11 @@
+3 // number of servers
+Alpha
+Beta
+Gamma
+3 // number of direct links
+Alpha Beta 5.0 50
+Beta Gamma 8.0 30
+Alpha Gamma 10.0 20
+2 // number of communication demands
+Alpha Gamma 40
+Beta Gamma 50

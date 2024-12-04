@@ -50,28 +50,27 @@ The application is implemented using fundamental data structures and avoids adva
 - No dynamic memory allocation is required, avoiding memory management issues.
 
 ## Testing
-The program was tested with various scenarios to ensure accuracy:
+The program was tested with the given scenario:
 1. **Connectivity Testing:**
-    - Tested with networks where some servers were completely disconnected.
+    - Tested with a network where some servers were completely disconnected.
 2. **Capacity Testing:**
     - Verified that capacity expansions were correctly calculated for multiple demands sharing the same links.
 3. **Pathfinding Testing:**
     - Ensured that the shortest path was selected for each demand, minimizing costs.
 4. **Edge Cases:**
-    - Tested with zero demands, no links, and fully connected networks.
-    - Verified appropriate handling of invalid inputs and large volumes.
+    - Tested for minimal case, fully connected network, no feasible path, capacity exceeded, large volume and many demands, circular graph, and high cost vs low cost paths.
 
 ### Example Input
 Input file format:
 ```
-6
+6 // number of servers followed with 6 names
 Daisy
 Heather
 Iris
 Jasmine
 Rose
 Violet
-7
+7 // number of direct links: two server names, unit cost and volume capacity
 Daisy Iris 7.5 50
 Daisy Heather 25.8 60
 Daisy Violet 14.2 80
@@ -79,7 +78,7 @@ Heather Jasmine 12.7 28
 Iris Jasmine 8.3 75
 Iris Violet 3.5 35
 Jasmine Violet 2.1 67
-5
+5 // number of communication demands: two server names, volume needed
 Daisy Iris 38
 Daisy Jasmine 52
 Daisy Violet 62
@@ -117,7 +116,7 @@ Jasmine to Violet from 67 to 111
 There are currently **no known bugs** in the application.
 
 ## Notes
-- **Input File:** Ensure the input file adheres to the specified format for correct processing. I removed the commented text to simplify my implementation.
+- **Input File:** Ensure the input file adheres to the specified format for correct processing.
 - **Output File:** The results are written to `techAnalysisResult.txt` in the working directory.
 - The Makefile has been provided to automate the build process. Running `make` will generate the executable named `network_analysis`.
 - Run the program with ./network_analysis input.txt

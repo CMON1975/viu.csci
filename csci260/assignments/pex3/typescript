@@ -1,0 +1,383 @@
+# CHRISTOPHER NILSSEN typescript for ASSIGNMENT 03 CSCI 260 F2402
+
+Script started on 2024-12-03 13:53:43-08:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="232" LINES="25"]
+make
+
+g++ -Wall -O2 -std=c++11 -c network_analysis.cpp -o network_analysis.o
+g++ -Wall -O2 -std=c++11 -o pex3 network_analysis.o
+
+6 // number of servers followed with 6 names
+
+Daisy
+
+Heather
+
+Iris
+
+Jasmine
+
+Rose
+
+Violet
+
+7 // number of direct links: two server names, unit cost and volume capacity
+
+Daisy Iris 7.5 50
+
+Daisy Heather 25.8 60
+
+Daisy Violet 14.2 80
+
+Heather Jasmine 12.7 28
+
+Iris Jasmine 8.3 75
+
+Iris Violet 3.5 35
+
+Jasmine Violet 2.1 67
+
+5 // number of communication demands: two server names, volume needed
+
+Daisy Iris 38
+
+Daisy Jasmine 52
+
+Daisy Violet 62
+
+Heather Violet 59
+
+Heather Rose 15
+
+./pex3 default.txt
+cat techAnalysisResult.txt 
+
+Technology Analysis based on data in file default.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+Heather Rose 15
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+Daisy to Iris from 50 to 152
+Heather to Jasmine from 28 to 59
+Iris to Violet from 35 to 114
+Jasmine to Violet from 67 to 111
+=== End of Report ===
+
+cat highlow.txt
+
+4 // number of servers
+
+W
+
+X
+
+Y
+
+Z
+
+4 // number of direct links
+
+W X 10.0 100
+
+X Y 5.0 50
+
+Y Z 2.0 50
+
+W Z 50.0 100
+
+2 // number of communication demands
+
+W Z 40
+
+X Z 25
+
+./pex3 highlow.txt
+cat techAnalysisResult.txt 
+
+Technology Analysis based on data in file highlow.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+X to Y from 50 to 65
+Y to Z from 50 to 65
+=== End of Report ===
+
+cat circular.txt 
+
+5 // number of servers
+
+A
+
+B
+
+C
+
+D
+
+E
+
+5 // number of direct links
+
+A B 4.0 50
+
+B C 3.0 50
+
+C D 2.0 50
+
+D E 1.0 50
+
+E A 5.0 50
+
+3 // number of communication demands
+
+A D 30
+
+B E 45
+
+C A 60
+
+./pex3 circular.txt 
+cat techAnalysisResult.txt 
+
+Technology Analysis based on data in file circular.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+A to B from 50 to 60
+B to C from 50 to 105
+D to E from 50 to 75
+=== End of Report ===
+
+cat scale.txt
+
+8 // number of servers
+
+Node1
+
+Node2
+
+Node3
+
+Node4
+
+Node5
+
+Node6
+
+Node7
+
+Node8
+
+10 // number of direct links
+
+Node1 Node2 2.5 100
+
+Node2 Node3 3.5 100
+
+Node3 Node4 1.5 100
+
+Node4 Node5 2.0 100
+
+Node5 Node6 2.2 100
+
+Node6 Node7 1.8 100
+
+Node7 Node8 3.0 100
+
+Node1 Node5 5.0 50
+
+Node2 Node6 4.5 75
+
+Node3 Node7 4.0 60
+
+6 // number of communication demands
+
+Node1 Node8 80
+
+Node1 Node4 40
+
+Node2 Node7 50
+
+Node3 Node5 70
+
+Node5 Node8 20
+
+Node6 Node4 30
+
+./pex3 scale.txt
+cat techAnalysisResult.txt 
+
+Technology Analysis based on data in file scale.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+Node2 to Node6 from 75 to 130
+Node4 to Node5 from 100 to 140
+Node6 to Node7 from 100 to 150
+=== End of Report ===
+
+cat exceeded.txt 
+
+3 // number of servers
+
+Alpha
+
+Beta
+
+Gamma
+
+3 // number of direct links
+
+Alpha Beta 5.0 50
+
+Beta Gamma 8.0 30
+
+Alpha Gamma 10.0 20
+
+2 // number of communication demands
+
+Alpha Gamma 40
+
+Beta Gamma 50
+
+./pex3 exceeded.txt
+cat techAnalysisResult.txt
+
+Technology Analysis based on data in file exceeded.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+Alpha to Gamma from 20 to 40
+Beta to Gamma from 30 to 50
+=== End of Report ===
+
+cat nopath.txt
+
+3 // number of servers
+
+X
+
+Y
+
+Z
+
+1 // number of direct links
+
+X Y 10.0 50
+
+1 // number of communication demands
+
+Y Z 25
+
+./pex3 nopath.txt
+cat techAnalysisResult.txt 
+
+Technology Analysis based on data in file nopath.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+Y Z 25
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+=== End of Report ===
+
+cat full.txt
+
+4 // number of servers
+
+A
+
+B
+
+C
+
+D
+
+6 // number of direct links
+
+A B 5.0 100
+
+A C 10.0 100
+
+A D 15.0 100
+
+B C 20.0 100
+
+B D 25.0 100
+
+C D 30.0 100
+
+2 // number of communication demands
+
+A D 50
+
+B C 75
+
+./pex3 full.txt
+cat techAnalysisResult.txt 
+
+Technology Analysis based on data in file full.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+=== End of Report ===
+
+cat minimal.txt
+
+1 // number of servers
+
+ServerA
+
+0 // number of direct links
+
+0 // number of communication demands
+
+./pex3 minimal.txt 
+cat techAnalysisResult.txt 
+
+Technology Analysis based on data in file minimal.txt
+
+The following communication demand(s) can't be met
+by current infrastructure due to lack of routes
+between the two servers:
+
+In order to meet the rest of the communication demands
+with the lowest cost, the following direct link(s)
+must expand their capacity:
+=== End of Report ===
+
+exit
+
+Script done on 2024-12-03 13:57:25-08:00 [COMMAND_EXIT_CODE="0"]
