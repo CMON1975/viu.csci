@@ -429,7 +429,7 @@ c. Show the order of vertices in a DFS traversal from A.
 
 13. From I, move to **F** (adjacent to I), mark as visited: `Visited: [A, B, E, C, G, J, K, D, H, I, F]`.
 
-**Final BFS Traversal Order:** `[A, B, E, C, G, J, K, D, H, I, F]`.
+**Final DFS Traversal Order:** `[A, B, E, C, G, J, K, D, H, I, F]`.
 
 \newpage
 
